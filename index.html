@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickleball Academy - Use Cases</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 1px solid #e5e5e5;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: #f5f5f5;
+            color: #000;
+        }
+
+        .tab.active {
+            background: #000;
+            color: #fff;
+        }
+
+        .search-container {
+            padding: 16px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fafafa;
+            transition: all 0.2s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: #fff;
+            border-color: #000;
+        }
+
+        .search-box::placeholder {
+            color: #999;
+        }
+
+        .nav-list {
+            flex: 1;
+            padding: 8px 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-item:hover {
+            background: #fafafa;
+            color: #000;
+        }
+
+        .nav-item.active {
+            background: #f5f5f5;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .nav-item.main-category {
+            font-weight: 500;
+            color: #000;
+            padding-left: 16px;
+        }
+
+        .nav-item.sub-category {
+            padding-left: 32px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .nav-item.sub-sub-category {
+            padding-left: 48px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .expand-icon {
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 40px 40px 40px;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .flow-section {
+            margin-bottom: 60px;
+        }
+
+        .flow-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .flow-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000;
+            letter-spacing: -0.01em;
+        }
+
+        .flow-count {
+            font-size: 14px;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .flow-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #e5e5e5 transparent;
+        }
+
+        .flow-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .flow-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .flow-container::-webkit-scrollbar-thumb {
+            background: #e5e5e5;
+            border-radius: 4px;
+        }
+
+        .flow-container::-webkit-scrollbar-thumb:hover {
+            background: #d0d0d0;
+        }
+
+        .flow-items {
+            display: flex;
+            gap: 16px;
+            padding-bottom: 8px;
+        }
+
+        .flow-item {
+            flex-shrink: 0;
+            width: 280px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .flow-item:hover {
+            border-color: #d0d0d0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .flow-item-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #999;
+        }
+
+        .flow-item-content {
+            padding: 20px;
+        }
+
+        .flow-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .flow-item-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .flow-item-features {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .flow-item-features li {
+            font-size: 12px;
+            color: #888;
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .flow-item-features li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 1000;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+
+            .flow-item {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flow-item {
+                width: 200px;
+            }
+
+            .flow-item-image {
+                height: 150px;
+                font-size: 36px;
+            }
+
+            .flow-title {
+                font-size: 20px;
+            }
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Pickleball Academy</div>
+                <div class="tabs">
+                    <button class="tab active" data-tab="flows">Flows</button>
+                    <button class="tab" data-tab="screens">Screens</button>
+                    <button class="tab" data-tab="elements">UI Elements</button>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search..." id="searchInput">
+            </div>
+
+            <nav class="nav-list" id="navList">
+                <div class="nav-item main-category" data-category="players">
+                    <span>For Players</span>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="nav-item sub-category" data-filter="training">Personalized Training</div>
+                <div class="nav-item sub-category" data-filter="booking">Court Booking</div>
+                <div class="nav-item sub-category" data-filter="partners">Find Partners</div>
+                <div class="nav-item sub-category" data-filter="analytics">Performance Analytics</div>
+
+                <div class="nav-item main-category" data-category="coaches">
+                    <span>For Coaches</span>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="nav-item sub-category" data-filter="dashboard">Coach Dashboard</div>
+                <div class="nav-item sub-category" data-filter="video">Video Analysis</div>
+                <div class="nav-item sub-category" data-filter="students">Student Management</div>
+
+                <div class="nav-item main-category" data-category="facilities">
+                    <span>For Facilities</span>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="nav-item sub-category" data-filter="operations">Facility Operations</div>
+                <div class="nav-item sub-category" data-filter="tournaments">Tournament Management</div>
+                <div class="nav-item sub-category" data-filter="members">Member Portal</div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <!-- Player Flows Section -->
+            <div class="flow-section" data-category="players">
+                <div class="flow-header">
+                    <h2 class="flow-title">For Players</h2>
+                    <span class="flow-count">12 use cases</span>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-items">
+                        <div class="flow-item" data-filter="training">
+                            <div class="flow-item-image">🎾</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Personalized Training Programs</h3>
+                                <p class="flow-item-description">Get customized training plans tailored to your skill level, goals, and schedule.</p>
+                                <ul class="flow-item-features">
+                                    <li>Skill assessment</li>
+                                    <li>Custom routines</li>
+                                    <li>Progress tracking</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="booking">
+                            <div class="flow-item-image">📅</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Easy Court Reservations</h3>
+                                <p class="flow-item-description">Book courts instantly with real-time availability. Manage your bookings seamlessly.</p>
+                                <ul class="flow-item-features">
+                                    <li>Real-time availability</li>
+                                    <li>Instant confirmation</li>
+                                    <li>Calendar sync</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="partners">
+                            <div class="flow-item-image">👥</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Find Playing Partners</h3>
+                                <p class="flow-item-description">Connect with players at your skill level. Join games and build your community.</p>
+                                <ul class="flow-item-features">
+                                    <li>Skill-based matching</li>
+                                    <li>Game invitations</li>
+                                    <li>Community events</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="analytics">
+                            <div class="flow-item-image">📊</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Performance Analytics</h3>
+                                <p class="flow-item-description">Deep insights into your game performance. Track statistics and optimize training.</p>
+                                <ul class="flow-item-features">
+                                    <li>Match statistics</li>
+                                    <li>Performance trends</li>
+                                    <li>Goal tracking</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="training">
+                            <div class="flow-item-image">🏃</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Workout Routines</h3>
+                                <p class="flow-item-description">Access curated workout routines designed specifically for pickleball players.</p>
+                                <ul class="flow-item-features">
+                                    <li>Strength training</li>
+                                    <li>Agility drills</li>
+                                    <li>Recovery exercises</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coach Flows Section -->
+            <div class="flow-section" data-category="coaches">
+                <div class="flow-header">
+                    <h2 class="flow-title">For Coaches</h2>
+                    <span class="flow-count">8 use cases</span>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-items">
+                        <div class="flow-item" data-filter="dashboard">
+                            <div class="flow-item-image">👨‍🏫</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Coach Dashboard</h3>
+                                <p class="flow-item-description">Manage your students, schedule lessons, and track progress all in one place.</p>
+                                <ul class="flow-item-features">
+                                    <li>Student management</li>
+                                    <li>Lesson scheduling</li>
+                                    <li>Progress reports</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="video">
+                            <div class="flow-item-image">📹</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Video Analysis Tools</h3>
+                                <p class="flow-item-description">Upload and analyze gameplay videos with detailed feedback and annotations.</p>
+                                <ul class="flow-item-features">
+                                    <li>Video upload</li>
+                                    <li>Frame analysis</li>
+                                    <li>Annotation tools</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="students">
+                            <div class="flow-item-image">📚</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Student Management</h3>
+                                <p class="flow-item-description">Organize student information, track attendance, and manage lesson plans.</p>
+                                <ul class="flow-item-features">
+                                    <li>Student profiles</li>
+                                    <li>Attendance tracking</li>
+                                    <li>Lesson plans</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="dashboard">
+                            <div class="flow-item-image">💰</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Payment Management</h3>
+                                <p class="flow-item-description">Handle payments, invoices, and billing for your coaching services.</p>
+                                <ul class="flow-item-features">
+                                    <li>Payment processing</li>
+                                    <li>Invoice generation</li>
+                                    <li>Payment history</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facility Flows Section -->
+            <div class="flow-section" data-category="facilities">
+                <div class="flow-header">
+                    <h2 class="flow-title">For Facilities</h2>
+                    <span class="flow-count">10 use cases</span>
+                </div>
+                <div class="flow-container">
+                    <div class="flow-items">
+                        <div class="flow-item" data-filter="operations">
+                            <div class="flow-item-image">🏢</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Facility Operations</h3>
+                                <p class="flow-item-description">Streamline court management, member services, and facility operations.</p>
+                                <ul class="flow-item-features">
+                                    <li>Court management</li>
+                                    <li>Member portal</li>
+                                    <li>Revenue analytics</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="tournaments">
+                            <div class="flow-item-image">🏆</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Tournament Organization</h3>
+                                <p class="flow-item-description">Organize and manage tournaments with registrations, brackets, and scoring.</p>
+                                <ul class="flow-item-features">
+                                    <li>Registration system</li>
+                                    <li>Bracket generation</li>
+                                    <li>Live scoring</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="members">
+                            <div class="flow-item-image">👤</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Member Portal</h3>
+                                <p class="flow-item-description">Provide members with easy access to bookings, payments, and facility info.</p>
+                                <ul class="flow-item-features">
+                                    <li>Member profiles</li>
+                                    <li>Booking history</li>
+                                    <li>Payment management</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flow-item" data-filter="operations">
+                            <div class="flow-item-image">📈</div>
+                            <div class="flow-item-content">
+                                <h3 class="flow-item-title">Revenue Analytics</h3>
+                                <p class="flow-item-description">Track revenue, analyze trends, and optimize facility operations.</p>
+                                <ul class="flow-item-features">
+                                    <li>Revenue reports</li>
+                                    <li>Usage analytics</li>
+                                    <li>Performance metrics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+
+        mobileMenuBtn?.addEventListener('click', toggleSidebar);
+        sidebarOverlay?.addEventListener('click', toggleSidebar);
+
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Navigation category expansion
+        const mainCategories = document.querySelectorAll('.nav-item.main-category');
+        mainCategories.forEach(category => {
+            category.addEventListener('click', (e) => {
+                const icon = category.querySelector('.expand-icon');
+                const isExpanded = icon.classList.contains('expanded');
+                
+                // Toggle icon
+                icon.classList.toggle('expanded');
+                
+                // Toggle sub-items visibility
+                let next = category.nextElementSibling;
+                while (next && next.classList.contains('sub-category')) {
+                    next.style.display = isExpanded ? 'none' : 'flex';
+                    next = next.nextElementSibling;
+                }
+            });
+        });
+
+        // Initially hide sub-categories
+        document.querySelectorAll('.nav-item.sub-category').forEach(item => {
+            item.style.display = 'none';
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const flowItems = document.querySelectorAll('.flow-item');
+        const flowSections = document.querySelectorAll('.flow-section');
+
+        searchInput?.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            flowItems.forEach(item => {
+                const title = item.querySelector('.flow-item-title').textContent.toLowerCase();
+                const description = item.querySelector('.flow-item-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide empty flow sections
+            flowSections.forEach(section => {
+                const visibleItems = section.querySelectorAll('.flow-item[style="display: block;"], .flow-item:not([style*="display: none"])');
+                if (visibleItems.length === 0 && searchTerm !== '') {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+        });
+
+        // Navigation filtering
+        const navItems = document.querySelectorAll('.nav-item[data-filter]');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active state from all nav items
+                navItems.forEach(ni => ni.classList.remove('active'));
+                item.classList.add('active');
+
+                const filter = item.dataset.filter;
+                
+                // Filter flow items
+                flowItems.forEach(flowItem => {
+                    if (flowItem.dataset.filter === filter) {
+                        flowItem.style.display = 'block';
+                    } else {
+                        flowItem.style.display = 'none';
+                    }
+                });
+
+                // Update flow sections visibility
+                flowSections.forEach(section => {
+                    const visibleItems = section.querySelectorAll('.flow-item[style="display: block;"], .flow-item:not([style*="display: none"])');
+                    if (visibleItems.length === 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+            });
+        });
+
+        // Category filtering
+        const categoryNavItems = document.querySelectorAll('.nav-item.main-category');
+        categoryNavItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.classList.contains('expand-icon')) return;
+                
+                const category = item.dataset.category;
+                
+                // Show all items in this category
+                flowItems.forEach(flowItem => {
+                    const section = flowItem.closest('.flow-section');
+                    if (section && section.dataset.category === category) {
+                        flowItem.style.display = 'block';
+                    } else {
+                        flowItem.style.display = 'none';
+                    }
+                });
+
+                // Update flow sections visibility
+                flowSections.forEach(section => {
+                    if (section.dataset.category === category) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
