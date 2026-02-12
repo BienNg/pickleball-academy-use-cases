@@ -342,6 +342,91 @@ body {
     line-height: 1.6;
 }
 
+/* View Mode Controls */
+.view-mode-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.view-mode-toggle {
+    display: flex;
+    gap: 0;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid #e5e5e5;
+}
+
+.toggle-option {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.toggle-option:hover {
+    color: #000;
+}
+
+.toggle-option[data-view-mode="complete"].active,
+.toggle-option[data-view-mode="step-by-step"].active {
+    background: #000;
+    color: #fff;
+}
+
+.step-navigation {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #000;
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.step-counter {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    min-width: 60px;
+    text-align: center;
+}
+
+.current-step {
+    color: #000;
+    font-weight: 600;
+}
+
 /* Step-by-Step Flow Styles */
 .flow-steps-container {
     display: flex;
@@ -349,6 +434,25 @@ body {
     gap: 0;
     position: relative;
     padding-left: 24px;
+}
+
+.flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+    padding-bottom: 24px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.flow-step.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
 }
 
 .flow-step {
@@ -505,6 +609,22 @@ body {
 
     .flow-step-connector {
         left: 3px;
+    }
+
+    .view-mode-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .step-navigation {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .toggle-option {
+        padding: 6px 12px;
+        font-size: 13px;
     }
 }
 

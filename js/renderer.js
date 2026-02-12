@@ -75,7 +75,24 @@ function renderFlowSections() {
                             <p class="use-case-description">${item.description}</p>
                         </div>
                     </div>
-                    <div class="flow-steps-container">
+                    <div class="view-mode-controls">
+                        <div class="view-mode-toggle">
+                            <button class="toggle-option ${item.id}-toggle" data-view-mode="complete" data-use-case-id="${item.id}">Complete</button>
+                            <button class="toggle-option ${item.id}-toggle" data-view-mode="step-by-step" data-use-case-id="${item.id}">Step-by-Step</button>
+                        </div>
+                        <div class="step-navigation" data-use-case-id="${item.id}" style="display: none;">
+                            <button class="nav-btn prev-btn" data-use-case-id="${item.id}" disabled>
+                                <span>←</span> Previous
+                            </button>
+                            <span class="step-counter">
+                                <span class="current-step">1</span> / <span class="total-steps">${item.steps.length}</span>
+                            </span>
+                            <button class="nav-btn next-btn" data-use-case-id="${item.id}">
+                                Next <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flow-steps-container" data-use-case-id="${item.id}">
                         ${stepsHtml}
                     </div>
                 </div>

@@ -123,11 +123,134 @@ function initializeApp() {
         });
     }
 
+    // Store current step for each use case (shared between functions)
+    const stepState = new Map();
+
+    // Function to update step visibility (shared between toggle and navigation)
+    function updateStepVisibility(useCaseId, visibleStepCount) {
+        const stepsContainer = document.querySelector(`.flow-steps-container[data-use-case-id="${useCaseId}"]`);
+        const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+        
+        if (!stepsContainer) return;
+
+        const steps = stepsContainer.querySelectorAll('.flow-step');
+        const state = stepState.get(useCaseId);
+        
+        steps.forEach((step, index) => {
+            if (index < visibleStepCount) {
+                step.classList.remove('hidden');
+            } else {
+                step.classList.add('hidden');
+            }
+        });
+
+        if (navControls) {
+            // Update step counter
+            const currentStepSpan = navControls.querySelector('.current-step');
+            if (currentStepSpan) {
+                currentStepSpan.textContent = visibleStepCount;
+            }
+
+            // Update button states
+            const prevBtn = navControls.querySelector('.prev-btn');
+            const nextBtn = navControls.querySelector('.next-btn');
+            
+            if (prevBtn) {
+                prevBtn.disabled = visibleStepCount === 1;
+            }
+            if (nextBtn && state) {
+                nextBtn.disabled = visibleStepCount === state.total;
+            }
+        }
+    }
+
+    // View mode toggle functionality
+    function setupViewModeToggle() {
+        // Set default to "Complete" mode for all use cases
+        document.querySelectorAll('.toggle-option[data-view-mode="complete"]').forEach(btn => {
+            btn.classList.add('active');
+        });
+
+        // Handle toggle button clicks
+        document.querySelectorAll('.toggle-option').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const useCaseId = btn.dataset.useCaseId;
+                const viewMode = btn.dataset.viewMode;
+                
+                // Update toggle buttons for this use case
+                document.querySelectorAll(`.toggle-option[data-use-case-id="${useCaseId}"]`).forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                
+                // Show/hide navigation controls
+                const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+                const stepsContainer = document.querySelector(`.flow-steps-container[data-use-case-id="${useCaseId}"]`);
+                
+                if (viewMode === 'step-by-step') {
+                    navControls.style.display = 'flex';
+                    // Reset to first step
+                    const state = stepState.get(useCaseId);
+                    if (state) {
+                        state.current = 1;
+                    }
+                    updateStepVisibility(useCaseId, 1);
+                } else {
+                    navControls.style.display = 'none';
+                    // Show all steps
+                    const steps = stepsContainer.querySelectorAll('.flow-step');
+                    steps.forEach(step => {
+                        step.classList.remove('hidden');
+                    });
+                }
+            });
+        });
+    }
+
+    // Step navigation functionality
+    function setupStepNavigation() {
+        // Initialize step state
+        document.querySelectorAll('.use-case-section[data-use-case-id]').forEach(section => {
+            const useCaseId = section.dataset.useCaseId;
+            const stepsContainer = section.querySelector('.flow-steps-container');
+            if (stepsContainer) {
+                const totalSteps = stepsContainer.querySelectorAll('.flow-step').length;
+                stepState.set(useCaseId, { current: 1, total: totalSteps });
+            }
+        });
+
+        // Next button handler
+        document.querySelectorAll('.next-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const useCaseId = btn.dataset.useCaseId;
+                const state = stepState.get(useCaseId);
+                if (state && state.current < state.total) {
+                    state.current++;
+                    updateStepVisibility(useCaseId, state.current);
+                }
+            });
+        });
+
+        // Previous button handler
+        document.querySelectorAll('.prev-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const useCaseId = btn.dataset.useCaseId;
+                const state = stepState.get(useCaseId);
+                if (state && state.current > 1) {
+                    state.current--;
+                    updateStepVisibility(useCaseId, state.current);
+                }
+            });
+        });
+    }
+
     // Setup all functionality
     setupCategoryExpansion();
     setupSearch();
     setupNavigationFiltering();
     setupCategoryFiltering();
+    setupViewModeToggle();
+    setupStepNavigation();
 }
 
 // Wait for DOM and dynamic content to be ready
