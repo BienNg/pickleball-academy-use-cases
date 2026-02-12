@@ -58,27 +58,16 @@ function initializeApp() {
         
         searchInput?.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const flowItems = document.querySelectorAll('.flow-item');
-            const flowSections = document.querySelectorAll('.flow-section');
+            const useCaseSections = document.querySelectorAll('.use-case-section');
             
-            flowItems.forEach(item => {
-                const title = item.querySelector('.flow-item-title')?.textContent.toLowerCase() || '';
-                const description = item.querySelector('.flow-item-description')?.textContent.toLowerCase() || '';
+            useCaseSections.forEach(section => {
+                const title = section.querySelector('.use-case-title, .flow-item-title')?.textContent.toLowerCase() || '';
+                const description = section.querySelector('.use-case-description, .flow-item-description')?.textContent.toLowerCase() || '';
                 
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Hide empty flow sections
-            flowSections.forEach(section => {
-                const visibleItems = section.querySelectorAll('.flow-item[style="display: block;"], .flow-item:not([style*="display: none"])');
-                if (visibleItems.length === 0 && searchTerm !== '') {
-                    section.style.display = 'none';
-                } else {
                     section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
                 }
             });
         });
@@ -94,25 +83,14 @@ function initializeApp() {
                 item.classList.add('active');
 
                 const useCaseId = item.dataset.useCaseId;
-                const flowItems = document.querySelectorAll('.flow-item');
-                const flowSections = document.querySelectorAll('.flow-section');
+                const useCaseSections = document.querySelectorAll('.use-case-section');
                 
-                // Filter flow items - show only the selected use case
-                flowItems.forEach(flowItem => {
-                    if (flowItem.dataset.useCaseId === useCaseId) {
-                        flowItem.style.display = 'block';
-                    } else {
-                        flowItem.style.display = 'none';
-                    }
-                });
-
-                // Update flow sections visibility
-                flowSections.forEach(section => {
-                    const visibleItems = section.querySelectorAll('.flow-item[style="display: block;"], .flow-item:not([style*="display: none"])');
-                    if (visibleItems.length === 0) {
-                        section.style.display = 'none';
-                    } else {
+                // Filter use case sections - show only the selected use case
+                useCaseSections.forEach(section => {
+                    if (section.dataset.useCaseId === useCaseId) {
                         section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
                     }
                 });
             });
@@ -127,22 +105,15 @@ function initializeApp() {
                 if (e.target.classList.contains('expand-icon')) return;
                 
                 const category = item.dataset.category;
-                const flowItems = document.querySelectorAll('.flow-item');
-                const flowSections = document.querySelectorAll('.flow-section');
+                const useCaseSections = document.querySelectorAll('.use-case-section');
                 
-                // Show all items in this category
-                flowItems.forEach(flowItem => {
-                    const section = flowItem.closest('.flow-section');
-                    if (section && section.dataset.category === category) {
-                        flowItem.style.display = 'block';
-                    } else {
-                        flowItem.style.display = 'none';
-                    }
-                });
-
-                // Update flow sections visibility
-                flowSections.forEach(section => {
-                    if (section.dataset.category === category) {
+                // Show all use cases that belong to this category (check parties)
+                useCaseSections.forEach(section => {
+                    const useCaseId = section.dataset.useCaseId;
+                    // Find the use case in allUseCases to check its parties
+                    const useCase = allUseCases.find(uc => uc.id === useCaseId);
+                    
+                    if (useCase && useCase.parties && useCase.parties.includes(category)) {
                         section.style.display = 'block';
                     } else {
                         section.style.display = 'none';
