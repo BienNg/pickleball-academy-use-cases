@@ -244,6 +244,29 @@ function initializeApp() {
         });
     }
 
+    // Step click - show detail panel and highlight selected step
+    function setupStepDetailSelection() {
+        document.querySelectorAll('.flow-step[data-use-case-id]').forEach(stepEl => {
+            stepEl.addEventListener('click', () => {
+                const useCaseId = stepEl.dataset.useCaseId;
+                const stepIndex = parseInt(stepEl.dataset.stepIndex, 10);
+                const hasMockup = stepEl.dataset.hasMockup === 'true';
+
+                // Remove selected from all steps in this use case
+                document.querySelectorAll(`.flow-step[data-use-case-id="${useCaseId}"]`).forEach(s => {
+                    s.classList.remove('selected');
+                });
+                stepEl.classList.add('selected');
+
+                // Show/hide detail panel based on whether this step has a mockup
+                const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                if (detailPanel) {
+                    detailPanel.style.display = hasMockup ? 'block' : 'none';
+                }
+            });
+        });
+    }
+
     // Setup all functionality
     setupCategoryExpansion();
     setupSearch();
@@ -251,6 +274,7 @@ function initializeApp() {
     setupCategoryFiltering();
     setupViewModeToggle();
     setupStepNavigation();
+    setupStepDetailSelection();
 }
 
 // Wait for DOM and dynamic content to be ready

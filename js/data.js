@@ -43,7 +43,8 @@ const allUseCases = [
         steps: [
             {
                 party: 'Student',
-                action: 'Requests a Coaching through Academy'
+                action: 'Requests a Coaching through Academy',
+                mockup: 'zalo-chat'
             },
             {
                 party: 'CSM',

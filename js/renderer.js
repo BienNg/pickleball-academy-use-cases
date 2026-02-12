@@ -51,8 +51,9 @@ function renderFlowSections() {
         if (item.steps && item.steps.length > 0) {
             const stepsHtml = item.steps.map((step, index) => {
                 const partyIcon = getPartyIcon(step.party);
+                const hasMockupAttr = step.mockup ? ` data-has-mockup="true"` : '';
                 return `
-                <div class="flow-step" data-step-index="${index}">
+                <div class="flow-step" data-step-index="${index}" data-use-case-id="${item.id}"${hasMockupAttr}>
                     <div class="flow-step-connector"></div>
                     <div class="flow-step-content">
                         <div class="flow-step-party">
@@ -65,6 +66,35 @@ function renderFlowSections() {
                 </div>
             `;
             }).join('');
+
+            const hasMockup = item.steps.some(s => s.mockup === 'zalo-chat');
+            const mockupPanelHtml = hasMockup ? `
+                <div class="step-detail-panel" data-use-case-id="${item.id}" style="display: none;">
+                    <div class="step-mockup">
+                        <div class="phone-mockup">
+                            <div class="phone-screen">
+                                <div class="phone-notch"></div>
+                                <div class="zalo-chat">
+                                    <div class="zalo-header">
+                                        <span class="zalo-back">←</span>
+                                        <div class="zalo-contact">
+                                            <span class="zalo-avatar">🏫</span>
+                                            <span class="zalo-name">Pickleball Academy</span>
+                                            <span class="zalo-status">Zalo Official Account</span>
+                                        </div>
+                                    </div>
+                                    <div class="zalo-messages">
+                                        <div class="zalo-message zalo-outgoing">
+                                            <span class="zalo-bubble">Chào academy, tôi muốn đăng ký học tại academy! 🎾</span>
+                                            <span class="zalo-time">14:32</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ` : '';
 
             return `
                 <div class="use-case-section" data-use-case-id="${item.id}">
@@ -92,8 +122,11 @@ function renderFlowSections() {
                             </button>
                         </div>
                     </div>
-                    <div class="flow-steps-container" data-use-case-id="${item.id}">
-                        ${stepsHtml}
+                    <div class="flow-steps-layout">
+                        <div class="flow-steps-container" data-use-case-id="${item.id}">
+                            ${stepsHtml}
+                        </div>
+                        ${mockupPanelHtml}
                     </div>
                 </div>
             `;
