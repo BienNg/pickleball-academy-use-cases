@@ -60,7 +60,10 @@ const allUseCases = [
             },
             {
                 party: 'Coach',
-                action: 'Session takes place'
+                action: 'First Session takes place',
+                details: 'Goes through all the shots the first time to rate the skill of every shot to create a roadmap',
+                mockup: 'phone-app',
+                mockupImage: 'app screenshots/dupr coach.png'
             },
             {
                 party: 'Coach',

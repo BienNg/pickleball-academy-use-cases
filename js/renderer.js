@@ -1,3 +1,17 @@
+// Reusable function to render phone mockup with an image
+function renderPhoneMockup(imagePath, altText = 'App Screenshot', stepIndex) {
+    return `
+        <div class="step-mockup" data-step-index="${stepIndex}">
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="phone-notch"></div>
+                    <img src="${imagePath}" alt="${altText}" class="phone-app-image" />
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 // Render navigation from flowData - each use case appears in all categories it belongs to
 function renderNavigation() {
     const navList = document.getElementById('navList');
@@ -141,16 +155,8 @@ function renderFlowSections() {
                                 </div>
                             `;
                         } else if (step.mockup === 'phone-app' && step.mockupImage) {
-                            mockupContent = `
-                                <div class="step-mockup" data-step-index="${index}">
-                                    <div class="phone-mockup">
-                                        <div class="phone-screen">
-                                            <div class="phone-notch"></div>
-                                            <img src="${step.mockupImage}" alt="Session Booked" class="phone-app-image" />
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
+                            const altText = step.action || 'App Screenshot';
+                            mockupContent = renderPhoneMockup(step.mockupImage, altText, index);
                         }
                         
                         return mockupContent;
