@@ -48,12 +48,15 @@ const allUseCases = [
             },
             {
                 party: 'CSM',
-                action: 'Consults'
+                action: 'Consults',
+                mockup: 'zalo-chat-continued'
             },
             {
                 party: 'CSM',
                 action: 'Schedules first session with coach',
-                details: 'Finds a time slot, free coach and court'
+                details: 'Finds a time slot, free coach and court',
+                mockup: 'phone-app',
+                mockupImage: 'app screenshots/session booked.png'
             },
             {
                 party: 'Coach',

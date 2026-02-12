@@ -144,26 +144,39 @@ function initializeApp() {
             }
         });
 
-        // Auto-select the latest visible step (index is 0-based, visibleStepCount is 1-based)
-        const latestStepIndex = visibleStepCount - 1;
-        if (latestStepIndex >= 0 && latestStepIndex < steps.length) {
-            // Remove selected from all steps in this use case
-            steps.forEach(s => s.classList.remove('selected'));
-            
-            // Select the latest visible step
-            const latestStep = steps[latestStepIndex];
-            latestStep.classList.add('selected');
-            
-            // Show/hide detail panel based on selected step
-            const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
-            const hasMockup = latestStep.dataset.hasMockup === 'true';
-            if (detailPanel) {
-                detailPanel.style.display = hasMockup ? 'block' : 'none';
+            // Auto-select the latest visible step (index is 0-based, visibleStepCount is 1-based)
+            const latestStepIndex = visibleStepCount - 1;
+            if (latestStepIndex >= 0 && latestStepIndex < steps.length) {
+                // Remove selected from all steps in this use case
+                steps.forEach(s => s.classList.remove('selected'));
+                
+                // Select the latest visible step
+                const latestStep = steps[latestStepIndex];
+                latestStep.classList.add('selected');
+                
+                // Show/hide detail panel based on selected step
+                const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                const hasMockup = latestStep.dataset.hasMockup === 'true';
+                if (detailPanel) {
+                    if (hasMockup) {
+                        detailPanel.style.display = 'block';
+                        // Hide all mockups and show only the selected step's mockup
+                        const allMockups = detailPanel.querySelectorAll('.step-mockup');
+                        allMockups.forEach(mockup => {
+                            mockup.style.display = 'none';
+                        });
+                        const selectedMockup = detailPanel.querySelector(`.step-mockup[data-step-index="${latestStepIndex}"]`);
+                        if (selectedMockup) {
+                            selectedMockup.style.display = 'block';
+                        }
+                    } else {
+                        detailPanel.style.display = 'none';
+                    }
+                }
+                
+                // Scroll the selected step into view
+                latestStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
-            
-            // Scroll the selected step into view
-            latestStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
 
         if (navControls) {
             // Update step counter
@@ -301,7 +314,20 @@ function initializeApp() {
                 // Show/hide detail panel based on whether this step has a mockup
                 const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
                 if (detailPanel) {
-                    detailPanel.style.display = hasMockup ? 'block' : 'none';
+                    if (hasMockup) {
+                        detailPanel.style.display = 'block';
+                        // Hide all mockups and show only the selected step's mockup
+                        const allMockups = detailPanel.querySelectorAll('.step-mockup');
+                        allMockups.forEach(mockup => {
+                            mockup.style.display = 'none';
+                        });
+                        const selectedMockup = detailPanel.querySelector(`.step-mockup[data-step-index="${stepIndex}"]`);
+                        if (selectedMockup) {
+                            selectedMockup.style.display = 'block';
+                        }
+                    } else {
+                        detailPanel.style.display = 'none';
+                    }
                 }
             });
         });

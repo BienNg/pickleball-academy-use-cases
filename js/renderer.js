@@ -51,7 +51,7 @@ function renderFlowSections() {
         if (item.steps && item.steps.length > 0) {
             const stepsHtml = item.steps.map((step, index) => {
                 const partyIcon = getPartyIcon(step.party);
-                const hasMockupAttr = step.mockup ? ` data-has-mockup="true"` : '';
+                const hasMockupAttr = step.mockup ? ` data-has-mockup="true" data-mockup-type="${step.mockup}"` : '';
                 return `
                 <div class="flow-step" data-step-index="${index}" data-use-case-id="${item.id}"${hasMockupAttr}>
                     <div class="flow-step-connector"></div>
@@ -67,32 +67,94 @@ function renderFlowSections() {
             `;
             }).join('');
 
-            const hasMockup = item.steps.some(s => s.mockup === 'zalo-chat');
-            const mockupPanelHtml = hasMockup ? `
+            // Create mockup panel that will show different content based on selected step
+            const hasAnyMockup = item.steps.some(s => s.mockup);
+            const mockupPanelHtml = hasAnyMockup ? `
                 <div class="step-detail-panel" data-use-case-id="${item.id}" style="display: none;">
-                    <div class="step-mockup">
-                        <div class="phone-mockup">
-                            <div class="phone-screen">
-                                <div class="phone-notch"></div>
-                                <div class="zalo-chat">
-                                    <div class="zalo-header">
-                                        <span class="zalo-back">←</span>
-                                        <div class="zalo-contact">
-                                            <span class="zalo-avatar">🏫</span>
-                                            <span class="zalo-name">Pickleball Academy</span>
-                                            <span class="zalo-status">Zalo Official Account</span>
-                                        </div>
-                                    </div>
-                                    <div class="zalo-messages">
-                                        <div class="zalo-message zalo-outgoing">
-                                            <span class="zalo-bubble">Chào academy, tôi muốn đăng ký học tại academy! 🎾</span>
-                                            <span class="zalo-time">14:32</span>
+                    ${item.steps.map((step, index) => {
+                        if (!step.mockup) return '';
+                        
+                        let mockupContent = '';
+                        
+                        if (step.mockup === 'zalo-chat') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="phone-mockup">
+                                        <div class="phone-screen">
+                                            <div class="phone-notch"></div>
+                                            <div class="zalo-chat">
+                                                <div class="zalo-header">
+                                                    <span class="zalo-back">←</span>
+                                                    <div class="zalo-contact">
+                                                        <span class="zalo-avatar">🏫</span>
+                                                        <span class="zalo-name">Pickleball Academy</span>
+                                                        <span class="zalo-status">Zalo Official Account</span>
+                                                    </div>
+                                                </div>
+                                                <div class="zalo-messages">
+                                                    <div class="zalo-message zalo-outgoing">
+                                                        <span class="zalo-bubble">Chào academy, tôi muốn đăng ký học tại academy! 🎾</span>
+                                                        <span class="zalo-time">14:32</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            `;
+                        } else if (step.mockup === 'zalo-chat-continued') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="phone-mockup">
+                                        <div class="phone-screen">
+                                            <div class="phone-notch"></div>
+                                            <div class="zalo-chat">
+                                                <div class="zalo-header">
+                                                    <span class="zalo-back">←</span>
+                                                    <div class="zalo-contact">
+                                                        <span class="zalo-avatar">🏫</span>
+                                                        <span class="zalo-name">Pickleball Academy</span>
+                                                        <span class="zalo-status">Zalo Official Account</span>
+                                                    </div>
+                                                </div>
+                                                <div class="zalo-messages">
+                                                    <div class="zalo-message zalo-outgoing">
+                                                        <span class="zalo-bubble">Chào academy, tôi muốn đăng ký học tại academy! 🎾</span>
+                                                        <span class="zalo-time">14:32</span>
+                                                    </div>
+                                                    <div class="zalo-message zalo-incoming">
+                                                        <span class="zalo-bubble">Chào bạn! Cảm ơn bạn đã quan tâm đến Pickleball Academy. Bạn có thể cho tôi biết trình độ hiện tại của bạn và mục tiêu học tập không?</span>
+                                                        <span class="zalo-time">14:33</span>
+                                                    </div>
+                                                    <div class="zalo-message zalo-outgoing">
+                                                        <span class="zalo-bubble">Tôi là người mới bắt đầu, muốn học từ cơ bản đến nâng cao</span>
+                                                        <span class="zalo-time">14:34</span>
+                                                    </div>
+                                                    <div class="zalo-message zalo-incoming">
+                                                        <span class="zalo-bubble">Tuyệt vời! Chúng tôi có các khóa học phù hợp cho người mới bắt đầu. Bạn có muốn tôi sắp xếp một buổi học thử với coach không?</span>
+                                                        <span class="zalo-time">14:35</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'phone-app' && step.mockupImage) {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="phone-mockup">
+                                        <div class="phone-screen">
+                                            <div class="phone-notch"></div>
+                                            <img src="${step.mockupImage}" alt="Session Booked" class="phone-app-image" />
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        return mockupContent;
+                    }).join('')}
                 </div>
             ` : '';
 
