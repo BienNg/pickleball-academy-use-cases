@@ -144,6 +144,27 @@ function initializeApp() {
             }
         });
 
+        // Auto-select the latest visible step (index is 0-based, visibleStepCount is 1-based)
+        const latestStepIndex = visibleStepCount - 1;
+        if (latestStepIndex >= 0 && latestStepIndex < steps.length) {
+            // Remove selected from all steps in this use case
+            steps.forEach(s => s.classList.remove('selected'));
+            
+            // Select the latest visible step
+            const latestStep = steps[latestStepIndex];
+            latestStep.classList.add('selected');
+            
+            // Show/hide detail panel based on selected step
+            const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+            const hasMockup = latestStep.dataset.hasMockup === 'true';
+            if (detailPanel) {
+                detailPanel.style.display = hasMockup ? 'block' : 'none';
+            }
+            
+            // Scroll the selected step into view
+            latestStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
         if (navControls) {
             // Update step counter
             const currentStepSpan = navControls.querySelector('.current-step');
@@ -202,6 +223,12 @@ function initializeApp() {
                     steps.forEach(step => {
                         step.classList.remove('hidden');
                     });
+                    // Clear selection in complete mode
+                    steps.forEach(step => step.classList.remove('selected'));
+                    const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                    if (detailPanel) {
+                        detailPanel.style.display = 'none';
+                    }
                 }
             });
         });
@@ -251,6 +278,19 @@ function initializeApp() {
                 const useCaseId = stepEl.dataset.useCaseId;
                 const stepIndex = parseInt(stepEl.dataset.stepIndex, 10);
                 const hasMockup = stepEl.dataset.hasMockup === 'true';
+                const state = stepState.get(useCaseId);
+
+                // Only allow selecting visible steps in step-by-step mode
+                const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+                const isStepByStepMode = navControls && navControls.style.display !== 'none';
+                
+                if (isStepByStepMode && state) {
+                    // In step-by-step mode, only allow selecting steps up to current visible count
+                    const visibleStepCount = state.current;
+                    if (stepIndex >= visibleStepCount) {
+                        return; // Don't allow selecting hidden steps
+                    }
+                }
 
                 // Remove selected from all steps in this use case
                 document.querySelectorAll(`.flow-step[data-use-case-id="${useCaseId}"]`).forEach(s => {
@@ -267,6 +307,48 @@ function initializeApp() {
         });
     }
 
+    // Keyboard navigation for step-by-step mode
+    function setupKeyboardNavigation() {
+        document.addEventListener('keydown', (e) => {
+            // Only handle arrow keys when not typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            // Find the active use case section (the one currently visible)
+            const visibleUseCase = Array.from(document.querySelectorAll('.use-case-section')).find(section => {
+                return section.style.display !== 'none';
+            });
+
+            if (!visibleUseCase) return;
+
+            const useCaseId = visibleUseCase.dataset.useCaseId;
+            const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+            
+            // Only handle keyboard navigation in step-by-step mode
+            if (!navControls || navControls.style.display === 'none') {
+                return;
+            }
+
+            const state = stepState.get(useCaseId);
+            if (!state) return;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (state.current < state.total) {
+                    state.current++;
+                    updateStepVisibility(useCaseId, state.current);
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (state.current > 1) {
+                    state.current--;
+                    updateStepVisibility(useCaseId, state.current);
+                }
+            }
+        });
+    }
+
     // Setup all functionality
     setupCategoryExpansion();
     setupSearch();
@@ -275,6 +357,7 @@ function initializeApp() {
     setupViewModeToggle();
     setupStepNavigation();
     setupStepDetailSelection();
+    setupKeyboardNavigation();
 }
 
 // Wait for DOM and dynamic content to be ready
