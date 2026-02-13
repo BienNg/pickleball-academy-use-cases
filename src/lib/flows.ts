@@ -4,6 +4,8 @@
 
 export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library";
 
+export type PartyCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "content-manager";
+
 export interface FlowStepVisual {
   type: VisualType;
   src?: string;
@@ -14,18 +16,93 @@ export interface FlowStep {
   title: string;
   description?: string;
   visual?: FlowStepVisual;
+  stepIcon?: string;
 }
 
 export interface FlowConfig {
   title: string;
   subtitle: string;
   steps: FlowStep[];
+  // Metadata for vanilla JS app compatibility
+  parties?: PartyCategory[];
+  filter?: "coaching" | "content";
+  image?: string;
+  features?: string[];
+  badge?: string;
+  viewMode?: "Step-by-Step" | "Complete";
+}
+
+// Category labels for display
+export const categoryLabels: Record<PartyCategory, string> = {
+  'student': 'Student',
+  'coach': 'Coach',
+  'head-coach': 'Head Coach',
+  'admin': 'Admin',
+  'customer-success': 'Customer Success Manager',
+  'content-manager': 'Content Manager'
+};
+
+// Party icons mapping - maps party names/abbreviations to their icons
+export const partyIcons: Record<string, string> = {
+  'Student': '🎾',
+  'student': '🎾',
+  'Coach': '👨‍🏫',
+  'coach': '👨‍🏫',
+  'Head Coach': '🧠',
+  'head-coach': '🧠',
+  'Admin': '⚙️',
+  'admin': '⚙️',
+  'Customer Success Manager': '💬',
+  'customer-success': '💬',
+  'CSM': '💬',
+  'Content Manager': '📝',
+  'content-manager': '📝',
+  'Editor': '✂️'
+};
+
+// Party slug for design system styling
+export const partySlugs: Record<string, string> = {
+  'Student': 'student',
+  'student': 'student',
+  'Coach': 'coach',
+  'coach': 'coach',
+  'Head Coach': 'head-coach',
+  'head-coach': 'head-coach',
+  'Admin': 'admin',
+  'admin': 'admin',
+  'Customer Success Manager': 'csm',
+  'customer-success': 'csm',
+  'CSM': 'csm',
+  'Content Manager': 'editor',
+  'content-manager': 'editor',
+  'Editor': 'editor',
+  'editor': 'editor',
+  'App': 'app',
+  'app': 'app'
+};
+
+export function getPartyIcon(partyName: string): string {
+  return partyIcons[partyName] || '👤';
+}
+
+export function getPartySlug(partyName: string): string {
+  return partySlugs[partyName] || 'editor';
 }
 
 export const flows: Record<string, FlowConfig> = {
-  "first-contact": {
-    title: "First Contact with Academy",
+  "first-contact-academy": {
+    title: "First contact with Academy",
     subtitle: "Student Requests a Coaching through Academy",
+    parties: ['student', 'customer-success', 'coach', 'content-manager'],
+    filter: 'coaching',
+    image: '🎓',
+    features: [
+      'CSM consults and schedules first session',
+      'Finds time slot, free coach and court',
+      'Coach records the session',
+      'CSM checks payment and sends recordings to Editor',
+      'Editor uploads recordings to App'
+    ],
     steps: [
       {
         party: "Student",
@@ -43,14 +120,14 @@ export const flows: Record<string, FlowConfig> = {
         party: "CSM",
         title: "Schedules first session with coach",
         description: "Finds a time slot, free coach and court",
-        visual: { type: "app-screen", src: "/images/session-booked.png" },
+        visual: { type: "app-screen", src: "app screenshots/session booked.png" },
       },
       {
         party: "Coach",
         title: "First Session takes place",
         description:
           "Goes through all the shots the first time to rate the skill of every shot to create a roadmap",
-        visual: { type: "app-screen", src: "/images/dupr-coach.png" },
+        visual: { type: "app-screen", src: "app screenshots/dupr coach.png" },
       },
       {
         party: "Coach",
@@ -75,144 +152,199 @@ export const flows: Record<string, FlowConfig> = {
   "creating-session-success-clips": {
     title: "Creating Session Success Clips",
     subtitle: "Daily before-and-after transformation clips for students and social media",
+    parties: ['content-manager', 'customer-success'],
+    filter: 'content',
+    image: '🎬',
+    features: [
+      'Daily content generation process',
+      'Before-and-after transformation clips',
+      'AI voiceover integration',
+      'Social media distribution',
+      'Student engagement through progress clips'
+    ],
     steps: [
       {
         party: "Editor",
         title: "Reviews All Completed Sessions",
         description: "Editor reviews recordings from all sessions completed the previous day to identify potential transformation moments.",
         visual: { type: "dashboard-view" },
+        stepIcon: '✂️'
       },
       {
         party: "Editor",
         title: "Selects Before & After Clip",
         description: "Editor selects one clip from the beginning of the session and one improved execution after coaching.",
         visual: { type: "video-thumbnail" },
+        stepIcon: '✂️'
       },
       {
         party: "Editor",
         title: "Transcribes Coaching Moment",
         description: "Editor extracts and transcribes the specific coaching instruction related to the technical correction.",
         visual: { type: "app-screen" },
+        stepIcon: '✂️'
       },
       {
         party: "Editor",
         title: "Generates AI Voice Explanation",
         description: "Editor creates an AI voiceover explaining the technical issue and how it was corrected.",
         visual: { type: "ai-voice-animation" },
+        stepIcon: '✂️'
       },
       {
         party: "Editor",
         title: "Produces 30-Second Transformation Clip",
         description: "Editor combines before, after, transcript insight, and AI voice into a polished 30-second vertical clip.",
         visual: { type: "video-thumbnail-vertical" },
+        stepIcon: '✂️'
       },
       {
         party: "CSM",
         title: "Receives Final Clip",
         description: "Customer Success Manager receives the finished clip for review and distribution.",
         visual: { type: "clip-transfer-animation" },
+        stepIcon: '💬'
       },
       {
         party: "CSM",
         title: "Sends to Student & Publishes",
         description: "CSM sends clip to the student and publishes it on social media channels.",
         visual: { type: "social-publish-screen" },
+        stepIcon: '💬'
       },
     ],
   },
   "head-coach-creates-coaching-program": {
     title: "Head Coach Creates Complete Coaching Program",
     subtitle: "Designing a structured curriculum for every level, shot, and development stage",
+    parties: ['head-coach'],
+    filter: 'coaching',
+    image: '🧠',
+    badge: 'Internal System Flow',
+    viewMode: 'Step-by-Step',
+    features: [
+      'Systematic curriculum design',
+      'Standardized coaching framework',
+      'Progressive skill development',
+      'Consistent evaluation criteria',
+      'Scalable training system'
+    ],
     steps: [
       {
         party: "Head Coach",
         title: "Defines Player Level Framework",
         description: "Head Coach defines all academy levels (Beginner → Advanced → Competitive) with clear performance criteria and progression standards.",
         visual: { type: "curriculum-planning-board" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Breaks Down All Core Shots",
         description: "Head Coach lists and categorizes every fundamental and advanced shot required across all levels.",
         visual: { type: "shot-categories-animation" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Defines Technical Standards Per Shot",
         description: "For each shot, the Head Coach defines technical checkpoints, common mistakes, and measurable improvement indicators.",
         visual: { type: "shot-breakdown-document" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Designs Progressive Training Drills",
         description: "Head Coach creates structured drills for each level and shot, progressing from isolated technique to game-realistic scenarios.",
         visual: { type: "drill-progression" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Creates Evaluation & Level-Up Criteria",
         description: "Head Coach defines standardized evaluation tests and level-up requirements for consistent player assessment.",
         visual: { type: "assessment-checklist" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Compiles Master Coaching Document",
         description: "All levels, shots, drills, and evaluation systems are consolidated into a structured master curriculum document.",
         visual: { type: "master-document" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Program Approved & Locked",
         description: "The complete coaching program is finalized and becomes the official academy training framework.",
         visual: { type: "approval-stamp" },
+        stepIcon: '🧠'
       },
     ],
   },
   "head-coach-creates-video-course": {
     title: "Creating Complete Video Course",
     subtitle: "Transforming the coaching program into structured in-app video lessons",
+    parties: ['head-coach', 'coach', 'content-manager'],
+    filter: 'content',
+    image: '📚',
+    badge: 'Internal System Flow',
+    viewMode: 'Step-by-Step',
+    features: [
+      'Curriculum-based video structure',
+      'Level-based lesson organization',
+      'Scripted and standardized teaching',
+      'Professional editing and overlays',
+      'Structured in-app learning library'
+    ],
     steps: [
       {
         party: "Head Coach",
         title: "Defines Course Structure Based on Coaching Program",
         description: "Head Coach translates the full curriculum into structured video modules organized by level, shot, and skill progression.",
         visual: { type: "course-structure-board" },
+        stepIcon: '🧠'
       },
       {
         party: "Head Coach",
         title: "Writes Lesson Scripts & Teaching Points",
         description: "For each shot and drill, the Head Coach defines clear teaching points, cues, demonstrations, and common mistakes to cover on camera.",
         visual: { type: "lesson-script-document" },
+        stepIcon: '🧠'
       },
       {
         party: "Content Manager",
         title: "Plans Production Schedule",
         description: "Content Manager schedules filming sessions, books courts, prepares equipment, and coordinates with filming team.",
         visual: { type: "production-calendar" },
+        stepIcon: '📅'
       },
       {
         party: "Coach",
         title: "Records Video Lessons",
         description: "Coach demonstrates techniques on court while Head Coach ensures technical accuracy and structure alignment.",
         visual: { type: "video-recording-court" },
+        stepIcon: '🏅'
       },
       {
         party: "Editor",
         title: "Edits & Structures Lessons",
         description: "Editor trims footage, adds overlays, subtitles, shot labels, slow motion breakdowns, and academy branding.",
         visual: { type: "video-editing-timeline" },
+        stepIcon: '✂️'
       },
       {
         party: "Head Coach",
         title: "Reviews & Approves Final Lessons",
         description: "Head Coach verifies technical correctness, clarity of instruction, and alignment with the official coaching program.",
         visual: { type: "video-review-dashboard" },
+        stepIcon: '🧠'
       },
       {
         party: "Editor",
         title: "Uploads Course to App",
         description: "Finalized videos are uploaded and categorized by level, shot, and topic inside the academy app.",
         visual: { type: "app-course-library" },
+        stepIcon: '✂️'
       },
     ],
   },
