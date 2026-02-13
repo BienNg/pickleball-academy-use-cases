@@ -47,8 +47,8 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
         onClick={handleToggle}
         className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors w-full text-left text-slate-600 hover:bg-slate-50"
       >
-        <LayoutDashboard className="size-4 flex-shrink-0" />
-        <span className="text-xs flex-1">All Flows</span>
+        <LayoutDashboard className="size-4 flex-shrink-0 text-slate-600" />
+        <span className="text-xs font-semibold flex-1">All Flows</span>
         {open ? (
           <ChevronDown className="size-3 flex-shrink-0 text-slate-400" />
         ) : (
@@ -124,8 +124,8 @@ function RolesDropdown({ pathname }: { pathname: string }) {
               onClick={() => setOpenRole(isOpen ? null : role)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors w-full text-left text-slate-600 hover:bg-slate-50"
             >
-              <Users className="size-4 flex-shrink-0 text-slate-400" />
-              <span className="text-xs flex-1">{role}</span>
+              <Users className="size-4 flex-shrink-0 text-slate-600" />
+              <span className="text-xs font-semibold flex-1">{role}</span>
               <span className="text-[10px] text-slate-400 tabular-nums">
                 {flowSlugs.length} flow{flowSlugs.length !== 1 ? "s" : ""}
               </span>
