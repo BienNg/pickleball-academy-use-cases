@@ -1,0 +1,266 @@
+/**
+ * PB Academy Mockups – Keyframe Animations
+ * All animations centralized for reuse and maintenance
+ */
+
+@keyframes camera-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.95; }
+}
+
+@keyframes arrow-flow {
+  0%, 100% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(4px); }
+}
+
+@keyframes cloud-receive {
+  0% { transform: scale(0.98); opacity: 0.85; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.98); opacity: 0.85; }
+}
+
+@keyframes payment-complete {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+}
+
+@keyframes send-to-editor {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes edit-video {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.04); }
+  70% { transform: scale(1.04); }
+}
+
+@keyframes upload-to-app {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.85; }
+}
+
+@keyframes scroll-sessions {
+  0%, 20% { transform: translateY(0); }
+  25%, 45% { transform: translateY(-100px); }
+  50%, 70% { transform: translateY(-200px); }
+  75%, 100% { transform: translateY(0); }
+}
+
+@keyframes video-fade-in {
+  0%, 50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes video-slide-in {
+  0% { opacity: 0; transform: translateX(-10px); }
+  50% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes waveform-animate {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 0%; }
+}
+
+@keyframes transcript-fade-in {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.3); }
+  50% { box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1); }
+}
+
+@keyframes soundwave-build {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes text-type {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes subtitle-fade-in {
+  0%, 30% { opacity: 0; transform: translateY(10px); }
+  50%, 80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; }
+}
+
+@keyframes timeline-compress {
+  0% { width: 100%; }
+  100% { width: 30%; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes clip-move {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes clip-move-left {
+  0%, 50% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(60px); opacity: 0; }
+}
+
+@keyframes receive-ping {
+  0%, 50% { transform: scale(1); }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes badge-ping {
+  0%, 50% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes message-send {
+  0%, 50% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes post-fade-in {
+  0%, 40% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes engagement-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Head Coach / Curriculum animations */
+@keyframes column-fade-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes label-slide-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes benchmark-fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes core-fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes shot-expand {
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes document-header-slide {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes section-slide-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bullet-fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes checklist-appear {
+  to { opacity: 1; }
+}
+
+@keyframes checkmark-animate {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes level-indicator-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes arrow-slide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+@keyframes drill-swipe {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes drill-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+}
+
+@keyframes metric-fade-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progress-fill-animate {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes checkmark-pulse {
+  0% { opacity: 0; transform: scale(0); }
+  50% { transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes branding-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes logo-appear {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes toc-expand {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toc-items-expand {
+  to { max-height: 200px; }
+}
+
+@keyframes toc-item-fade {
+  to { opacity: 1; }
+}
+
+@keyframes document-final-appear {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes logo-bg-fade {
+  from { opacity: 0; }
+  to { opacity: 0.05; }
+}
+
+@keyframes stamp-appear {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.1); }
+}
