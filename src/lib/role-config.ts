@@ -1,8 +1,8 @@
 /**
- * Centralized party design tokens – no hardcoded colors in components.
+ * Centralized role design tokens – no hardcoded colors in components.
  */
 
-export type PartyKey =
+export type RoleKey =
   | "STUDENT"
   | "COACH"
   | "HEAD_COACH"
@@ -11,8 +11,8 @@ export type PartyKey =
   | "EDITOR"
   | "APP";
 
-export const partyConfig: Record<
-  PartyKey,
+export const roleConfig: Record<
+  RoleKey,
   { color: string; bg: string; gradient: string; icon: string }
 > = {
   STUDENT: {
@@ -59,8 +59,8 @@ export const partyConfig: Record<
   },
 };
 
-/** Map display party names (from flow data) to PartyKey */
-export const partyNameToKey: Record<string, PartyKey> = {
+/** Map display role names (from flow data) to RoleKey */
+export const roleNameToKey: Record<string, RoleKey> = {
   Student: "STUDENT",
   student: "STUDENT",
   Coach: "COACH",
@@ -80,10 +80,10 @@ export const partyNameToKey: Record<string, PartyKey> = {
   app: "APP",
 };
 
-export function getPartyKey(partyName: string): PartyKey {
-  return partyNameToKey[partyName] ?? "EDITOR";
+export function getRoleKey(roleName: string): RoleKey {
+  return roleNameToKey[roleName] ?? "EDITOR";
 }
 
-export function getPartyConfig(partyName: string) {
-  return partyConfig[getPartyKey(partyName)];
+export function getRoleConfig(roleName: string) {
+  return roleConfig[getRoleKey(roleName)];
 }

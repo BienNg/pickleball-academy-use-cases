@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { PartyBadge } from "./PartyBadge";
+import { RoleBadge } from "./RoleBadge";
 
 export interface TimelineStepProps {
-  party: string;
+  role: string;
   title: string;
   description?: string;
   active?: boolean;
@@ -14,7 +14,7 @@ export interface TimelineStepProps {
 }
 
 export function TimelineStep({
-  party,
+  role,
   title,
   description,
   active = false,
@@ -62,7 +62,7 @@ export function TimelineStep({
         aria-hidden
       />
       <div className="flex-1 pt-0">
-        <PartyBadge party={party} className="mb-2" />
+        <RoleBadge role={role} className="mb-2" />
         <p
           className={cn(
             "text-[15px] leading-snug tracking-[-0.01em] text-[#1E1E1E]",

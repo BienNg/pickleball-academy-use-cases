@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Timeline } from "./Timeline";
 import { VisualPanel } from "./VisualPanel";
-import { PartyBadge } from "./PartyBadge";
+import { RoleBadge } from "./RoleBadge";
 import { Button } from "@/components/ui/button";
 import type { FlowConfig } from "@/lib/flows";
 import { categoryLabels } from "@/lib/flows";
@@ -27,18 +27,18 @@ export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutPr
   const activeStep = steps[activeIndex];
   const hasVisual = activeStep?.visual != null;
 
-  // Map party slugs to display names for badges
-  const partyDisplayNames = useMemo(() => {
-    if (!flow.parties || flow.parties.length === 0) {
-      // Fallback: extract unique parties from steps
-      const uniqueParties = Array.from(new Set(steps.map(step => step.party)));
-      return uniqueParties;
+  // Map role slugs to display names for badges
+  const roleDisplayNames = useMemo(() => {
+    if (!flow.roles || flow.roles.length === 0) {
+      // Fallback: extract unique roles from steps
+      const uniqueRoles = Array.from(new Set(steps.map(step => step.role)));
+      return uniqueRoles;
     }
-    // Map party slugs to display names
-    return flow.parties.map(partySlug => {
-      return categoryLabels[partySlug as keyof typeof categoryLabels] || partySlug;
+    // Map role slugs to display names
+    return flow.roles.map(roleSlug => {
+      return categoryLabels[roleSlug as keyof typeof categoryLabels] || roleSlug;
     });
-  }, [flow.parties, steps]);
+  }, [flow.roles, steps]);
 
   const handleStepSelect = useCallback((index: number) => {
     setActiveIndex(index);
@@ -82,11 +82,11 @@ export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutPr
 
       {/* View mode + step nav */}
       <div className="mb-9 flex flex-col gap-4 border-b border-[#E5E7EB] py-5">
-        {/* Party badges */}
-        {partyDisplayNames.length > 0 && (
+        {/* Role badges */}
+        {roleDisplayNames.length > 0 && (
           <div className="flex flex-wrap items-center gap-2">
-            {partyDisplayNames.map((partyName) => (
-              <PartyBadge key={partyName} party={partyName} />
+            {roleDisplayNames.map((roleName) => (
+              <RoleBadge key={roleName} role={roleName} />
             ))}
           </div>
         )}
@@ -153,7 +153,7 @@ export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutPr
       <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:flex-nowrap lg:items-start">
         {hasVisual && activeStep && (
           <VisualPanel
-            party={activeStep.party}
+            role={activeStep.role}
             visual={activeStep.visual ?? null}
             active
             className="w-full lg:w-[360px] lg:flex-shrink-0 order-first lg:order-none"

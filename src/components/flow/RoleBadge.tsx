@@ -1,15 +1,15 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { getPartyConfig, type PartyKey } from "@/lib/party-config";
+import { getRoleConfig, type RoleKey } from "@/lib/role-config";
 
-export interface PartyBadgeProps {
-  party: string;
+export interface RoleBadgeProps {
+  role: string;
   className?: string;
 }
 
-export function PartyBadge({ party, className }: PartyBadgeProps) {
-  const config = getPartyConfig(party);
+export function RoleBadge({ role, className }: RoleBadgeProps) {
+  const config = getRoleConfig(role);
   if (!config) return null;
   return (
     <span
@@ -19,7 +19,7 @@ export function PartyBadge({ party, className }: PartyBadgeProps) {
       )}
       style={{ backgroundColor: config.color }}
     >
-      {config.icon} {party}
+      {config.icon} {role}
     </span>
   );
 }

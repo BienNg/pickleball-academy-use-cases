@@ -23,7 +23,7 @@ export function Timeline({
       {steps.map((step, index) => (
         <TimelineStep
           key={index}
-          party={step.party}
+          role={step.role}
           title={step.title}
           description={step.description}
           active={index === activeIndex}

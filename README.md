@@ -23,7 +23,7 @@ Open [http://localhost:3000](http://localhost:3000). Home lists all flows; click
 
 1. Edit **`src/lib/flows.ts`**:
    - Add a new entry to the `flows` object with a unique slug (e.g. `"onboarding"`).
-   - Set `title`, `subtitle`, and `steps` (each step: `party`, `title`, optional `description`, optional `visual`).
+   - Set `title`, `subtitle`, and `steps` (each step: `role`, `title`, optional `description`, optional `visual`).
 
 2. The flow is automatically available at **`/flows/<slug>`** and on the home page. No new pages or routes to create.
 
@@ -37,10 +37,10 @@ src/
     flows/[slug]/page.tsx  # Dynamic flow page
   components/
     ui/                    # Button, Card, Tabs, Badge, Dialog
-    flow/                  # FlowLayout, Timeline, TimelineStep, PartyBadge, VisualPanel
+    flow/                  # FlowLayout, Timeline, TimelineStep, RoleBadge, VisualPanel
   lib/
     flows.ts               # Flow definitions (single source of truth)
-    party-config.ts        # Party design tokens (colors, gradients, icons)
+    role-config.ts         # Role design tokens (colors, gradients, icons)
     utils.ts
   styles/
     globals.css
@@ -48,7 +48,7 @@ src/
 
 ## Design system
 
-Party styling is centralized in **`src/lib/party-config.ts`**. No hardcoded party colors in components. Supported parties: STUDENT, COACH, HEAD_COACH, ADMIN, CSM, EDITOR, APP.
+Role styling is centralized in **`src/lib/role-config.ts`**. No hardcoded role colors in components. Supported roles: STUDENT, COACH, HEAD_COACH, ADMIN, CSM, EDITOR, APP.
 
 ## Deploy (Vercel)
 

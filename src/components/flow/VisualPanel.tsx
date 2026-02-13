@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { getPartyConfig } from "@/lib/party-config";
+import { getRoleConfig } from "@/lib/role-config";
 import type { FlowStepVisual } from "@/lib/flows";
 
 export interface VisualPanelProps {
-  /** Party name for gradient background */
-  party: string;
+  /** Role name for gradient background */
+  role: string;
   /** What to render inside */
   visual: FlowStepVisual | null;
   /** When true, apply active scale/shadow */
@@ -16,12 +16,12 @@ export interface VisualPanelProps {
 }
 
 export function VisualPanel({
-  party,
+  role,
   visual,
   active = false,
   className,
 }: VisualPanelProps) {
-  const config = getPartyConfig(party);
+  const config = getRoleConfig(role);
   const gradientClass = config
     ? `bg-gradient-to-br ${config.gradient}`
     : "bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9]";
