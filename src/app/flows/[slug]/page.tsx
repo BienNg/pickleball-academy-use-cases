@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getFlowBySlug, getAllFlowSlugs } from "@/lib/flows";
 import { FlowLayout } from "@/components/flow/FlowLayout";
+import { DashboardShell } from "@/components/layout/DashboardShell";
+import { ChevronLeft } from "lucide-react";
 
 export interface FlowPageProps {
   params: Promise<{ slug: string }>;
@@ -12,22 +14,21 @@ export default async function FlowPage({ params }: FlowPageProps) {
   const flow = getFlowBySlug(slug);
   if (!flow) notFound();
   return (
-    <div className="min-h-screen bg-white">
-      <header className="border-b border-[#E5E7EB] px-6 py-4 md:px-10">
-        <div className="flex items-center gap-4">
+    <DashboardShell>
+      <div className="p-8">
+        <div className="mb-6 flex items-center gap-4">
           <Link
             href="/"
-            className="inline-flex h-8 items-center rounded-md px-3 text-sm font-medium text-[#1E1E1E] hover:bg-black/5"
+            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
           >
-            ← Back
+            <ChevronLeft className="size-4" />
+            Back
           </Link>
-          <h1 className="text-lg font-semibold text-[#1E1E1E]">PB Academy</h1>
+          <h2 className="text-lg font-semibold text-slate-900">{flow.title}</h2>
         </div>
-      </header>
-      <main className="px-6 py-8 md:px-10 md:py-10">
         <FlowLayout flow={flow} />
-      </main>
-    </div>
+      </div>
+    </DashboardShell>
   );
 }
 

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Flow Archive | Internal UX Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1111d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e2e9;
+            border-radius: 10px;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .flow-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-900 font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 bg-white border-r border-primary/10 flex flex-col justify-between p-6">
+<div class="flex flex-col gap-8">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary flex items-center justify-center rounded-xl text-white">
+<span class="material-symbols-outlined">auto_awesome_motion</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#0d0d1b] text-base font-bold leading-tight">Flow Archive</h1>
+<p class="text-primary/60 text-xs font-medium uppercase tracking-wider">Internal v2.4</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 px-3">Main Library</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm">All Flows</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+<span class="text-sm">Onboarding</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="text-sm">Growth</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-sm">Retention</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="text-sm">Checkout</span>
+</a>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-6 mb-2 px-3">Research</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="text-sm">Competitive Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">bookmarks</span>
+<span class="text-sm">Favorites</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-white text-sm font-bold shadow-lg shadow-primary/20 transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+<span>Upload Flow</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Global Header -->
+<header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10">
+<div class="flex-1 max-w-2xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-background-light border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400" placeholder="Search user flows, companies, or patterns..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-8">
+<div class="flex items-center gap-2">
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 border-2 border-white rounded-full"></span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="h-8 w-px bg-slate-200"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-900">Alex Rivera</p>
+<p class="text-[10px] text-slate-500">Sr. Product Designer</p>
+</div>
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center border-2 border-white ring-1 ring-slate-100" data-alt="User profile portrait of a designer" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNLoWtu_FTjIT4JhJDbWZ_-Adj2Zs68AYMw7CqLuqW4vjHsNIIZkohZwRvy5mb8oYhRyaRqlk-Y7_imRnE1R3t6TfIh7fQlq85ou6xwpvVBOSnlt1u6RodY73kXd5XQgBclqZL6-Sn0Zkz8QPCZ4QYDxbelabW9NtNpbNqj5uw4tVLWqhAJ96ViPT2YVK58ErVIq4xz9l3mGaOXnJMti1Qpk63tM8uaZZ_N04L77XKVcwKGXpHtnUljeMT_wtjvIp9jrDqAnyzBDZO');"></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+<!-- Section Title & Filter Chips -->
+<div class="mb-8">
+<div class="flex items-end justify-between mb-6">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Onboarding Flows</h2>
+<p class="text-slate-500 text-sm mt-1">Found 128 results across mobile and web platforms.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:border-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:border-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[16px]">sort</span>
+<span>Newest First</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+<button class="shrink-0 px-4 py-1.5 bg-primary text-white rounded-full text-xs font-semibold">All Categories</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">Mobile Apps</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">Web Apps</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">B2B SaaS</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">Fintech</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">iOS</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">Android</button>
+<button class="shrink-0 px-4 py-1.5 bg-white text-slate-600 border border-slate-200 rounded-full text-xs font-semibold hover:border-primary/50">E-commerce</button>
+</div>
+</div>
+<!-- Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="A clean mobile app dashboard interface with charts" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGTlcbRDnNEZhfzyWaEieql7Z7U4KumHm4Rs3QO_f7nB5QY5bd0iG_LZgOCRWCwvEOF8MMutOHw8Cvg_WI4XGcPbcUz38sJ7aEYAXKeCo-6rslMlErQAng6C47oGrvB4Dl443up30z5s_08851oGulf2rt16yg5wok7PzpYefXydH-ROLIZFyzwOWiaRRGGkB4UAE6z_7l3Jj3g27XjJDMBKIOMH70EwaXNmh4_HSRWYIVo8nOHPwYeB5nZ-D0IHEZ5SWJoFrKSu_k');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">iOS</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 12 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Airbnb Identity Flow</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Identity verification walkthrough for first-time hosts including document scanning.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Onboarding</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Security</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Modern desktop web application layout" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaZPhG8gj_SDy8zDhn7yLNDv65kica-l52tyZVIe0F0ZgRYEA_Lmv4GL7hfgVKki1JCZ_RjcwrweQo7WiZ9AasjoUeLZKQLYnDCPzjYFOLLT4PWoTOa-6jZupMEKNXkNB_C-OuiXj_84wXNLoHqMO7dRDtT4ekMWJT4jnOIx_Rt5GjmbyMq9ule5OGax2TfpUvZkqspc69zPU5DeGJ-Ft1EbaKOLY-YTxI3Lz_ph9K8anAqRXBcJTJcD_YapHWVv75d7jStxaAhpbf');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Web</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 8 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Stripe Checkout</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Optimized single-page checkout experience for SaaS subscriptions.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Payments</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Conversion</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Conceptual design sketches for mobile app" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCasJBZv4C60rsUq252FXFFMM8qdSBb7mRUK5178eQFt9pXZDENCll8KbMXZ8uROsuFUdonG_2sN5eY0k7o6bm737rvxbS5MuIMvScrlPNqJVHgZSL0IRPze-2JUyUjVR4DuwgxtHY77y1xUDkW7QNCefg5TDHI5WL3pvADV5fJqsyi-gbetnySQ60E_ZcHNZfZQhb7x-p_CCb37e5nBmToytl1I0AkLM5RD_Uvw4NjX8PVY5xW8Ugp6Q9s7QHTO4ddSBuMl5U4i7EP');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Android</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 18 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Duolingo Gamification</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Streaks and rewards system visualization for user retention.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Retention</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Education</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Creative design toolkit interface" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3zko9zMCpKepvEBtwsILbFbmIKxaUHJMFo74Plu25puzJhN0eLU6rXHde3HcH-rQ4kM1T8w3n_y-LJ5sBpL0idoK-KFtEXLBG7rkMt5rjMtxwHkwHS8xlk7UeHjqfgssejrJcpCX4dSjxuko9uYm8aJoBTPDrOu_HjYMZ3oUMHE5w9XwEVZMjqjXdV8Gqj9TgC9I1nW3wTCtBPAyqOYNUv7W4V9vcH-VLhJ7uasyuHtyis6VWtmmN5VIy0gPsWpibCMyG4B0mpfG3');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Web</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 5 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Figma Workspace</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Team creation and collaborative permission settings flow.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Onboarding</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">B2B</span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cryptocurrency mobile wallet app UI" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQeU-ohnQFGuerq7BV2G0m6bPuB8TMGZMWJSBMW52z0UhIYlu2qDvpJ54Qt171m9DkZAdYE1ZdlWhZ-QSwJ-mqSQFsY4ghSBdRdNkw6hg1SpemVW5U6dM8lq2TDbFwhi8vTqtdOp-8X1V66QgKSFRI89IHsoLdnOo501-Tw_nwdcQVN8lDnle2mNE-x_tKQ1RDj8InZCFB9ftMw5GqTfHQly7GD6UiRfg4FwNbSRSk3TBvdQUjsJAUUPCFROcr5XNqFH2XawBUblE2');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">iOS</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 24 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Coinbase KYC</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Detailed "Know Your Customer" flow with multi-step identity verification.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Fintech</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Compliance</span>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Digital marketing strategy and analytics UI" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBM27I_Gq2ju5LRZoSUzlU6_L5XptfmzkO-JHP4i5Azi0W4m9ldq5wlv5kHS1vcm4WO2CWMrtwNtDQi2jecyG9GhVqJpWWAiz4EpC7_occEGwIj6VcTi0GIsU7oz_mLYbftH75r5IWIWltLcoyJRO-oQ-ZzkK8Ny9pKyTD3GBL5oIrRuucN_-1Fn6cSXr0OlNMStwm3uAnlNWYPRw5Z2fD8kwNacQqmD4z-xe7kYQPf11xPMx3GYoOgaWDs2j8XlWIYV5cK5JdhsLb1');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Web</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 15 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Hubspot CRM Setup</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Enterprise-level workspace configuration and data import wizard.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">B2B SaaS</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Setup</span>
+</div>
+</div>
+</div>
+<!-- Card 7 -->
+<div class="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer">
+<div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Instagram-like social media application feed UI" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAETVJl46TFPut819dL-lNTT-swBWKHDdpW5YyeLXwPxRbdjYCj0Am15PmNxRQJ67Q_lkDOhACGikw5lGBlRg6vYeQVWGJIPSsl4Un7l8QxhuDvZE3zAroHmWRishyQyvOpQi-sTdnX2LkVTp9GZoiK1a1uTxAiCd9HXymP9MQQNWaQneyI7-nP1HFiHubq1Y95AI1cLKgRqLuCSWSqq2-Lgto2dOmmm8gHJJ-Qtm96raIXu0VI__jeH-JrlPN3tImZYZtXEwPtn32M');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">iOS</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<span class="text-white text-xs font-bold flex items-center gap-1">
+                                    View 9 screens <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Instagram Stories</h3>
+<div class="size-6 bg-slate-50 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-slate-400">bookmark</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">Content creation flow with filter selection and privacy controls.</p>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">Creation</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">Social</span>
+</div>
+</div>
+</div>
+<!-- Card 8 (Skeleton loading example) -->
+<div class="bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow">
+<div class="aspect-[4/3] bg-slate-50 animate-pulse flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-200 text-5xl">image</span>
+</div>
+<div class="p-4 space-y-3">
+<div class="h-4 bg-slate-100 rounded-full w-3/4 animate-pulse"></div>
+<div class="space-y-2">
+<div class="h-2 bg-slate-50 rounded-full animate-pulse"></div>
+<div class="h-2 bg-slate-50 rounded-full w-5/6 animate-pulse"></div>
+</div>
+<div class="flex gap-2">
+<div class="h-4 bg-slate-50 rounded-lg w-16 animate-pulse"></div>
+<div class="h-4 bg-slate-50 rounded-lg w-12 animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Pagination -->
+<div class="mt-12 flex items-center justify-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-400 cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+<span>Previous</span>
+</button>
+<div class="flex gap-1">
+<button class="size-9 bg-primary text-white rounded-lg text-sm font-bold">1</button>
+<button class="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors">2</button>
+<button class="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors">3</button>
+<span class="size-9 flex items-center justify-center text-slate-400">...</span>
+<button class="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors">12</button>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-600 hover:border-primary/50 transition-colors">
+<span>Next</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>
