@@ -31,6 +31,31 @@ function getPartyIcon(partyName) {
     return partyIcons[partyName] || '👤';
 }
 
+// Party slug for design system styling (Student, Coach, Head Coach, CSM, Editor, Admin, App)
+const partySlugs = {
+    'Student': 'student',
+    'student': 'student',
+    'Coach': 'coach',
+    'coach': 'coach',
+    'Head Coach': 'head-coach',
+    'head-coach': 'head-coach',
+    'Admin': 'admin',
+    'admin': 'admin',
+    'Customer Success Manager': 'csm',
+    'customer-success': 'csm',
+    'CSM': 'csm',
+    'Content Manager': 'editor',
+    'content-manager': 'editor',
+    'Editor': 'editor',
+    'editor': 'editor',
+    'App': 'app',
+    'app': 'app'
+};
+
+function getPartySlug(partyName) {
+    return partySlugs[partyName] || 'editor';
+}
+
 // All use cases with parties property - each use case can belong to multiple categories
 const allUseCases = [
     {

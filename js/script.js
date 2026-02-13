@@ -161,14 +161,11 @@ function initializeApp() {
                     if (hasMockup) {
                         detailPanel.style.display = 'block';
                         // Hide all mockups and show only the selected step's mockup
-                        const allMockups = detailPanel.querySelectorAll('.step-mockup');
-                        allMockups.forEach(mockup => {
-                            mockup.style.display = 'none';
-                        });
+                        detailPanel.querySelectorAll('.step-mockup').forEach(m => m.classList.remove('step-mockup-visible'));
                         const selectedMockup = detailPanel.querySelector(`.step-mockup[data-step-index="${latestStepIndex}"]`);
-                        if (selectedMockup) {
-                            selectedMockup.style.display = 'block';
-                        }
+                        if (selectedMockup) selectedMockup.classList.add('step-mockup-visible');
+                        const party = latestStep.dataset.party || 'editor';
+                        detailPanel.setAttribute('data-active-party', party);
                         alignDetailPanelWithStep(detailPanel, latestStep);
                     } else {
                         detailPanel.style.display = 'none';
@@ -319,14 +316,11 @@ function initializeApp() {
                     if (hasMockup) {
                         detailPanel.style.display = 'block';
                         // Hide all mockups and show only the selected step's mockup
-                        const allMockups = detailPanel.querySelectorAll('.step-mockup');
-                        allMockups.forEach(mockup => {
-                            mockup.style.display = 'none';
-                        });
+                        detailPanel.querySelectorAll('.step-mockup').forEach(m => m.classList.remove('step-mockup-visible'));
                         const selectedMockup = detailPanel.querySelector(`.step-mockup[data-step-index="${stepIndex}"]`);
-                        if (selectedMockup) {
-                            selectedMockup.style.display = 'block';
-                        }
+                        if (selectedMockup) selectedMockup.classList.add('step-mockup-visible');
+                        const party = stepEl.dataset.party || 'editor';
+                        detailPanel.setAttribute('data-active-party', party);
                         alignDetailPanelWithStep(detailPanel, stepEl);
                     } else {
                         detailPanel.style.display = 'none';
@@ -339,12 +333,17 @@ function initializeApp() {
 
     function alignDetailPanelWithStep(detailPanel, stepEl) {
         if (!detailPanel || !stepEl) return;
+        if (window.innerWidth < 768) {
+            detailPanel.style.transform = detailPanel.hasAttribute('data-active-party') ? 'scale(1.02)' : '';
+            return;
+        }
         const layout = stepEl.closest('.flow-steps-layout');
         if (!layout) return;
         const layoutRect = layout.getBoundingClientRect();
         const stepRect = stepEl.getBoundingClientRect();
         const offsetTop = stepRect.top - layoutRect.top;
-        detailPanel.style.transform = `translateY(${offsetTop}px)`;
+        const scale = detailPanel.hasAttribute('data-active-party') ? ' scale(1.02)' : '';
+        detailPanel.style.transform = `translateY(${offsetTop}px)${scale}`;
     }
 
     // Keyboard navigation for step-by-step mode

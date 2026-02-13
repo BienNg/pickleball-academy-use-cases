@@ -64,16 +64,13 @@ function renderFlowSections() {
         // If use case has steps, render step-by-step flow
         if (item.steps && item.steps.length > 0) {
             const stepsHtml = item.steps.map((step, index) => {
-                const partyIcon = getPartyIcon(step.party);
+                const partySlug = getPartySlug(step.party);
                 const hasMockupAttr = step.mockup ? ` data-has-mockup="true" data-mockup-type="${step.mockup}"` : '';
                 return `
-                <div class="flow-step" data-step-index="${index}" data-use-case-id="${item.id}"${hasMockupAttr}>
+                <div class="flow-step" data-step-index="${index}" data-use-case-id="${item.id}" data-party="${partySlug}"${hasMockupAttr}>
                     <div class="flow-step-connector"></div>
                     <div class="flow-step-content">
-                        <div class="flow-step-party">
-                            <span class="flow-step-party-icon">${partyIcon}</span>
-                            <span class="flow-step-party-name">${step.party}</span>
-                        </div>
+                        <span class="flow-step-badge party-badge-${partySlug}">${step.party}</span>
                         <div class="flow-step-action">${step.action}</div>
                         ${step.details ? `<div class="flow-step-details">${step.details}</div>` : ''}
                     </div>
@@ -223,10 +220,10 @@ function renderFlowSections() {
                         </div>
                     </div>
                     <div class="flow-steps-layout">
+                        ${mockupPanelHtml}
                         <div class="flow-steps-container" data-use-case-id="${item.id}">
                             ${stepsHtml}
                         </div>
-                        ${mockupPanelHtml}
                     </div>
                 </div>
             `;

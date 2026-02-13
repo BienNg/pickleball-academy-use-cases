@@ -1,0 +1,339 @@
+/**
+ * PB Academy – Visual Panel System
+ * 24px radius, soft shadow, party gradient, scale on active
+ */
+
+/* Visual panel – LEFT column, fixed width */
+.step-detail-panel {
+    flex-shrink: 0;
+    width: 360px;
+    align-self: flex-start;
+    position: sticky;
+    top: 32px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Party-based gradient backgrounds */
+.step-detail-panel[data-active-party="student"] {
+    background: linear-gradient(135deg, #E9F7EF 0%, #F8FFFB 100%);
+}
+
+.step-detail-panel[data-active-party="coach"] {
+    background: linear-gradient(135deg, #EEF2FF 0%, #F8FAFF 100%);
+}
+
+.step-detail-panel[data-active-party="head-coach"] {
+    background: #F7F6F2;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(198, 167, 94, 0.15);
+}
+
+.step-detail-panel[data-active-party="csm"] {
+    background: linear-gradient(135deg, #EEF2FF 0%, #F8FAFF 100%);
+}
+
+.step-detail-panel[data-active-party="editor"] {
+    background: linear-gradient(135deg, #F1F5F9 0%, #F8FAFC 100%);
+}
+
+.step-detail-panel[data-active-party="admin"] {
+    background: #F3F4F6;
+}
+
+.step-detail-panel[data-active-party="app"] {
+    background: linear-gradient(135deg, #ECFEFF 0%, #F0FDFA 100%);
+}
+
+/* Default when no party */
+.step-detail-panel:not([data-active-party]) {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+}
+
+/* Panel inner padding */
+.step-detail-panel .step-mockup {
+    padding: 24px;
+    display: none;
+}
+
+.step-detail-panel .step-mockup.step-mockup-visible {
+    display: block;
+}
+
+/* Active step – panel shadow +15%, scale 1.02 (when party is set via JS) */
+.step-detail-panel[data-active-party] {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+    transform: scale(1.02);
+}
+
+/* Step mockup – visible when selected */
+.step-mockup {
+    margin-top: 0;
+}
+
+/* Phone mockup */
+.phone-mockup {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.phone-screen {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 9 / 19;
+    min-height: 420px;
+    position: relative;
+}
+
+.phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 24px;
+    background: #1a1a1a;
+    border-radius: 0 0 14px 14px;
+    z-index: 2;
+}
+
+/* Zalo Chat UI */
+.zalo-chat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.zalo-header {
+    background: linear-gradient(135deg, #0068FF 0%, #0052CC 100%);
+    color: #fff;
+    padding: 12px 16px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+}
+
+.zalo-back {
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.zalo-contact {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.zalo-avatar {
+    font-size: 24px;
+}
+
+.zalo-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.zalo-status {
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+.zalo-messages {
+    flex: 1;
+    background: #e8e8e8;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.zalo-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.zalo-outgoing {
+    align-items: flex-end;
+}
+
+.zalo-outgoing .zalo-bubble {
+    background: linear-gradient(135deg, #0068FF 0%, #0052CC 100%);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 18px 18px 4px 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 85%;
+}
+
+.zalo-incoming {
+    align-items: flex-start;
+}
+
+.zalo-incoming .zalo-bubble {
+    background: #fff;
+    color: #1a1a1a;
+    padding: 10px 14px;
+    border-radius: 18px 18px 18px 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 85%;
+}
+
+.zalo-time {
+    font-size: 11px;
+    color: #888;
+    padding: 0 4px;
+}
+
+.phone-app-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Animation mockups */
+.animation-mockup {
+    width: 100%;
+    max-width: 280px;
+    min-height: 180px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.animation-mockup .anim-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.animation-mockup .anim-arrow {
+    font-size: 24px;
+    color: #6B7280;
+    opacity: 0.8;
+}
+
+.animation-mockup .anim-label {
+    font-size: 12px;
+    color: #6B7280;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Subtle animations – no bounce */
+.camera-upload-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.camera-upload-animation .anim-camera {
+    animation: camera-pulse 2s ease-in-out infinite;
+}
+
+.camera-upload-animation .anim-arrow {
+    animation: arrow-flow 2s ease-in-out infinite;
+}
+
+.camera-upload-animation .anim-cloud {
+    animation: cloud-receive 2s ease-in-out infinite;
+}
+
+@keyframes camera-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.95; }
+}
+
+@keyframes arrow-flow {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(4px); }
+}
+
+@keyframes cloud-receive {
+    0% { transform: scale(0.98); opacity: 0.85; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.98); opacity: 0.85; }
+}
+
+.payment-editor-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-editor-animation .anim-payment {
+    animation: payment-complete 2.2s ease-in-out infinite;
+}
+
+.payment-editor-animation .anim-arrow {
+    animation: arrow-flow 2.2s ease-in-out infinite 0.2s;
+}
+
+.payment-editor-animation .anim-recordings {
+    animation: send-to-editor 2.2s ease-in-out infinite 0.4s;
+}
+
+@keyframes payment-complete {
+    0%, 100% { transform: scale(1); }
+    40% { transform: scale(1.03); }
+}
+
+@keyframes send-to-editor {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.editor-upload-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.editor-upload-animation .anim-edit {
+    animation: edit-video 2.4s ease-in-out infinite;
+}
+
+.editor-upload-animation .anim-arrow {
+    animation: arrow-flow 2.4s ease-in-out infinite 0.3s;
+}
+
+.editor-upload-animation .anim-phone {
+    animation: upload-to-app 2.4s ease-in-out infinite 0.6s;
+}
+
+@keyframes edit-video {
+    0%, 100% { transform: scale(1); }
+    35% { transform: scale(1.04); }
+    70% { transform: scale(1.04); }
+}
+
+@keyframes upload-to-app {
+    0% { transform: scale(0.95); opacity: 0.85; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.85; }
+}

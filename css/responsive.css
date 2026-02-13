@@ -1,0 +1,173 @@
+/**
+ * PB Academy – Responsive
+ * Mobile: Visual panel above timeline, full width, breathable spacing
+ */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 24px 20px;
+    }
+
+    .flow-item {
+        width: 260px;
+    }
+
+    /* Visual panel full width on tablet */
+    .step-detail-panel {
+        width: 100%;
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Layout: Visual panel ABOVE timeline, stack vertically */
+    .flow-steps-layout {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+    }
+
+    .step-detail-panel {
+        width: 100%;
+        max-width: none;
+        order: 0;
+        position: static;
+        align-self: stretch;
+    }
+
+    .flow-steps-container {
+        order: 1;
+        width: 100%;
+        padding-left: 20px;
+    }
+
+    .flow-item {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .flow-item-image {
+        height: 160px;
+        font-size: 40px;
+    }
+
+    .flow-title {
+        font-size: 20px;
+    }
+
+    .use-case-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .use-case-icon {
+        font-size: 36px;
+    }
+
+    .use-case-title {
+        font-size: 20px;
+    }
+
+    .flow-step {
+        padding: 12px 14px 12px 32px;
+    }
+
+    .flow-step-content::before {
+        left: -26px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .flow-step.selected .flow-step-content::before {
+        width: 16px;
+        height: 16px;
+        left: -28px;
+        top: 4px;
+    }
+
+    .flow-step-connector {
+        left: 5px;
+    }
+
+    /* Badge: smaller but consistent */
+    .flow-step-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+
+    .view-mode-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .step-navigation {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .toggle-option {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    /* Maintain breathable spacing */
+    .main-content {
+        padding: 20px 16px;
+    }
+
+    .flow-steps-layout {
+        gap: 28px;
+    }
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu-btn:hover {
+    background: #F9FAFB;
+}
+
+@media (max-width: 1024px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+.sidebar-overlay.open {
+    display: block;
+}
