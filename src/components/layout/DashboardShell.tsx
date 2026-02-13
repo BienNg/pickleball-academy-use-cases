@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   ChevronDown,
@@ -16,24 +16,25 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
   const slugs = getAllFlowSlugs();
   const STORAGE_KEY = "allFlowsDropdownOpen";
   
-  // Initialize state from localStorage or isHome
-  const getInitialState = () => {
-    if (typeof window === "undefined") return isHome;
+  // Initialize with isHome to match server render (prevents hydration mismatch)
+  const [open, setOpen] = useState(isHome);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // After hydration, read from localStorage and update state
+  useEffect(() => {
+    setIsHydrated(true);
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored !== null) {
-      return stored === "true";
+      setOpen(stored === "true");
     }
-    return isHome;
-  };
-  
-  const [open, setOpen] = useState(getInitialState);
+  }, []);
 
-  // Persist state to localStorage whenever it changes
+  // Persist state to localStorage whenever it changes (only after hydration)
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isHydrated && typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, String(open));
     }
-  }, [open]);
+  }, [open, isHydrated]);
 
   const handleToggle = () => {
     setOpen((o) => !o);
@@ -88,33 +89,27 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
 }
 
 function RolesDropdown({ pathname }: { pathname: string }) {
-  // Helper function to get the role for a given pathname
-  const getOpenRoleFromPathname = (currentPathname: string): string | null => {
-    if (currentPathname.startsWith("/flows/")) {
-      const slug = currentPathname.replace("/flows/", "");
-      const flow = flows[slug];
-      if (flow) {
-        // Find which role this flow belongs to
-        for (const role of ALL_ROLES) {
-          const flowSlugs = getFlowSlugsByRole(role);
-          if (flowSlugs.includes(slug)) {
-            return role;
-          }
-        }
-      }
-    }
-    return null;
-  };
+  const STORAGE_KEY = "rolesDropdownOpen";
+  
+  // Initialize with null to match server render (prevents hydration mismatch)
+  const [openRole, setOpenRole] = useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  const [openRole, setOpenRole] = useState<string | null>(() => getOpenRoleFromPathname(pathname));
-
-  // Sync openRole with pathname changes - keep role open when navigating to its flows
+  // After hydration, read from localStorage and update state
   useEffect(() => {
-    const roleFromPathname = getOpenRoleFromPathname(pathname);
-    if (roleFromPathname) {
-      setOpenRole(roleFromPathname);
+    setIsHydrated(true);
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored !== null && stored !== "null") {
+      setOpenRole(stored);
     }
-  }, [pathname]);
+  }, []);
+
+  // Persist state to localStorage whenever it changes (only after hydration)
+  useEffect(() => {
+    if (isHydrated && typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, String(openRole));
+    }
+  }, [openRole, isHydrated]);
 
   return (
     <div className="flex flex-col gap-0.5">
@@ -153,10 +148,6 @@ function RolesDropdown({ pathname }: { pathname: string }) {
                       onClick={(e) => {
                         // Prevent the click from closing the dropdown
                         e.stopPropagation();
-                        // Keep the role open when clicking a link
-                        if (!isOpen) {
-                          setOpenRole(role);
-                        }
                       }}
                       className={cn(
                         "block px-3 py-1 rounded-lg text-xs transition-colors",
