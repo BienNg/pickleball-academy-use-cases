@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAllFlowSlugs, getFlowBySlug } from "@/lib/flows";
 import { DashboardShell } from "@/components/layout/DashboardShell";
-import { Filter, ArrowDownNarrowWide, Bookmark, Image as ImageIcon } from "lucide-react";
+import { Filter, ArrowDownNarrowWide, Bookmark, ArrowRight } from "lucide-react";
 
 const CATEGORIES = [
   "All Categories",
@@ -79,64 +79,50 @@ export default function HomePage() {
             <Link
               key={flow.slug}
               href={`/flows/${flow.slug}`}
-              className="flow-card group bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow transition-all cursor-pointer block"
+              className="flow-card group bg-white rounded-xl border border-slate-100 card-shadow transition-all cursor-pointer block p-5 text-left hover:border-primary/20"
             >
-              <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
-                <div className="absolute inset-0 bg-slate-100 flex items-center justify-center">
-                  <ImageIcon className="size-12 text-slate-200" />
-                </div>
-                <div className="absolute top-3 left-3 flex gap-2">
-                  <span className="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                    Web
-                  </span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                  <span className="text-white text-xs font-bold flex items-center gap-1">
-                    View flow
-                    <span className="inline-block size-3.5">→</span>
-                  </span>
+              <div className="flex justify-between items-start mb-2">
+                <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                  Web
+                </span>
+                <div className="size-6 bg-slate-50 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Bookmark className="size-4 text-slate-400" />
                 </div>
               </div>
-              <div className="p-4">
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-bold text-slate-900 group-hover:text-primary transition-colors">
-                    {flow.title}
-                  </h3>
-                  <div className="size-6 bg-slate-50 rounded flex items-center justify-center">
-                    <Bookmark className="size-4 text-slate-400" />
-                  </div>
-                </div>
-                <p className="text-xs text-slate-500 line-clamp-2 mb-3 leading-relaxed">
-                  {flow.subtitle}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  <span className="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">
-                    Onboarding
-                  </span>
-                  <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">
-                    Academy
-                  </span>
-                </div>
+              <h3 className="font-bold text-slate-900 group-hover:text-primary transition-colors text-base mb-2">
+                {flow.title}
+              </h3>
+              <p className="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed">
+                {flow.subtitle}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                <span className="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">
+                  Onboarding
+                </span>
+                <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">
+                  Academy
+                </span>
               </div>
+              <span className="text-xs font-semibold text-slate-400 group-hover:text-primary transition-colors flex items-center gap-1">
+                View flow
+                <ArrowRight className="size-3.5" />
+              </span>
             </Link>
           ))}
           {/* Skeleton card placeholder */}
           {flows.length < 8 && (
-            <div className="bg-white rounded-xl overflow-hidden border border-slate-100 card-shadow">
-              <div className="aspect-[4/3] bg-slate-50 animate-pulse flex items-center justify-center">
-                <ImageIcon className="size-12 text-slate-200" />
+            <div className="bg-white rounded-xl border border-slate-100 card-shadow p-5 space-y-3">
+              <div className="h-4 bg-slate-100 rounded w-12 animate-pulse" />
+              <div className="h-5 bg-slate-100 rounded-full w-3/4 animate-pulse" />
+              <div className="space-y-2">
+                <div className="h-3 bg-slate-50 rounded-full animate-pulse" />
+                <div className="h-3 bg-slate-50 rounded-full w-5/6 animate-pulse" />
               </div>
-              <div className="p-4 space-y-3">
-                <div className="h-4 bg-slate-100 rounded-full w-3/4 animate-pulse" />
-                <div className="space-y-2">
-                  <div className="h-2 bg-slate-50 rounded-full animate-pulse" />
-                  <div className="h-2 bg-slate-50 rounded-full w-5/6 animate-pulse" />
-                </div>
-                <div className="flex gap-2">
-                  <div className="h-4 bg-slate-50 rounded-lg w-16 animate-pulse" />
-                  <div className="h-4 bg-slate-50 rounded-lg w-12 animate-pulse" />
-                </div>
+              <div className="flex gap-2">
+                <div className="h-5 bg-slate-50 rounded w-16 animate-pulse" />
+                <div className="h-5 bg-slate-50 rounded w-12 animate-pulse" />
               </div>
+              <div className="h-3 bg-slate-50 rounded w-20 animate-pulse" />
             </div>
           )}
         </div>
