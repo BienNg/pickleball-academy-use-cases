@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification" | "coach-request-notification" | "coach-confirm-court-booking" | "csm-escalation-notification" | "csm-zalo-to-student" | "csm-court-call-coach" | "csm-zalo-confirmation";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification" | "coach-request-notification" | "coach-confirm-court-booking" | "csm-escalation-notification" | "csm-zalo-to-student" | "csm-court-call-coach" | "csm-zalo-confirmation" | "reactivation-notification" | "reactivation-roadmap-review" | "reactivation-zalo-progress-check" | "reactivation-student-confirm" | "reactivation-coach-coordinate" | "reactivation-final-confirmation";
 
 export type RoleCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor" | "app";
 
@@ -682,6 +682,87 @@ export const flows: Record<string, FlowConfig> = {
           type: "csm-zalo-confirmation"
         },
         stepIcon: "✅"
+      }
+    ]
+  },
+  "reactivation-follow-up-5-day": {
+    title: "5-Day Student Reactivation Follow-Up",
+    subtitle: "CSM proactively reaches out when a student has not booked a new session within 5 days.",
+    roles: ['student', 'customer-success', 'coach'],
+    filter: "coaching",
+    image: "🔁",
+    features: [
+      "Automatic 5-day inactivity trigger",
+      "CSM proactive progress check via Zalo",
+      "Rebooking same weekly time slot",
+      "Coach schedule coordination",
+      "Court booking and session creation",
+      "Confirmation sent to student and coach"
+    ],
+    steps: [
+      {
+        role: "CSM",
+        title: "Receives 5-Day Inactivity Notification",
+        description: "CSM is alerted that the student has not booked a new session within 5 days after their last training.",
+        visual: {
+          type: "reactivation-notification"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Reviews Last Session Details and Roadmap",
+        description: "CSM checks the student's last session date, progress notes, and roadmap to suggest the next step in the roadmap.",
+        visual: {
+          type: "reactivation-roadmap-review"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Sends Progress Check Message via Zalo",
+        description: "CSM messages the student on Zalo, asks how progress is going, and proposes booking the same day and time as the previous week.",
+        visual: {
+          type: "reactivation-zalo-progress-check"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "Student",
+        title: "Confirms New Session",
+        description: "Student replies positively and agrees to book another session at the proposed weekly time slot.",
+        visual: {
+          type: "reactivation-student-confirm"
+        },
+        stepIcon: "🎾"
+      },
+      {
+        role: "CSM",
+        title: "Coordinates Schedule with Coach",
+        description: "CSM checks the coach's availability for the proposed time and confirms alignment before proceeding.",
+        visual: {
+          type: "reactivation-coach-coordinate"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Books Court and Creates Session",
+        description: "CSM books the court and creates the new coaching session in the system under the student and assigned coach.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session booked.png"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Sends Confirmation to Student and Coach",
+        description: "CSM sends final confirmation via Zalo to both the student and coach, including session time, court, and details.",
+        visual: {
+          type: "reactivation-final-confirmation"
+        },
+        stepIcon: "💬"
       }
     ]
   },

@@ -53,10 +53,19 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
       imageSrc = `/${imageSrc}`;
     }
     
+    // Special animation for session booked screen
+    const isSessionBooked = imageSrc.includes('session booked');
+    const animationClass = isSessionBooked 
+      ? "animate-[reactivation-session-appear_0.8s_ease-out_forwards] opacity-0"
+      : "";
+    
     return (
       <div className="mx-auto w-full max-w-[280px] rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] p-4 shadow-lg">
-        <div className="relative overflow-hidden rounded-[20px] bg-white aspect-[9/19] min-h-[280px]">
+        <div className={`relative overflow-hidden rounded-[20px] bg-white aspect-[9/19] min-h-[280px] ${animationClass} ${isSessionBooked ? 'border-2 border-[#10b981]/30' : ''}`}>
           <div className="absolute left-1/2 top-0 z-10 h-6 w-[100px] -translate-x-1/2 rounded-b-[14px] bg-[#1a1a1a]" />
+          {isSessionBooked && (
+            <div className="absolute inset-0 rounded-[20px] pointer-events-none animate-[reactivation-green-glow_2s_ease-in-out_infinite_1s]" />
+          )}
           <Image
             src={imageSrc}
             alt="App screen"
@@ -928,6 +937,216 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
           </div>
         </div>
         <div className="text-xs font-semibold text-[#10b981] uppercase tracking-wider mt-1">Booking finalized</div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-notification") {
+    // Step 1: CSM receives 5-day inactivity notification
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="relative">
+          <div className="text-4xl animate-[reactivation-notification-pulse_2s_ease-in-out_infinite]">🔔</div>
+          <div className="absolute -top-1 -right-1 w-6 h-6 bg-[#f59e0b] rounded-full flex items-center justify-center text-white text-[11px] font-semibold animate-[reactivation-badge-ping_2s_ease-in-out_infinite]">
+            !
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2 opacity-0 animate-[reactivation-dashboard-fade_0.6s_ease-out_0.2s_forwards]">
+          <div className="text-xs font-semibold text-[#1a1a1a]">5-Day Inactivity Alert</div>
+          <div className="text-[11px] text-[#6b7280] text-center">
+            Student has not booked a session in 5 days
+          </div>
+        </div>
+        <div className="flex items-center gap-2 mt-2 opacity-0 animate-[reactivation-dashboard-fade_0.6s_ease-out_0.4s_forwards]">
+          <div className="text-2xl animate-[reactivation-notification-pulse_2s_ease-in-out_infinite]">💬</div>
+          <span className="text-sm text-[#6B7280]">CSM Dashboard</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-roadmap-review") {
+    // Step 2: CSM reviews last session details and roadmap
+    return (
+      <div className="mx-auto w-full max-w-[320px] rounded-xl overflow-hidden bg-white shadow-md min-h-[280px]">
+        <div className="w-[60px] bg-[#1a1a1a] flex-shrink-0" />
+        <div className="flex-1 p-4 flex flex-col gap-4">
+          <div className="text-sm font-semibold text-[#1a1a1a] opacity-0 animate-[reactivation-text-fade-in_0.5s_ease-out_0.1s_forwards]">
+            Student Overview
+          </div>
+          
+          {/* Last Session Card */}
+          <div className="bg-[#f9fafb] rounded-lg p-3 shadow-sm opacity-0 animate-[reactivation-card-slide-in_0.6s_ease-out_0.2s_forwards]">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg animate-[reactivation-icon-pulse_2s_ease-in-out_infinite]">📅</span>
+              <div className="text-xs font-semibold text-[#1a1a1a]">Last Session</div>
+            </div>
+            <div className="text-[11px] text-[#6b7280] mb-1 opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_0.4s_forwards]">
+              5 days ago
+            </div>
+            <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full w-0 animate-[reactivation-roadmap-progress_1s_ease-out_0.6s_forwards]" style={{ width: "75%" }}></div>
+            </div>
+          </div>
+
+          {/* Roadmap Progress */}
+          <div className="bg-[#f9fafb] rounded-lg p-3 shadow-sm opacity-0 animate-[reactivation-card-slide-in_0.6s_ease-out_0.4s_forwards]">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg animate-[reactivation-icon-pulse_2s_ease-in-out_infinite_0.3s]">🗺️</span>
+              <div className="text-xs font-semibold text-[#1a1a1a]">Roadmap Progress</div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#10b981] rounded-full"></div>
+                <div className="text-[10px] text-[#6b7280] opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_0.7s_forwards]">
+                  Serve Basics ✓
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#10b981] rounded-full"></div>
+                <div className="text-[10px] text-[#6b7280] opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_0.8s_forwards]">
+                  Return Technique ✓
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-[#f59e0b] rounded-full animate-[reactivation-icon-pulse_1.5s_ease-in-out_infinite]"></div>
+                <div className="text-[10px] text-[#1a1a1a] font-medium opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_0.9s_forwards]">
+                  Dink Mastery (Current)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Next Step Suggestion */}
+          <div className="bg-[#e8f5e9] rounded-lg p-3 border-2 border-[#10b981]/30 shadow-sm opacity-0 animate-[reactivation-card-slide-in_0.6s_ease-out_0.6s_forwards] animate-[reactivation-next-step-highlight_2s_ease-in-out_infinite_1s]">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-lg animate-[reactivation-icon-pulse_2s_ease-in-out_infinite_0.5s]">💡</span>
+              <div className="text-xs font-semibold text-[#10b981]">Suggested Next Step</div>
+            </div>
+            <div className="text-[11px] text-[#1a1a1a] opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_1s_forwards]">
+              Book session to practice dink consistency
+            </div>
+            <div className="text-[10px] text-[#6b7280] mt-1 opacity-0 animate-[reactivation-text-fade-in_0.4s_ease-out_1.1s_forwards]">
+              Same weekly time slot recommended
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-zalo-progress-check") {
+    // Step 3: CSM sends progress check message via Zalo
+    return (
+      <div className="mx-auto max-w-[280px] rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] p-4 shadow-lg">
+        <div className="overflow-hidden rounded-[20px] bg-white aspect-[9/19] min-h-[320px] flex flex-col font-sans">
+          <div className="flex min-h-14 items-center gap-3 bg-gradient-to-br from-[#0068FF] to-[#0052CC] px-4 py-3 text-white">
+            <span className="text-xl opacity-90">←</span>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-base font-semibold">Pickleball Academy</span>
+              <span className="text-[11px] opacity-85">Zalo Official Account</span>
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col justify-end gap-2 bg-[#e8e8e8] p-4">
+            <div className="flex flex-col items-start gap-1 opacity-0 animate-[reactivation-message-appear_0.5s_ease-out_0.3s_forwards]">
+              <span className="max-w-[85%] rounded-[18px] rounded-bl-md bg-white px-3.5 py-2.5 text-sm leading-snug text-[#1a1a1a]">
+                Hi! How has your progress been? Would you like to book another session? Same day and time as last week?
+              </span>
+              <span className="text-[11px] text-[#888]">14:32</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-student-confirm") {
+    // Step 4: Student confirms new session
+    return (
+      <div className="mx-auto max-w-[280px] rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] p-4 shadow-lg">
+        <div className="overflow-hidden rounded-[20px] bg-white aspect-[9/19] min-h-[320px] flex flex-col font-sans">
+          <div className="flex min-h-14 items-center gap-3 bg-gradient-to-br from-[#0068FF] to-[#0052CC] px-4 py-3 text-white">
+            <span className="text-xl opacity-90">←</span>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-base font-semibold">Pickleball Academy</span>
+              <span className="text-[11px] opacity-85">Zalo Official Account</span>
+            </div>
+          </div>
+          <div className="flex flex-1 flex-col justify-end gap-2 bg-[#e8e8e8] p-4">
+            <div className="flex flex-col items-start gap-1 opacity-0 animate-[reactivation-message-appear_0.5s_ease-out_0.2s_forwards]">
+              <span className="max-w-[85%] rounded-[18px] rounded-bl-md bg-white px-3.5 py-2.5 text-sm leading-snug text-[#1a1a1a]">
+                Hi! How has your progress been? Would you like to book another session? Same day and time as last week?
+              </span>
+              <span className="text-[11px] text-[#888]">14:32</span>
+            </div>
+            <div className="flex flex-col items-end gap-1 opacity-0 animate-[reactivation-message-appear_0.5s_ease-out_0.5s_forwards]">
+              <span className="max-w-[85%] rounded-[18px] rounded-br-md bg-gradient-to-br from-[#0068FF] to-[#0052CC] px-3.5 py-2.5 text-sm leading-snug text-white flex items-center gap-2">
+                <span>Yes, that works! Let's book it 🎾</span>
+                <span className="text-lg animate-[reactivation-check-appear_0.6s_ease-out_0.8s_forwards] opacity-0">✓</span>
+              </span>
+              <span className="text-[11px] text-[#888]">14:35</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-coach-coordinate") {
+    // Step 5: CSM coordinates schedule with coach
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3 flex-wrap justify-center">
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl">
+            <div className="text-3xl animate-[reactivation-coach-check_2s_ease-in-out_infinite]">📅</div>
+            <div className="text-[10px] text-[#6b7280]">Check availability</div>
+          </div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl">
+            <div className="text-3xl animate-[reactivation-coach-check_2s_ease-in-out_infinite_0.3s]">👨‍🏫</div>
+            <div className="text-[10px] text-[#6b7280]">Coach</div>
+          </div>
+        </div>
+        <span className="text-xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">↓</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-[#e8f5e9] rounded-xl animate-[reactivation-confirmation-flow_0.6s_ease-out_0.4s_forwards] opacity-0">
+          <div className="text-xs font-semibold text-[#10b981] flex items-center gap-2">
+            <span className="text-lg animate-[reactivation-check-appear_0.5s_ease-out_0.6s_forwards] opacity-0">✓</span>
+            <span>Schedule confirmed</span>
+          </div>
+          <div className="text-[10px] text-[#6b7280]">Coach available</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "reactivation-final-confirmation") {
+    // Step 7: CSM sends final confirmation to student and coach
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-3">
+            <div className="text-4xl animate-[reactivation-zalo-send_2s_ease-in-out_infinite]">💬</div>
+            <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+            <div className="flex flex-col items-center gap-1 p-3 bg-[#0068FF]/10 rounded-xl animate-[reactivation-zalo-receive_2s_ease-in-out_infinite]">
+              <div className="text-2xl">📱</div>
+              <div className="text-[9px] text-[#0068FF] font-semibold">Zalo</div>
+            </div>
+          </div>
+          <div className="text-[10px] text-[#6b7280] mt-2">Session details · Court address</div>
+        </div>
+        <div className="flex items-center gap-6 mt-2">
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl animate-[reactivation-confirmation-flow_0.5s_ease-out_0.2s_forwards] opacity-0">
+            <div className="text-2xl animate-[reactivation-student-confirm-pulse_2s_ease-in-out_infinite]">🎾</div>
+            <div className="text-[10px] text-[#6b7280]">Student</div>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl animate-[reactivation-confirmation-flow_0.5s_ease-out_0.4s_forwards] opacity-0">
+            <div className="text-2xl animate-[reactivation-student-confirm-pulse_2s_ease-in-out_infinite_0.2s]">👨‍🏫</div>
+            <div className="text-[10px] text-[#6b7280]">Coach</div>
+          </div>
+        </div>
+        <div className="text-xs font-semibold text-[#10b981] uppercase tracking-wider mt-2 p-2 bg-[#10b981]/10 rounded-lg animate-[reactivation-confirmation-flow_0.5s_ease-out_0.6s_forwards] opacity-0">
+          Booking finalized ✓
+        </div>
       </div>
     );
   }
