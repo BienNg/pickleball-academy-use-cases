@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { getAllFlowSlugs, getFlowBySlug, ALL_ROLES, getFlowSlugsByRole, categoryLabels, FlowConfig } from "@/lib/flows";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Bookmark, ArrowRight } from "lucide-react";
 import { VisualContent } from "@/components/flow/VisualPanel";
 
 const ITEMS_PER_PAGE = 12;
+const DASHBOARD_STATE_KEY = "dashboard-state";
 
 // Helper function to get thumbnail visual for a flow
 function getFlowThumbnailVisual(flow: FlowConfig, flowSlug: string) {
@@ -40,6 +41,41 @@ function getFlowThumbnailVisual(flow: FlowConfig, flowSlug: string) {
 export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+
+  // Restore dashboard state from sessionStorage on mount
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem(DASHBOARD_STATE_KEY);
+      if (stored) {
+        const { role, page } = JSON.parse(stored) as { role: string | null; page: number };
+        if (role === null || (ALL_ROLES as readonly string[]).includes(role)) {
+          setSelectedRole(role);
+        }
+        if (typeof page === "number" && page >= 1) {
+          setCurrentPage(page);
+        }
+      }
+    } catch {
+      // Ignore parse errors
+    }
+  }, []);
+
+  // Persist dashboard state to sessionStorage when it changes (skip initial mount to avoid overwriting before restore)
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    try {
+      sessionStorage.setItem(
+        DASHBOARD_STATE_KEY,
+        JSON.stringify({ role: selectedRole, page: currentPage })
+      );
+    } catch {
+      // Ignore quota errors
+    }
+  }, [selectedRole, currentPage]);
   
   // Get all flows, filtered by selected role
   const filteredFlows = useMemo(() => {
@@ -58,6 +94,13 @@ export default function HomePage() {
   // Calculate pagination
   const totalPages = Math.ceil(filteredFlows.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  // Clamp page when it exceeds totalPages (e.g. after role filter change or restore)
+  useEffect(() => {
+    if (totalPages >= 1 && currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const flows = filteredFlows.slice(startIndex, endIndex);
 
@@ -140,26 +183,28 @@ export default function HomePage() {
               key="all"
               type="button"
               onClick={() => handleRoleChange(null)}
-              className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+              className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                 selectedRole === null
                   ? "bg-primary text-white"
                   : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
               }`}
             >
               All Roles
+              <span className="tabular-nums opacity-80">{getAllFlowSlugs().length}</span>
             </button>
             {ALL_ROLES.map((role) => (
               <button
                 key={role}
                 type="button"
                 onClick={() => handleRoleChange(role)}
-                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   selectedRole === role
                     ? "bg-primary text-white"
                     : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
                 }`}
               >
                 {role}
+                <span className="tabular-nums opacity-80">{getFlowSlugsByRole(role).length}</span>
               </button>
             ))}
           </div>
