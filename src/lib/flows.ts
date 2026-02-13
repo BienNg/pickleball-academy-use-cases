@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification" | "coach-request-notification" | "coach-confirm-court-booking" | "csm-escalation-notification" | "csm-zalo-to-student" | "csm-court-call-coach" | "csm-zalo-confirmation";
 
 export type RoleCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor" | "app";
 
@@ -427,6 +427,186 @@ export const flows: Record<string, FlowConfig> = {
           type: "student-notification"
         },
         stepIcon: "📣"
+      }
+    ]
+  },
+  "student-requests-training-session-scenario-1": {
+    title: "Student Requests Training Session (Scenario 1)",
+    subtitle: "Student books a session with a coach through the app and receives confirmation with court details.",
+    roles: ['student', 'coach'],
+    filter: "coaching",
+    image: "app screenshots/booking-flow.png",
+    viewMode: "step-by-step",
+    features: [
+      "Coach selection",
+      "Real-time availability view",
+      "Session request system",
+      "Coach confirmation window",
+      "Court booking responsibility",
+      "Automated notification with address"
+    ],
+    steps: [
+      {
+        role: "Student",
+        title: "Selects Preferred Coach",
+        description: "Student browses available coaches inside the app and selects a specific coach based on level and availability.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/coach availability.png"
+        },
+        stepIcon: "🎾"
+      },
+      {
+        role: "Student",
+        title: "Chooses Available Time Slot",
+        description: "Student views the coach's calendar with available dates and time slots and selects a preferred session time.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/coach and time selected.png"
+        },
+        stepIcon: "📅"
+      },
+      {
+        role: "Student",
+        title: "Sends Training Request",
+        description: "Student submits the session request through the app, triggering a real-time notification to the coach.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session requesting.png"
+        },
+        stepIcon: "📤"
+      },
+      {
+        role: "Coach",
+        title: "Receives Request Notification",
+        description: "Coach receives an in-app notification about the new session request and reviews the selected time.",
+        visual: {
+          type: "coach-request-notification"
+        },
+        stepIcon: "🏅"
+      },
+      {
+        role: "Coach",
+        title: "Confirms Session & Books Court",
+        description: "Coach confirms the session within 10 minutes and books an available court for the selected time slot.",
+        visual: {
+          type: "coach-confirm-court-booking"
+        },
+        stepIcon: "✅"
+      },
+      {
+        role: "Student",
+        title: "Receives Confirmation with Address",
+        description: "Student receives confirmation notification in the app including the exact court address and session details.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session booked.png"
+        },
+        stepIcon: "📍"
+      }
+    ]
+  },
+  "student-requests-training-session-scenario-2": {
+    title: "Student Requests Training Session (Scenario 2)",
+    subtitle: "Escalation flow when coach does not respond within 10 minutes and CSM intervenes to secure the session.",
+    roles: ['student', 'coach', 'customer-success'],
+    filter: "coaching",
+    image: "app screenshots/booking-escalation.png",
+    viewMode: "step-by-step",
+    features: [
+      "Coach selection",
+      "Real-time availability view",
+      "Session request system",
+      "10-minute response SLA",
+      "Automatic escalation to CSM",
+      "Manual court coordination",
+      "Zalo confirmation communication"
+    ],
+    steps: [
+      {
+        role: "Student",
+        title: "Selects Preferred Coach",
+        description: "Student browses available coaches inside the app and selects a specific coach based on level and availability.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/coach availability.png"
+        },
+        stepIcon: "🎾"
+      },
+      {
+        role: "Student",
+        title: "Chooses Available Time Slot",
+        description: "Student views the coach's calendar with available dates and time slots and selects a preferred session time.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/coach and time selected.png"
+        },
+        stepIcon: "📅"
+      },
+      {
+        role: "Student",
+        title: "Sends Training Request",
+        description: "Student submits the session request through the app, triggering a notification to the coach.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session requesting.png"
+        },
+        stepIcon: "📤"
+      },
+      {
+        role: "Coach",
+        title: "Receives Request Notification",
+        description: "Coach receives an in-app notification about the new session request but does not respond within the 10-minute confirmation window.",
+        visual: {
+          type: "coach-request-notification"
+        },
+        stepIcon: "⏳"
+      },
+      {
+        role: "CSM",
+        title: "Receives Escalation Notification",
+        description: "After 10 minutes without confirmation, the CSM automatically receives an escalation notification inside the app.",
+        visual: {
+          type: "csm-escalation-notification"
+        },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Contacts Student via Zalo",
+        description: "CSM sends a Zalo message to the student confirming that the request has been received and is being processed.",
+        visual: {
+          type: "csm-zalo-to-student"
+        },
+        stepIcon: "📲"
+      },
+      {
+        role: "CSM",
+        title: "Checks Court Availability & Calls Coach",
+        description: "CSM searches for available courts and directly calls the coach to verify real-time availability.",
+        visual: {
+          type: "csm-court-call-coach"
+        },
+        stepIcon: "📞"
+      },
+      {
+        role: "CSM",
+        title: "Books Court & Creates Session in App",
+        description: "Once coach confirms availability, CSM books the court and manually creates the confirmed session inside the app system.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session booked.png"
+        },
+        stepIcon: "🛠️"
+      },
+      {
+        role: "CSM",
+        title: "Sends Final Confirmation to Student & Coach",
+        description: "CSM sends Zalo confirmation to both student and coach including court address and session details. Booking is finalized.",
+        visual: {
+          type: "csm-zalo-confirmation"
+        },
+        stepIcon: "✅"
       }
     ]
   },

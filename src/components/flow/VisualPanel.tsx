@@ -787,6 +787,151 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "coach-request-notification") {
+    return (
+      <div className="flex min-h-[160px] max-w-[280px] flex-row items-center justify-center gap-5 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] relative">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Student</div>
+          <div className="text-4xl animate-[clip-move-left_2s_ease-in-out_infinite]">📱</div>
+          <div className="text-[10px] text-[#6b7280]">Request sent</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] relative animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Coach</div>
+          <div className="relative">
+            <div className="text-4xl animate-[icon-pulse_2s_ease-in-out_infinite]">👨‍🏫</div>
+            <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#ef4444] text-white rounded-full flex items-center justify-center text-[11px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">1</div>
+          </div>
+          <div className="text-[10px] text-[#6b7280]">New session request</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "coach-confirm-court-booking") {
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">✅</div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+          <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite_0.2s]">🏸</div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+          <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite_0.4s]">📍</div>
+        </div>
+        <div className="flex flex-col gap-2 items-center">
+          <div className="text-xs font-semibold text-[#1a1a1a]">Session Confirmed</div>
+          <div className="text-[10px] text-[#6b7280] text-center">Court booked · Address sent</div>
+        </div>
+        <div className="w-full max-w-[180px] h-1 bg-[#e5e7eb] rounded-full overflow-hidden mt-1">
+          <div className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full animate-[progress-bar_2s_ease-in-out_infinite]" style={{ width: "100%" }}></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "csm-escalation-notification") {
+    return (
+      <div className="flex min-h-[160px] max-w-[280px] flex-row items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl min-w-[80px]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Coach</div>
+          <div className="text-3xl opacity-60">👨‍🏫</div>
+          <div className="text-[10px] text-[#ef4444]">No response</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-[#fef3c7]/80 rounded-xl min-w-[80px]">
+          <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">⏱️</div>
+          <div className="text-[10px] text-[#6b7280]">10 min</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl min-w-[80px] relative animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">CSM</div>
+          <div className="relative">
+            <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">💬</div>
+            <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#f59e0b] text-white rounded-full flex items-center justify-center text-[10px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">!</div>
+          </div>
+          <div className="text-[10px] text-[#6b7280]">Escalation</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "csm-zalo-to-student") {
+    return (
+      <div className="flex min-h-[160px] max-w-[280px] flex-row items-center justify-center gap-5 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] relative">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">CSM</div>
+          <div className="text-4xl animate-[clip-move-left_2s_ease-in-out_infinite]">💬</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-3 p-5 bg-[#0068FF]/10 rounded-xl min-w-[100px] relative animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#0068FF] uppercase tracking-wider">Zalo</div>
+          <div className="text-3xl">📱</div>
+          <div className="text-[10px] text-[#6b7280] text-center">Request received, processing...</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] animate-[receive-ping_2s_ease-in-out_infinite_0.3s]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Student</div>
+          <div className="text-4xl animate-[icon-pulse_2s_ease-in-out_infinite]">🎾</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "csm-court-call-coach") {
+    return (
+      <div className="flex min-h-[180px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3 flex-wrap justify-center">
+          <div className="flex flex-col items-center gap-1 p-4 bg-white/90 rounded-xl">
+            <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">📅</div>
+            <div className="text-[10px] text-[#6b7280]">Court search</div>
+          </div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">+</span>
+          <div className="flex flex-col items-center gap-1 p-4 bg-white/90 rounded-xl">
+            <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite_0.2s]">📞</div>
+            <div className="text-[10px] text-[#6b7280]">Call coach</div>
+          </div>
+        </div>
+        <span className="text-xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">↓</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-[#e8f5e9] rounded-xl animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#10b981]">Availability confirmed</div>
+          <div className="flex items-center gap-2">
+            <div className="text-2xl">👨‍🏫</div>
+            <div className="text-[10px] text-[#6b7280]">Coach verified</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "csm-zalo-confirmation") {
+    return (
+      <div className="flex min-h-[180px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-3">
+            <div className="text-4xl animate-[clip-move-left_2s_ease-in-out_infinite]">💬</div>
+            <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+            <div className="flex flex-col items-center gap-1 p-3 bg-[#0068FF]/10 rounded-xl animate-[receive-ping_2s_ease-in-out_infinite]">
+              <div className="text-2xl">📱</div>
+              <div className="text-[9px] text-[#0068FF] font-semibold">Zalo</div>
+            </div>
+          </div>
+          <div className="text-[10px] text-[#6b7280]">Court address · Session details</div>
+        </div>
+        <div className="flex items-center gap-6 mt-2">
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl animate-[receive-ping_2s_ease-in-out_infinite_0.2s]">
+            <div className="text-2xl">🎾</div>
+            <div className="text-[10px] text-[#6b7280]">Student</div>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl animate-[receive-ping_2s_ease-in-out_infinite_0.4s]">
+            <div className="text-2xl">👨‍🏫</div>
+            <div className="text-[10px] text-[#6b7280]">Coach</div>
+          </div>
+        </div>
+        <div className="text-xs font-semibold text-[#10b981] uppercase tracking-wider mt-1">Booking finalized</div>
+      </div>
+    );
+  }
+
   if (visual.type === "animation") {
     // Cloud upload animation - Step 1
     return (
