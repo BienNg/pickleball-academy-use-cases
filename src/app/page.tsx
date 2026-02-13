@@ -1,40 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { getAllFlowSlugs, getFlowBySlug } from "@/lib/flows";
+import { useState, useMemo } from "react";
+import { getAllFlowSlugs, getFlowBySlug, ALL_ROLES, getFlowSlugsByRole, categoryLabels, FlowConfig } from "@/lib/flows";
 import { DashboardShell } from "@/components/layout/DashboardShell";
-import { Filter, ArrowDownNarrowWide, Bookmark, ArrowRight } from "lucide-react";
-
-const CATEGORIES = [
-  "All Categories",
-  "Mobile Apps",
-  "Web Apps",
-  "B2B SaaS",
-  "Fintech",
-  "iOS",
-  "Android",
-  "E-commerce",
-];
+import { Bookmark, ArrowRight } from "lucide-react";
+import { VisualContent } from "@/components/flow/VisualPanel";
 
 const ITEMS_PER_PAGE = 12;
 
+// Helper function to get thumbnail visual for a flow
+function getFlowThumbnailVisual(flow: FlowConfig, flowSlug: string) {
+  // Map of flow slugs to specific step indices (0-indexed) for thumbnails
+  const thumbnailStepMap: Record<string, number> = {
+    "head-coach-creates-video-course": 6, // Step 7 (index 6): "Uploads Course to App"
+    "session-editing-and-upload": 4, // Step 5 (index 4): "Cuts Idle Time & Stitches Clips"
+    "first-contact-academy": 1, // Step 2 (index 1): "Consults"
+    "head-coach-creates-coaching-program": 5, // Step 6 (index 5): "Compiles Master Coaching Document"
+    "creating-session-success-clips": 1, // Step 2 (index 1): "Selects Before & After Clip"
+  };
+
+  // Check if this flow has a specific thumbnail step defined
+  const thumbnailStepIndex = thumbnailStepMap[flowSlug];
+  if (thumbnailStepIndex !== undefined && flow.steps && flow.steps[thumbnailStepIndex]?.visual) {
+    return flow.steps[thumbnailStepIndex].visual;
+  }
+
+  // Fallback: Use the first step's visual, or find a step with a visual
+  if (flow.steps && flow.steps.length > 0) {
+    // Try to find a step with a visual (prefer non-app-screen visuals for better thumbnails)
+    const stepWithVisual = flow.steps.find(step => step.visual);
+    if (stepWithVisual?.visual) {
+      return stepWithVisual.visual;
+    }
+  }
+  return null;
+}
+
 export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
   
-  const slugs = getAllFlowSlugs();
-  const allFlows = slugs
-    .map((slug) => {
-      const flow = getFlowBySlug(slug);
-      return flow ? { slug, ...flow } : null;
-    })
-    .filter(Boolean) as { slug: string; title: string; subtitle: string }[];
+  // Get all flows, filtered by selected role
+  const filteredFlows = useMemo(() => {
+    const slugs = selectedRole 
+      ? getFlowSlugsByRole(selectedRole)
+      : getAllFlowSlugs();
+    
+    return slugs
+      .map((slug) => {
+        const flow = getFlowBySlug(slug);
+        return flow ? { slug, ...flow } : null;
+      })
+      .filter(Boolean) as { slug: string; title: string; subtitle: string; roles?: string[] }[];
+  }, [selectedRole]);
 
   // Calculate pagination
-  const totalPages = Math.ceil(allFlows.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredFlows.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const flows = allFlows.slice(startIndex, endIndex);
+  const flows = filteredFlows.slice(startIndex, endIndex);
+
+  // Reset to page 1 when role changes
+  const handleRoleChange = (role: string | null) => {
+    setSelectedRole(role);
+    setCurrentPage(1);
+  };
 
   // Calculate page numbers to display
   const getPageNumbers = () => {
@@ -98,40 +129,37 @@ export default function HomePage() {
                 Flows
               </h2>
               <p className="text-slate-500 text-sm mt-1">
-                Found {allFlows.length} result{allFlows.length !== 1 ? "s" : ""} across
+                Found {filteredFlows.length} result{filteredFlows.length !== 1 ? "s" : ""} across
                 mobile and web platforms.
               </p>
             </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:border-primary/30 transition-colors"
-              >
-                <Filter className="size-4" />
-                <span>Filter</span>
-              </button>
-              <button
-                type="button"
-                className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:border-primary/30 transition-colors"
-              >
-                <ArrowDownNarrowWide className="size-4" />
-                <span>Newest First</span>
-              </button>
-            </div>
           </div>
-          {/* Filter chips */}
+          {/* Role filter chips */}
           <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
-            {CATEGORIES.map((cat, i) => (
+            <button
+              key="all"
+              type="button"
+              onClick={() => handleRoleChange(null)}
+              className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                selectedRole === null
+                  ? "bg-primary text-white"
+                  : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
+              }`}
+            >
+              All Roles
+            </button>
+            {ALL_ROLES.map((role) => (
               <button
-                key={cat}
+                key={role}
                 type="button"
+                onClick={() => handleRoleChange(role)}
                 className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                  i === 0
+                  selectedRole === role
                     ? "bg-primary text-white"
                     : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
                 }`}
               >
-                {cat}
+                {role}
               </button>
             ))}
           </div>
@@ -139,40 +167,82 @@ export default function HomePage() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {flows.map((flow) => (
-            <Link
-              key={flow.slug}
-              href={`/flows/${flow.slug}`}
-              className="flow-card group bg-white rounded-xl border border-slate-100 card-shadow transition-all cursor-pointer block p-5 text-left hover:border-primary/20"
-            >
-              <div className="flex justify-between items-start mb-2">
-                <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                  Web
-                </span>
-                <div className="size-6 bg-slate-50 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Bookmark className="size-4 text-slate-400" />
+          {flows.map((flow) => {
+            const flowConfig = getFlowBySlug(flow.slug);
+            const thumbnailVisual = flowConfig ? getFlowThumbnailVisual(flowConfig, flow.slug) : null;
+            
+            return (
+              <Link
+                key={flow.slug}
+                href={`/flows/${flow.slug}`}
+                className="flow-card group bg-white rounded-xl border border-slate-100 card-shadow transition-all cursor-pointer block overflow-hidden hover:border-primary/20"
+              >
+                {/* Thumbnail section */}
+                {thumbnailVisual && (
+                  <div className="w-full h-40 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center overflow-hidden relative p-4">
+                    <div className="w-full h-full flex items-center justify-center scale-75 group-hover:scale-80 transition-transform duration-200">
+                      <VisualContent visual={thumbnailVisual} />
+                    </div>
+                  </div>
+                )}
+                
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                      Web
+                    </span>
+                    <div className="size-6 bg-slate-50 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Bookmark className="size-4 text-slate-400" />
+                    </div>
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-primary transition-colors text-base mb-2">
+                    {flow.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed">
+                    {flow.subtitle}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {flow.roles && flow.roles.length > 0 ? (
+                      flow.roles.map((role) => {
+                        const displayName = categoryLabels[role as keyof typeof categoryLabels] || role;
+                        return (
+                          <span
+                            key={role}
+                            className="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase"
+                          >
+                            {displayName}
+                          </span>
+                        );
+                      })
+                    ) : (
+                      // Fallback: extract unique roles from steps if roles property doesn't exist
+                      (() => {
+                        const flowConfigForRoles = getFlowBySlug(flow.slug);
+                        if (flowConfigForRoles) {
+                          const uniqueRoles = Array.from(
+                            new Set(flowConfigForRoles.steps.map((step) => step.role))
+                          );
+                          return uniqueRoles.map((role) => (
+                            <span
+                              key={role}
+                              className="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase"
+                            >
+                              {role}
+                            </span>
+                          ));
+                        }
+                        return null;
+                      })()
+                    )}
+                  </div>
+                  <span className="text-xs font-semibold text-slate-400 group-hover:text-primary transition-colors flex items-center gap-1">
+                    View flow
+                    <ArrowRight className="size-3.5" />
+                  </span>
                 </div>
-              </div>
-              <h3 className="font-bold text-slate-900 group-hover:text-primary transition-colors text-base mb-2">
-                {flow.title}
-              </h3>
-              <p className="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed">
-                {flow.subtitle}
-              </p>
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                <span className="px-2 py-0.5 bg-primary/5 text-primary text-[10px] font-bold rounded uppercase">
-                  Onboarding
-                </span>
-                <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-bold rounded uppercase">
-                  Academy
-                </span>
-              </div>
-              <span className="text-xs font-semibold text-slate-400 group-hover:text-primary transition-colors flex items-center gap-1">
-                View flow
-                <ArrowRight className="size-3.5" />
-              </span>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Pagination */}

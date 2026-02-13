@@ -429,3 +429,218 @@
     transform: translateY(0);
   }
 }
+
+/* Session Editing & Upload animations - subtle data flow */
+@keyframes data-flow-left {
+  0%, 100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translateX(8px); 
+    opacity: 0.9; 
+  }
+}
+@keyframes data-flow-right {
+  0%, 100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translateX(-8px); 
+    opacity: 0.9; 
+  }
+}
+@keyframes arrow-flow-subtle {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: translateX(0); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: translateX(3px); 
+  }
+}
+
+/* Step 2: Cloud Link Paste Animation */
+@keyframes link-copy {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.9; 
+  }
+}
+@keyframes link-paste {
+  0% { 
+    transform: scale(0.9); 
+    opacity: 0.7; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+/* Step 3: Editor Notification Animation */
+@keyframes notification-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  25% { 
+    transform: scale(1.1); 
+  }
+  50% { 
+    transform: scale(1.05); 
+  }
+  75% { 
+    transform: scale(1.1); 
+  }
+}
+@keyframes notification-fade {
+  0%, 100% { 
+    opacity: 0.7; 
+  }
+  50% { 
+    opacity: 1; 
+  }
+}
+
+/* Step 4: Video Download Animation */
+@keyframes cloud-send {
+  0%, 100% { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translateY(-5px); 
+    opacity: 0.9; 
+  }
+}
+@keyframes video-receive {
+  0% { 
+    transform: translateY(-10px); 
+    opacity: 0.5; 
+  }
+  50% { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+@keyframes download-progress {
+  0% { 
+    width: 0; 
+    opacity: 0; 
+  }
+  50% { 
+    width: 100%; 
+    opacity: 1; 
+  }
+  100% { 
+    width: 100%; 
+    opacity: 0.6; 
+  }
+}
+
+/* Step 5: Video Editing Tool Animation */
+@keyframes clip-trim {
+  0%, 100% { 
+    width: 30%; 
+    opacity: 0.8; 
+  }
+  50% { 
+    width: 35%; 
+    opacity: 1; 
+  }
+}
+@keyframes scissors-cut {
+  0%, 100% { 
+    transform: rotate(0deg) scale(1); 
+  }
+  25% { 
+    transform: rotate(-5deg) scale(1.1); 
+  }
+  50% { 
+    transform: rotate(0deg) scale(1); 
+  }
+  75% { 
+    transform: rotate(5deg) scale(1.1); 
+  }
+}
+
+/* Step 6: Upload to App Animation */
+@keyframes video-upload-start {
+  0%, 100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translateX(5px); 
+    opacity: 0.9; 
+  }
+}
+@keyframes upload-progress {
+  0% { 
+    width: 0; 
+    opacity: 0; 
+  }
+  50% { 
+    width: 100%; 
+    opacity: 1; 
+  }
+  100% { 
+    width: 100%; 
+    opacity: 0.6; 
+  }
+}
+@keyframes app-receive {
+  0% { 
+    transform: scale(0.9); 
+    opacity: 0.7; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+@keyframes progress-bar {
+  0% { 
+    width: 0%; 
+  }
+  50% { 
+    width: 75%; 
+  }
+  100% { 
+    width: 100%; 
+  }
+}
+
+/* Step 8: Student Notification Animation */
+@keyframes video-thumbnail-appear {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}

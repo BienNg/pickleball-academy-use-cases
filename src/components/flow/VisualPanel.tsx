@@ -44,7 +44,7 @@ export function VisualPanel({
   );
 }
 
-function VisualContent({ visual }: { visual: FlowStepVisual }) {
+export function VisualContent({ visual }: { visual: FlowStepVisual }) {
   if (visual.type === "app-screen" && visual.src) {
     // Normalize src: Next.js Image requires paths starting with / for public folder
     // or full URLs (http:// or https://)
@@ -782,6 +782,163 @@ function VisualContent({ visual }: { visual: FlowStepVisual }) {
               </div>
             );
           })}
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "animation") {
+    // Cloud upload animation - Step 1
+    return (
+      <div className="flex min-h-[180px] max-w-[280px] flex-row items-center justify-center gap-5 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-3xl animate-[data-flow-left_2s_ease-in-out_infinite]">📹</div>
+          <div className="w-12 h-0.5 bg-gradient-to-r from-[#10b981] to-transparent opacity-60"></div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-3xl animate-[data-flow-right_2s_ease-in-out_infinite]">☁️</div>
+          <div className="w-12 h-0.5 bg-gradient-to-l from-[#10b981] to-transparent opacity-60"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "cloud-link-paste") {
+    // Step 2: Coach pastes cloud links
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="text-2xl animate-[link-copy_2s_ease-in-out_infinite]">🔗</div>
+          <span className="text-lg text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+          <div className="text-2xl animate-[link-paste_2s_ease-in-out_infinite_0.3s]">📱</div>
+        </div>
+        <div className="w-full max-w-[200px] bg-[#f9fafb] rounded-lg p-3 border border-[#e5e7eb]">
+          <div className="text-[11px] text-[#6b7280] font-mono truncate animate-[text-type_2s_ease-in-out_infinite]">
+            drive.google.com/file/...
+          </div>
+        </div>
+        <div className="text-xs text-[#6b7280] uppercase tracking-wider mt-2">Link Pasted</div>
+      </div>
+    );
+  }
+
+  if (visual.type === "editor-notification") {
+    // Step 3: Editor receives notification
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="relative">
+          <div className="text-4xl animate-[notification-pulse_2s_ease-in-out_infinite]">🔔</div>
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#ef4444] rounded-full flex items-center justify-center text-white text-[10px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">
+            1
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-xs font-semibold text-[#1a1a1a]">New Session Ready</div>
+          <div className="text-[11px] text-[#6b7280] text-center animate-[notification-fade_2s_ease-in-out_infinite]">
+            Video footage available for download
+          </div>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <div className="text-2xl animate-[icon-pulse_2s_ease-in-out_infinite]">✂️</div>
+          <span className="text-sm text-[#6B7280]">Editor</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-download") {
+    // Step 4: Editor downloads video segments
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="text-3xl animate-[cloud-send_2s_ease-in-out_infinite]">☁️</div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">↓</span>
+          <div className="flex flex-col items-center gap-1">
+            <div className="text-3xl animate-[video-receive_2s_ease-in-out_infinite]">📹</div>
+            <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#10b981] to-transparent opacity-60 animate-[download-progress_2s_ease-in-out_infinite]"></div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 items-center">
+          <div className="text-xs font-semibold text-[#1a1a1a]">Downloading...</div>
+          <div className="text-[10px] text-[#6b7280]">Multiple video segments</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-editing-tool") {
+    // Step 5: Video editing tool animation
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4">
+          Video Editing Timeline
+        </div>
+        <div className="relative w-full h-20 bg-[#1a1a1a] rounded-lg mb-3 overflow-hidden">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full h-full flex items-center gap-1 px-2">
+              <div className="h-12 bg-[#4caf50] rounded opacity-80 animate-[clip-trim_2s_ease-in-out_infinite]"></div>
+              <div className="h-12 bg-[#4caf50] rounded opacity-80 animate-[clip-trim_2s_ease-in-out_infinite_0.2s]"></div>
+              <div className="h-12 bg-[#4caf50] rounded opacity-80 animate-[clip-trim_2s_ease-in-out_infinite_0.4s]"></div>
+            </div>
+          </div>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-[9px]">
+            Stitching clips...
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          <div className="text-2xl animate-[scissors-cut_2s_ease-in-out_infinite]">✂️</div>
+          <div className="text-[11px] text-[#6b7280]">Removing idle time</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "upload-to-app") {
+    // Step 6: Uploading to app animation
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-1">
+            <div className="text-3xl animate-[video-upload-start_2s_ease-in-out_infinite]">📹</div>
+            <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#10b981] to-transparent opacity-60 animate-[upload-progress_2s_ease-in-out_infinite]"></div>
+          </div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow-subtle_2s_ease-in-out_infinite]">→</span>
+          <div className="text-3xl animate-[app-receive_2s_ease-in-out_infinite]">📱</div>
+        </div>
+        <div className="flex flex-col gap-2 items-center">
+          <div className="text-xs font-semibold text-[#1a1a1a]">Uploading...</div>
+          <div className="text-[10px] text-[#6b7280]">Final session video</div>
+        </div>
+        <div className="w-full max-w-[180px] h-1 bg-[#e5e7eb] rounded-full overflow-hidden mt-2">
+          <div className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full animate-[progress-bar_2s_ease-in-out_infinite]" style={{ width: "75%" }}></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "student-notification") {
+    // Step 8: Student receives video and notification
+    return (
+      <div className="flex min-h-[220px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="relative">
+          <div className="text-4xl animate-[notification-pulse_2s_ease-in-out_infinite]">📱</div>
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#10b981] rounded-full flex items-center justify-center text-white text-[10px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">
+            ✓
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-xs font-semibold text-[#1a1a1a]">Session Replay Available</div>
+          <div className="text-[11px] text-[#6b7280] text-center animate-[notification-fade_2s_ease-in-out_infinite]">
+            Your coaching session is ready to watch
+          </div>
+        </div>
+        <div className="flex items-center gap-3 mt-2">
+          <div className="w-16 h-10 bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-lg animate-[video-thumbnail-appear_2s_ease-in-out_infinite]"></div>
+          <div className="flex flex-col gap-1">
+            <div className="text-[10px] font-semibold text-[#1a1a1a]">Session Video</div>
+            <div className="text-[9px] text-[#6b7280]">Ready to play</div>
+          </div>
         </div>
       </div>
     );

@@ -2,9 +2,9 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification";
 
-export type RoleCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor";
+export type RoleCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor" | "app";
 
 export interface FlowStepVisual {
   type: VisualType;
@@ -25,11 +25,11 @@ export interface FlowConfig {
   steps: FlowStep[];
   // Metadata for vanilla JS app compatibility
   roles?: RoleCategory[];
-  filter?: "coaching" | "content";
+  filter?: "coaching" | "content" | "internal";
   image?: string;
   features?: string[];
   badge?: string;
-  viewMode?: "Step-by-Step" | "Complete";
+  viewMode?: "Step-by-Step" | "Complete" | "step-by-step";
 }
 
 // Category labels for display
@@ -39,7 +39,8 @@ export const categoryLabels: Record<RoleCategory, string> = {
   'head-coach': 'Head Coach',
   'admin': 'Admin',
   'customer-success': 'Customer Success Manager',
-  'editor': 'Editor'
+  'editor': 'Editor',
+  'app': 'App'
 };
 
 // Role icons mapping - maps role names/abbreviations to their icons
@@ -56,7 +57,9 @@ export const roleIcons: Record<string, string> = {
   'customer-success': '💬',
   'CSM': '💬',
   'Editor': '✂️',
-  'editor': '✂️'
+  'editor': '✂️',
+  'App': '📱',
+  'app': '📱'
 };
 
 // Role slug for design system styling
@@ -344,6 +347,88 @@ export const flows: Record<string, FlowConfig> = {
         stepIcon: '✂️'
       },
     ],
+  },
+  "session-editing-and-upload": {
+    title: "Session Editing & Upload Process",
+    subtitle: "Recorded coaching sessions are processed, edited, uploaded and distributed via the app.",
+    roles: ['coach', 'editor', 'student'],
+    filter: "internal",
+    badge: "Internal System Flow",
+    viewMode: "Step-by-Step",
+    image: "app screenshots/session-library.png",
+    features: [
+      "Automatic Cloud Backup",
+      "Link-Based Transfer",
+      "Multi-Clip Stitching",
+      "Idle Time Removal",
+      "App Upload",
+      "Automated Notifications"
+    ],
+    steps: [
+      {
+        role: "Coach",
+        title: "Session Recordings Auto-Uploaded to Cloud",
+        description: "Immediately after the session ends, all recorded video segments are automatically backed up to Google Drive or Google Photos.",
+        visual: {
+          type: "animation"
+        },
+        stepIcon: "☁️"
+      },
+      {
+        role: "Coach",
+        title: "Coach Pastes Cloud Links into App",
+        description: "Coach copies the Google Drive or Google Photos links and pastes them into the session record inside the PB Academy app.",
+        visual: {
+          type: "cloud-link-paste"
+        },
+        stepIcon: "🔗"
+      },
+      {
+        role: "Editor",
+        title: "Editor Receives Notification",
+        description: "App automatically notifies the assigned editor that new session footage is ready for download and processing.",
+        visual: {
+          type: "editor-notification"
+        },
+        stepIcon: "🔔"
+      },
+      {
+        role: "Editor",
+        title: "Downloads Raw Video Segments",
+        description: "Editor downloads all raw video files from the provided cloud links and prepares them for editing.",
+        visual: {
+          type: "video-download"
+        },
+        stepIcon: "⬇️"
+      },
+      {
+        role: "Editor",
+        title: "Cuts Idle Time & Stitches Clips",
+        description: "Editor removes idle time, transitions, and off-court breaks. All usable segments are stitched into one clean structured session replay.",
+        visual: {
+          type: "video-editing-tool"
+        },
+        stepIcon: "✂️"
+      },
+      {
+        role: "Editor",
+        title: "Uploads Final Session to App",
+        description: "Final exported video file is uploaded to the PB Academy app and linked to the correct session and participants.",
+        visual: {
+          type: "upload-to-app"
+        },
+        stepIcon: "⬆️"
+      },
+      {
+        role: "Student",
+        title: "Automatic Notification Sent to Participants",
+        description: "Students and coach who participated in the session receive a push notification that the replay is available.",
+        visual: {
+          type: "student-notification"
+        },
+        stepIcon: "📣"
+      }
+    ]
   },
 };
 
