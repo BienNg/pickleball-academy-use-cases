@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Timeline } from "./Timeline";
 import { VisualPanel } from "./VisualPanel";
+import { PartyBadge } from "./PartyBadge";
 import { Button } from "@/components/ui/button";
 import type { FlowConfig } from "@/lib/flows";
+import { categoryLabels } from "@/lib/flows";
 
 export interface FlowLayoutProps {
   flow: FlowConfig;
@@ -23,6 +25,19 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
   const steps = flow.steps;
   const activeStep = steps[activeIndex];
   const hasVisual = activeStep?.visual != null;
+
+  // Map party slugs to display names for badges
+  const partyDisplayNames = useMemo(() => {
+    if (!flow.parties || flow.parties.length === 0) {
+      // Fallback: extract unique parties from steps
+      const uniqueParties = Array.from(new Set(steps.map(step => step.party)));
+      return uniqueParties;
+    }
+    // Map party slugs to display names
+    return flow.parties.map(partySlug => {
+      return categoryLabels[partySlug as keyof typeof categoryLabels] || partySlug;
+    });
+  }, [flow.parties, steps]);
 
   const handleStepSelect = useCallback((index: number) => {
     setActiveIndex(index);
@@ -49,7 +64,7 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
   return (
     <div className={cn("flex flex-col", className)}>
       {/* Header */}
-      <div className="mb-9 border-b border-[#E5E7EB] pb-7">
+      <div className="mb-4 border-b border-[#E5E7EB] pb-7">
         <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2 flex items-center gap-2">
           {flow.title}
           {flowSlug === "creating-session-success-clips" && (
@@ -64,8 +79,17 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
       </div>
 
       {/* View mode + step nav */}
-      <div className="mb-9 flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] py-5">
-        <div className="inline-flex rounded-lg bg-[#F3F4F6] p-1">
+      <div className="mb-9 flex flex-col gap-4 border-b border-[#E5E7EB] py-5">
+        {/* Party badges */}
+        {partyDisplayNames.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            {partyDisplayNames.map((partyName) => (
+              <PartyBadge key={partyName} party={partyName} />
+            ))}
+          </div>
+        )}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="inline-flex rounded-lg bg-[#F3F4F6] p-1">
           <button
             type="button"
             onClick={() => setViewMode("complete")}
@@ -94,6 +118,7 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
           >
             Step-by-Step
           </button>
+        </div>
         </div>
         {isStepByStep && (
           <div className="flex items-center gap-4">
