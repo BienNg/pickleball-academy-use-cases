@@ -2,29 +2,68 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import {
   LayoutDashboard,
-  UserPlus,
-  TrendingUp,
-  CheckCircle,
-  ShoppingCart,
   BarChart3,
   Bookmark,
   Search,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
-
-const navMain = [
-  { href: "/", label: "All Flows", icon: LayoutDashboard },
-  { href: "#onboarding", label: "Onboarding", icon: UserPlus },
-  { href: "#growth", label: "Growth", icon: TrendingUp },
-  { href: "#retention", label: "Retention", icon: CheckCircle },
-  { href: "#checkout", label: "Checkout", icon: ShoppingCart },
-];
+import { flows, getAllFlowSlugs } from "@/lib/flows";
 
 const navResearch = [
   { href: "#competitive", label: "Competitive Bench", icon: BarChart3 },
   { href: "#favorites", label: "Favorites", icon: Bookmark },
 ];
+
+function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: boolean }) {
+  const [open, setOpen] = useState(isHome || pathname.startsWith("/flows/"));
+  const slugs = getAllFlowSlugs();
+
+  return (
+    <div className="flex flex-col gap-0.5">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors w-full text-left ${
+          isHome ? "bg-primary/10 text-primary font-semibold" : "text-slate-600 hover:bg-slate-50"
+        }`}
+      >
+        <LayoutDashboard className="size-5 flex-shrink-0" />
+        <span className="text-sm flex-1">All Flows</span>
+        {open ? (
+          <ChevronDown className="size-4 flex-shrink-0 text-slate-400" />
+        ) : (
+          <ChevronRight className="size-4 flex-shrink-0 text-slate-400" />
+        )}
+      </button>
+      {open && (
+        <div className="flex flex-col gap-0.5 pl-6 mt-0.5 border-l border-slate-200 ml-3">
+          {slugs.map((slug) => {
+            const flow = flows[slug];
+            const href = `/flows/${slug}`;
+            const active = pathname === href;
+            return (
+              <Link
+                key={slug}
+                href={href}
+                className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
+                  active
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                {flow?.title ?? slug}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -54,23 +93,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 px-3">
               Main Library
             </p>
-            {navMain.map((item) => {
-              const active = item.href === "/" ? isHome : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-                    active
-                      ? "bg-primary/10 text-primary font-semibold"
-                      : "text-slate-600 hover:bg-slate-50"
-                  }`}
-                >
-                  <item.icon className="size-5" />
-                  <span className="text-sm">{item.label}</span>
-                </Link>
-              );
-            })}
+            <AllFlowsDropdown pathname={pathname} isHome={isHome} />
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-6 mb-2 px-3">
               Research
             </p>
@@ -102,7 +125,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-        <div className="flex-1 overflow-y-auto custom-scrollbar">{children}</div>
+        <div className="flex-1 overflow-y-auto custom-scrollbar bg-white">{children}</div>
       </main>
     </div>
   );
