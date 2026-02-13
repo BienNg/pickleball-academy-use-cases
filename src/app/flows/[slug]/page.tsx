@@ -34,6 +34,6 @@ export default async function FlowPage({ params }: FlowPageProps) {
   );
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getAllFlowSlugs().map((slug) => ({ slug }));
 }

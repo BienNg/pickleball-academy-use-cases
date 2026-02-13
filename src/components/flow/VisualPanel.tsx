@@ -147,7 +147,7 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
         </div>
         <div className="p-3 bg-[#f9fafb] rounded-lg min-h-[120px]">
           <div className="text-[13px] text-[#1a1a1a] leading-relaxed animate-[text-type_3s_ease-in-out_infinite]">
-            "Focus on keeping your wrist firm at contact..."
+            &quot;Focus on keeping your wrist firm at contact...&quot;
           </div>
           <div className="mt-3 flex gap-1 items-end h-[40px]">
             <div className="w-1.5 h-4 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite]" />
@@ -182,7 +182,7 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
     return (
       <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
         <div className="text-[13px] text-[#1a1a1a] text-center p-3 bg-[#f5f5f5] rounded-lg animate-[text-type_3s_ease-in-out_infinite]">
-          "The key improvement was maintaining wrist stability..."
+          &quot;The key improvement was maintaining wrist stability...&quot;
         </div>
         <div className="flex gap-1 items-end justify-center h-[60px]">
           <div className="w-1.5 h-5 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite]" />
@@ -202,7 +202,7 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
         <div className="w-full aspect-[9/16] bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-xl p-2 relative overflow-hidden">
           <div className="w-full h-full bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-lg" />
           <div className="absolute bottom-5 left-3 right-3 bg-black/70 text-white p-2 rounded-md text-[11px] animate-[subtitle-fade-in_2s_ease-in-out_infinite]">
-            "Focus on keeping your wrist firm..."
+            &quot;Focus on keeping your wrist firm...&quot;
           </div>
         </div>
         <div className="w-full h-1 bg-[#e0e0e0] rounded-full relative overflow-hidden">
@@ -692,7 +692,7 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
         <div className="relative w-full h-30 bg-[#1a1a1a] rounded-lg mb-4 overflow-hidden">
           <div className="w-full h-full bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]" />
           <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-[10px] opacity-0 animate-[subtitle-fade-in_1s_ease-out_0.5s_forwards]">
-            "Keep your wrist firm at contact"
+            &quot;Keep your wrist firm at contact&quot;
           </div>
         </div>
         <div className="relative w-full h-10 bg-[#f9fafb] rounded-lg overflow-hidden mb-2">
