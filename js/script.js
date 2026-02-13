@@ -58,11 +58,11 @@ function initializeApp() {
         
         searchInput?.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const useCaseSections = document.querySelectorAll('.use-case-section');
+            const userFlowSections = document.querySelectorAll('.user-flow-section');
             
-            useCaseSections.forEach(section => {
-                const title = section.querySelector('.use-case-title, .flow-item-title')?.textContent.toLowerCase() || '';
-                const description = section.querySelector('.use-case-description, .flow-item-description')?.textContent.toLowerCase() || '';
+            userFlowSections.forEach(section => {
+                const title = section.querySelector('.user-flow-title, .flow-item-title')?.textContent.toLowerCase() || '';
+                const description = section.querySelector('.user-flow-description, .flow-item-description')?.textContent.toLowerCase() || '';
                 
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
                     section.style.display = 'block';
@@ -73,21 +73,21 @@ function initializeApp() {
         });
     }
 
-    // Navigation filtering - each use case nav item filters to that specific use case
+    // Navigation filtering - each user flow nav item filters to that specific user flow
     function setupNavigationFiltering() {
-        const navItems = document.querySelectorAll('.nav-item[data-use-case-id]');
+        const navItems = document.querySelectorAll('.nav-item[data-user-flow-id]');
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 // Remove active state from all nav items
                 navItems.forEach(ni => ni.classList.remove('active'));
                 item.classList.add('active');
 
-                const useCaseId = item.dataset.useCaseId;
-                const useCaseSections = document.querySelectorAll('.use-case-section');
+                const userFlowId = item.dataset.userFlowId;
+                const userFlowSections = document.querySelectorAll('.user-flow-section');
                 
-                // Filter use case sections - show only the selected use case
-                useCaseSections.forEach(section => {
-                    if (section.dataset.useCaseId === useCaseId) {
+                // Filter user flow sections - show only the selected user flow
+                userFlowSections.forEach(section => {
+                    if (section.dataset.userFlowId === userFlowId) {
                         section.style.display = 'block';
                     } else {
                         section.style.display = 'none';
@@ -105,15 +105,15 @@ function initializeApp() {
                 if (e.target.classList.contains('expand-icon')) return;
                 
                 const category = item.dataset.category;
-                const useCaseSections = document.querySelectorAll('.use-case-section');
+                const userFlowSections = document.querySelectorAll('.user-flow-section');
                 
-                // Show all use cases that belong to this category (check parties)
-                useCaseSections.forEach(section => {
-                    const useCaseId = section.dataset.useCaseId;
-                    // Find the use case in allUseCases to check its parties
-                    const useCase = allUseCases.find(uc => uc.id === useCaseId);
+                // Show all user flows that belong to this category (check parties)
+                userFlowSections.forEach(section => {
+                    const userFlowId = section.dataset.userFlowId;
+                    // Find the user flow in allUserFlows to check its parties
+                    const userFlow = allUserFlows.find(uc => uc.id === userFlowId);
                     
-                    if (useCase && useCase.parties && useCase.parties.includes(category)) {
+                    if (userFlow && userFlow.parties && userFlow.parties.includes(category)) {
                         section.style.display = 'block';
                     } else {
                         section.style.display = 'none';
@@ -123,18 +123,18 @@ function initializeApp() {
         });
     }
 
-    // Store current step for each use case (shared between functions)
+    // Store current step for each user flow (shared between functions)
     const stepState = new Map();
 
     // Function to update step visibility (shared between toggle and navigation)
-    function updateStepVisibility(useCaseId, visibleStepCount) {
-        const stepsContainer = document.querySelector(`.flow-steps-container[data-use-case-id="${useCaseId}"]`);
-        const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+    function updateStepVisibility(userFlowId, visibleStepCount) {
+        const stepsContainer = document.querySelector(`.flow-steps-container[data-user-flow-id="${userFlowId}"]`);
+        const navControls = document.querySelector(`.step-navigation[data-user-flow-id="${userFlowId}"]`);
         
         if (!stepsContainer) return;
 
         const steps = stepsContainer.querySelectorAll('.flow-step');
-        const state = stepState.get(useCaseId);
+        const state = stepState.get(userFlowId);
         
         steps.forEach((step, index) => {
             if (index < visibleStepCount) {
@@ -147,7 +147,7 @@ function initializeApp() {
             // Auto-select the latest visible step (index is 0-based, visibleStepCount is 1-based)
             const latestStepIndex = visibleStepCount - 1;
             if (latestStepIndex >= 0 && latestStepIndex < steps.length) {
-                // Remove selected from all steps in this use case
+                // Remove selected from all steps in this user flow
                 steps.forEach(s => s.classList.remove('selected'));
                 
                 // Select the latest visible step
@@ -155,7 +155,7 @@ function initializeApp() {
                 latestStep.classList.add('selected');
                 
                 // Show/hide detail panel based on selected step
-                const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                const detailPanel = document.querySelector(`.step-detail-panel[data-user-flow-id="${userFlowId}"]`);
                 const hasMockup = latestStep.dataset.hasMockup === 'true';
                 if (detailPanel) {
                     if (hasMockup) {
@@ -199,7 +199,7 @@ function initializeApp() {
 
     // View mode toggle functionality
     function setupViewModeToggle() {
-        // Set default to "Complete" mode for all use cases
+        // Set default to "Complete" mode for all user flows
         document.querySelectorAll('.toggle-option[data-view-mode="complete"]').forEach(btn => {
             btn.classList.add('active');
         });
@@ -207,27 +207,27 @@ function initializeApp() {
         // Handle toggle button clicks
         document.querySelectorAll('.toggle-option').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const useCaseId = btn.dataset.useCaseId;
+                const userFlowId = btn.dataset.userFlowId;
                 const viewMode = btn.dataset.viewMode;
                 
-                // Update toggle buttons for this use case
-                document.querySelectorAll(`.toggle-option[data-use-case-id="${useCaseId}"]`).forEach(b => {
+                // Update toggle buttons for this user flow
+                document.querySelectorAll(`.toggle-option[data-user-flow-id="${userFlowId}"]`).forEach(b => {
                     b.classList.remove('active');
                 });
                 btn.classList.add('active');
                 
                 // Show/hide navigation controls
-                const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
-                const stepsContainer = document.querySelector(`.flow-steps-container[data-use-case-id="${useCaseId}"]`);
+                const navControls = document.querySelector(`.step-navigation[data-user-flow-id="${userFlowId}"]`);
+                const stepsContainer = document.querySelector(`.flow-steps-container[data-user-flow-id="${userFlowId}"]`);
                 
                 if (viewMode === 'step-by-step') {
                     navControls.style.display = 'flex';
                     // Reset to first step
-                    const state = stepState.get(useCaseId);
+                    const state = stepState.get(userFlowId);
                     if (state) {
                         state.current = 1;
                     }
-                    updateStepVisibility(useCaseId, 1);
+                    updateStepVisibility(userFlowId, 1);
                 } else {
                     navControls.style.display = 'none';
                     // Show all steps
@@ -237,7 +237,7 @@ function initializeApp() {
                     });
                     // Clear selection in complete mode
                     steps.forEach(step => step.classList.remove('selected'));
-                    const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                    const detailPanel = document.querySelector(`.step-detail-panel[data-user-flow-id="${userFlowId}"]`);
                     if (detailPanel) {
                         detailPanel.style.display = 'none';
                     }
@@ -249,23 +249,23 @@ function initializeApp() {
     // Step navigation functionality
     function setupStepNavigation() {
         // Initialize step state
-        document.querySelectorAll('.use-case-section[data-use-case-id]').forEach(section => {
-            const useCaseId = section.dataset.useCaseId;
+        document.querySelectorAll('.user-flow-section[data-user-flow-id]').forEach(section => {
+            const userFlowId = section.dataset.userFlowId;
             const stepsContainer = section.querySelector('.flow-steps-container');
             if (stepsContainer) {
                 const totalSteps = stepsContainer.querySelectorAll('.flow-step').length;
-                stepState.set(useCaseId, { current: 1, total: totalSteps });
+                stepState.set(userFlowId, { current: 1, total: totalSteps });
             }
         });
 
         // Next button handler
         document.querySelectorAll('.next-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const useCaseId = btn.dataset.useCaseId;
-                const state = stepState.get(useCaseId);
+                const userFlowId = btn.dataset.userFlowId;
+                const state = stepState.get(userFlowId);
                 if (state && state.current < state.total) {
                     state.current++;
-                    updateStepVisibility(useCaseId, state.current);
+                    updateStepVisibility(userFlowId, state.current);
                 }
             });
         });
@@ -273,11 +273,11 @@ function initializeApp() {
         // Previous button handler
         document.querySelectorAll('.prev-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const useCaseId = btn.dataset.useCaseId;
-                const state = stepState.get(useCaseId);
+                const userFlowId = btn.dataset.userFlowId;
+                const state = stepState.get(userFlowId);
                 if (state && state.current > 1) {
                     state.current--;
-                    updateStepVisibility(useCaseId, state.current);
+                    updateStepVisibility(userFlowId, state.current);
                 }
             });
         });
@@ -285,15 +285,15 @@ function initializeApp() {
 
     // Step click - show detail panel and highlight selected step
     function setupStepDetailSelection() {
-        document.querySelectorAll('.flow-step[data-use-case-id]').forEach(stepEl => {
+        document.querySelectorAll('.flow-step[data-user-flow-id]').forEach(stepEl => {
             stepEl.addEventListener('click', () => {
-                const useCaseId = stepEl.dataset.useCaseId;
+                const userFlowId = stepEl.dataset.userFlowId;
                 const stepIndex = parseInt(stepEl.dataset.stepIndex, 10);
                 const hasMockup = stepEl.dataset.hasMockup === 'true';
-                const state = stepState.get(useCaseId);
+                const state = stepState.get(userFlowId);
 
                 // Only allow selecting visible steps in step-by-step mode
-                const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+                const navControls = document.querySelector(`.step-navigation[data-user-flow-id="${userFlowId}"]`);
                 const isStepByStepMode = navControls && navControls.style.display !== 'none';
                 
                 if (isStepByStepMode && state) {
@@ -304,14 +304,14 @@ function initializeApp() {
                     }
                 }
 
-                // Remove selected from all steps in this use case
-                document.querySelectorAll(`.flow-step[data-use-case-id="${useCaseId}"]`).forEach(s => {
+                // Remove selected from all steps in this user flow
+                document.querySelectorAll(`.flow-step[data-user-flow-id="${userFlowId}"]`).forEach(s => {
                     s.classList.remove('selected');
                 });
                 stepEl.classList.add('selected');
 
                 // Show/hide detail panel based on whether this step has a mockup
-                const detailPanel = document.querySelector(`.step-detail-panel[data-use-case-id="${useCaseId}"]`);
+                const detailPanel = document.querySelector(`.step-detail-panel[data-user-flow-id="${userFlowId}"]`);
                 if (detailPanel) {
                     if (hasMockup) {
                         detailPanel.style.display = 'block';
@@ -354,35 +354,35 @@ function initializeApp() {
                 return;
             }
 
-            // Find the active use case section (the one currently visible)
-            const visibleUseCase = Array.from(document.querySelectorAll('.use-case-section')).find(section => {
+            // Find the active user flow section (the one currently visible)
+            const visibleUserFlow = Array.from(document.querySelectorAll('.user-flow-section')).find(section => {
                 return section.style.display !== 'none';
             });
 
-            if (!visibleUseCase) return;
+            if (!visibleUserFlow) return;
 
-            const useCaseId = visibleUseCase.dataset.useCaseId;
-            const navControls = document.querySelector(`.step-navigation[data-use-case-id="${useCaseId}"]`);
+            const userFlowId = visibleUserFlow.dataset.userFlowId;
+            const navControls = document.querySelector(`.step-navigation[data-user-flow-id="${userFlowId}"]`);
             
             // Only handle keyboard navigation in step-by-step mode
             if (!navControls || navControls.style.display === 'none') {
                 return;
             }
 
-            const state = stepState.get(useCaseId);
+            const state = stepState.get(userFlowId);
             if (!state) return;
 
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (state.current < state.total) {
                     state.current++;
-                    updateStepVisibility(useCaseId, state.current);
+                    updateStepVisibility(userFlowId, state.current);
                 }
             } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
                 e.preventDefault();
                 if (state.current > 1) {
                     state.current--;
-                    updateStepVisibility(useCaseId, state.current);
+                    updateStepVisibility(userFlowId, state.current);
                 }
             }
         });

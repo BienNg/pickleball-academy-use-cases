@@ -1,21 +1,21 @@
 /**
- * PB Academy – Use Case Section
+ * PB Academy – User Flow Section
  * Premium, structured, product-driven
  */
 
-.use-case-section {
+.user-flow-section {
     margin-bottom: 80px;
     padding-bottom: 64px;
     border-bottom: 1px solid #E5E7EB;
 }
 
-.use-case-section:last-child {
+.user-flow-section:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.use-case-header {
+.user-flow-header {
     display: flex;
     align-items: flex-start;
     gap: 20px;
@@ -24,18 +24,18 @@
     border-bottom: 1px solid #E5E7EB;
 }
 
-.use-case-icon {
+.user-flow-icon {
     font-size: 32px;
     flex-shrink: 0;
     line-height: 1;
 }
 
-.use-case-title-section {
+.user-flow-title-section {
     flex: 1;
     padding-top: 2px;
 }
 
-.use-case-title {
+.user-flow-title {
     font-size: 22px;
     font-weight: 600;
     color: #1E1E1E;
@@ -44,7 +44,7 @@
     line-height: 1.3;
 }
 
-.use-case-description {
+.user-flow-description {
     font-size: 15px;
     color: #6B7280;
     line-height: 1.5;

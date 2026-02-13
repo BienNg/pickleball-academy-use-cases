@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "PB Academy – User Flows",
-  description: "Pickleball Academy user flows and use cases",
+  description: "Pickleball Academy user flows",
 };
 
 export default function RootLayout({

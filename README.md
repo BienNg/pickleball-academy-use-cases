@@ -1,6 +1,6 @@
 # PB Academy – User Flows
 
-Modern Next.js app for Pickleball Academy user flows and use cases.
+Modern Next.js app for Pickleball Academy user flows.
 
 ## Stack
 

@@ -56,8 +56,8 @@ function getPartySlug(partyName) {
     return partySlugs[partyName] || 'editor';
 }
 
-// All use cases with parties property - each use case can belong to multiple categories
-const allUseCases = [
+// All user flows with parties property - each user flow can belong to multiple categories
+const allUserFlows = [
     {
         id: 'first-contact-academy',
         parties: ['student', 'customer-success', 'coach', 'content-manager'],
@@ -117,13 +117,13 @@ const allUseCases = [
 ];
 
 // Generate flowData grouped by parties (for backward compatibility and rendering)
-// Each use case appears in all categories it belongs to
+// Each user flow appears in all categories it belongs to
 function generateFlowData() {
     const categories = Object.keys(categoryLabels);
     const flowData = [];
     
     categories.forEach(category => {
-        const items = allUseCases.filter(useCase => useCase.parties.includes(category));
+        const items = allUserFlows.filter(userFlow => userFlow.parties.includes(category));
         if (items.length > 0) {
             flowData.push({
                 category: category,
