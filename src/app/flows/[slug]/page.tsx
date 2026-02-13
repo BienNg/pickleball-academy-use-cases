@@ -16,17 +16,19 @@ export default async function FlowPage({ params }: FlowPageProps) {
   return (
     <DashboardShell>
       <div className="p-8">
-        <div className="mb-6 flex items-center gap-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
-          >
-            <ChevronLeft className="size-4" />
-            Back
-          </Link>
-          <h2 className="text-lg font-semibold text-slate-900">{flow.title}</h2>
-        </div>
-        <FlowLayout flow={flow} flowSlug={slug} />
+        <FlowLayout 
+          flow={flow} 
+          flowSlug={slug}
+          backLink={
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+            >
+              <ChevronLeft className="size-4" />
+              Back
+            </Link>
+          }
+        />
       </div>
     </DashboardShell>
   );

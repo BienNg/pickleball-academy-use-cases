@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   LayoutDashboard,
-  Search,
   ChevronDown,
   ChevronRight,
   Users,
 } from "lucide-react";
 import { flows, getAllFlowSlugs, ALL_ROLES, getFlowSlugsByRole } from "@/lib/flows";
+import { cn } from "@/lib/utils";
 
 function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: boolean }) {
   const [open, setOpen] = useState(isHome || pathname.startsWith("/flows/"));
@@ -32,15 +32,21 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
         )}
       </button>
       {open && (
-        <div className="flex flex-col gap-0 pl-5 mt-0.5 border-l border-slate-200 ml-3">
+        <div className="flex flex-col gap-0 pl-1 mt-0.5 border-l border-slate-200 ml-3">
           {slugs.map((slug) => {
             const flow = flows[slug];
             const href = `/flows/${slug}`;
+            const isActive = pathname === href;
             return (
               <Link
                 key={slug}
                 href={href}
-                className="block px-3 py-1 rounded-lg text-xs transition-colors text-slate-600 hover:bg-slate-50"
+                className={cn(
+                  "block px-3 py-1 rounded-lg text-xs transition-colors",
+                  isActive
+                    ? "bg-slate-100 text-slate-900 font-medium"
+                    : "text-slate-600 hover:bg-slate-50"
+                )}
               >
                 {flow?.title ?? slug}
               </Link>
@@ -80,15 +86,21 @@ function RolesDropdown({ pathname }: { pathname: string }) {
               )}
             </button>
             {isOpen && flowSlugs.length > 0 && (
-              <div className="flex flex-col gap-0 pl-5 mt-0.5 border-l border-slate-200 ml-3">
+              <div className="flex flex-col gap-0 pl-1 mt-0.5 border-l border-slate-200 ml-3">
                 {flowSlugs.map((slug) => {
                   const flow = flows[slug];
                   const href = `/flows/${slug}`;
+                  const isActive = pathname === href;
                   return (
                     <Link
                       key={slug}
                       href={href}
-                      className="block px-3 py-1 rounded-lg text-xs transition-colors text-slate-600 hover:bg-slate-50"
+                      className={cn(
+                        "block px-3 py-1 rounded-lg text-xs transition-colors",
+                        isActive
+                          ? "bg-slate-100 text-slate-900 font-medium"
+                          : "text-slate-600 hover:bg-slate-50"
+                      )}
                     >
                       {flow?.title ?? slug}
                     </Link>
@@ -97,7 +109,7 @@ function RolesDropdown({ pathname }: { pathname: string }) {
               </div>
             )}
             {isOpen && flowSlugs.length === 0 && (
-              <div className="pl-5 mt-0.5 ml-3 border-l border-slate-200 py-1 px-3">
+              <div className="pl-1 mt-0.5 ml-3 border-l border-slate-200 py-1 px-3">
                 <p className="text-[10px] text-slate-400">No flows for this role yet</p>
               </div>
             )}
@@ -147,18 +159,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10">
-          <div className="flex-1 max-w-2xl">
-            <div className="relative group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 group-focus-within:text-primary transition-colors" />
-              <input
-                type="text"
-                placeholder="Search user flows, companies, or patterns..."
-                className="w-full bg-background-light border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400"
-              />
-            </div>
-          </div>
-        </header>
         <div className="flex-1 overflow-y-auto custom-scrollbar bg-white">{children}</div>
       </main>
     </div>

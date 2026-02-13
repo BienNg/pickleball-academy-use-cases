@@ -134,6 +134,33 @@ function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "coaching-transcript") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4">
+          Coaching Transcript
+        </div>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-2xl animate-[icon-pulse_2s_ease-in-out_infinite]">🎬</span>
+          <span className="animate-[arrow-flow_2s_ease-in-out_infinite] text-lg text-[#6B7280] opacity-80">→</span>
+          <span className="text-2xl animate-[icon-pulse_2s_ease-in-out_infinite_0.3s]">📝</span>
+        </div>
+        <div className="p-3 bg-[#f9fafb] rounded-lg min-h-[120px]">
+          <div className="text-[13px] text-[#1a1a1a] leading-relaxed animate-[text-type_3s_ease-in-out_infinite]">
+            "Focus on keeping your wrist firm at contact..."
+          </div>
+          <div className="mt-3 flex gap-1 items-end h-[40px]">
+            <div className="w-1.5 h-4 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite]" />
+            <div className="w-1.5 h-6 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.1s]" />
+            <div className="w-1.5 h-8 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.2s]" />
+            <div className="w-1.5 h-6 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.3s]" />
+            <div className="w-1.5 h-4 bg-[#10b981] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.4s]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (visual.type === "video-thumbnail") {
     return (
       <div className="mx-auto w-full max-w-[320px]">

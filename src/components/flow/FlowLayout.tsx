@@ -13,11 +13,12 @@ export interface FlowLayoutProps {
   flow: FlowConfig;
   flowSlug?: string;
   className?: string;
+  backLink?: React.ReactNode;
 }
 
 type ViewMode = "complete" | "step-by-step";
 
-export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
+export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("complete");
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
@@ -65,6 +66,7 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Header */}
       <div className="mb-4 border-b border-[#E5E7EB] pb-7">
+        {backLink && <div className="mb-2">{backLink}</div>}
         <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2 flex items-center gap-2">
           {flow.title}
           {flowSlug === "creating-session-success-clips" && (
