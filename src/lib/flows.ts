@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp";
 
 export interface FlowStepVisual {
   type: VisualType;
@@ -117,6 +117,54 @@ export const flows: Record<string, FlowConfig> = {
         title: "Sends to Student & Publishes",
         description: "CSM sends clip to the student and publishes it on social media channels.",
         visual: { type: "social-publish-screen" },
+      },
+    ],
+  },
+  "head-coach-creates-coaching-program": {
+    title: "Head Coach Creates Complete Coaching Program",
+    subtitle: "Designing a structured curriculum for every level, shot, and development stage",
+    steps: [
+      {
+        party: "Head Coach",
+        title: "Defines Player Level Framework",
+        description: "Head Coach defines all academy levels (Beginner → Advanced → Competitive) with clear performance criteria and progression standards.",
+        visual: { type: "curriculum-planning-board" },
+      },
+      {
+        party: "Head Coach",
+        title: "Breaks Down All Core Shots",
+        description: "Head Coach lists and categorizes every fundamental and advanced shot required across all levels.",
+        visual: { type: "shot-categories-animation" },
+      },
+      {
+        party: "Head Coach",
+        title: "Defines Technical Standards Per Shot",
+        description: "For each shot, the Head Coach defines technical checkpoints, common mistakes, and measurable improvement indicators.",
+        visual: { type: "shot-breakdown-document" },
+      },
+      {
+        party: "Head Coach",
+        title: "Designs Progressive Training Drills",
+        description: "Head Coach creates structured drills for each level and shot, progressing from isolated technique to game-realistic scenarios.",
+        visual: { type: "drill-progression" },
+      },
+      {
+        party: "Head Coach",
+        title: "Creates Evaluation & Level-Up Criteria",
+        description: "Head Coach defines standardized evaluation tests and level-up requirements for consistent player assessment.",
+        visual: { type: "assessment-checklist" },
+      },
+      {
+        party: "Head Coach",
+        title: "Compiles Master Coaching Document",
+        description: "All levels, shots, drills, and evaluation systems are consolidated into a structured master curriculum document.",
+        visual: { type: "master-document" },
+      },
+      {
+        party: "Head Coach",
+        title: "Program Approved & Locked",
+        description: "The complete coaching program is finalized and becomes the official academy training framework.",
+        visual: { type: "approval-stamp" },
       },
     ],
   },

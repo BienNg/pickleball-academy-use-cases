@@ -14,8 +14,8 @@ const partyIcons = {
     'student': '🎾',
     'Coach': '👨‍🏫',
     'coach': '👨‍🏫',
-    'Head Coach': '👨‍💼',
-    'head-coach': '👨‍💼',
+    'Head Coach': '🧠',
+    'head-coach': '🧠',
     'Admin': '⚙️',
     'admin': '⚙️',
     'Customer Success Manager': '💬',
@@ -178,6 +178,74 @@ const allUserFlows = [
             'AI voiceover integration',
             'Social media distribution',
             'Student engagement through progress clips'
+        ]
+    },
+    {
+        id: 'head-coach-creates-coaching-program',
+        parties: ['head-coach'],
+        filter: 'coaching',
+        image: '🧠',
+        title: 'Head Coach Creates Complete Coaching Program',
+        subtitle: 'Designing a structured curriculum for every level, shot, and development stage',
+        viewMode: 'Step-by-Step',
+        badge: 'Internal System Flow',
+        steps: [
+            {
+                party: 'Head Coach',
+                action: 'Defines Player Level Framework',
+                details: 'Head Coach defines all academy levels (Beginner → Advanced → Competitive) with clear performance criteria and progression standards.',
+                mockup: 'curriculum-planning-board',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Breaks Down All Core Shots',
+                details: 'Head Coach lists and categorizes every fundamental and advanced shot required across all levels.',
+                mockup: 'shot-categories-animation',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Defines Technical Standards Per Shot',
+                details: 'For each shot, the Head Coach defines technical checkpoints, common mistakes, and measurable improvement indicators.',
+                mockup: 'shot-breakdown-document',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Designs Progressive Training Drills',
+                details: 'Head Coach creates structured drills for each level and shot, progressing from isolated technique to game-realistic scenarios.',
+                mockup: 'drill-progression',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Creates Evaluation & Level-Up Criteria',
+                details: 'Head Coach defines standardized evaluation tests and level-up requirements for consistent player assessment.',
+                mockup: 'assessment-checklist',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Compiles Master Coaching Document',
+                details: 'All levels, shots, drills, and evaluation systems are consolidated into a structured master curriculum document.',
+                mockup: 'master-document',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Program Approved & Locked',
+                details: 'The complete coaching program is finalized and becomes the official academy training framework.',
+                mockup: 'approval-stamp',
+                stepIcon: '🧠'
+            }
+        ],
+        features: [
+            'Systematic curriculum design',
+            'Standardized coaching framework',
+            'Progressive skill development',
+            'Consistent evaluation criteria',
+            'Scalable training system'
         ]
     }
 ];

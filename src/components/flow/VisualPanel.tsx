@@ -232,6 +232,264 @@ function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "curriculum-planning-board") {
+    return (
+      <div className="mx-auto w-full max-w-[320px]">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-5">
+          Curriculum Planning Board
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm opacity-0 animate-[column-fade-in_0.6s_ease-out_0.1s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-1 opacity-0 animate-[label-slide-up_0.4s_ease-out_0.2s_forwards]">Level 1</div>
+            <div className="text-[10px] text-[#6b7280] mb-2 uppercase">Beginner</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.3s_forwards]">Basic grip & stance</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.4s_forwards]">Serve consistency</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.5s_forwards]">Court awareness</div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm border-2 border-[#10b981] shadow-[#10b981]/15 opacity-0 animate-[column-fade-in_0.6s_ease-out_0.3s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-1 opacity-0 animate-[label-slide-up_0.4s_ease-out_0.4s_forwards]">Level 2</div>
+            <div className="text-[10px] text-[#6b7280] mb-2 uppercase">Advanced</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.5s_forwards]">Shot placement</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.6s_forwards]">Rally control</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.7s_forwards]">Strategy basics</div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm opacity-0 animate-[column-fade-in_0.6s_ease-out_0.5s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-1 opacity-0 animate-[label-slide-up_0.4s_ease-out_0.6s_forwards]">Level 3</div>
+            <div className="text-[10px] text-[#6b7280] mb-2 uppercase">Competitive</div>
+            <div className="flex flex-col gap-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.7s_forwards]">Advanced tactics</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.8s_forwards]">Match play</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded opacity-0 animate-[benchmark-fade-in_0.4s_ease-out_0.9s_forwards]">Performance metrics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "shot-categories-animation") {
+    return (
+      <div className="flex min-h-[280px] flex-col items-center justify-center gap-8">
+        <div className="text-xs font-semibold text-[#6b7280] opacity-0 animate-[core-fade-in_0.5s_ease-out_forwards]">
+          Curriculum Core
+        </div>
+        <div className="relative w-[200px] h-[200px]">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.1s_forwards]">
+            Serve
+          </div>
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.2s_forwards]">
+            Return
+          </div>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.3s_forwards]">
+            Dink
+          </div>
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.4s_forwards]">
+            Volley
+          </div>
+          <div className="absolute top-[20%] right-[20%] text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.5s_forwards]">
+            Drive
+          </div>
+          <div className="absolute bottom-[20%] right-[20%] text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.6s_forwards]">
+            Reset
+          </div>
+          <div className="absolute bottom-[20%] left-[20%] text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.7s_forwards]">
+            Transition
+          </div>
+          <div className="absolute top-[20%] left-[20%] text-[10px] font-semibold text-[#1a1a1a] bg-white px-2.5 py-1.5 rounded-lg shadow-sm opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.8s_forwards]">
+            Footwork
+          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-semibold text-white bg-[#10b981] px-2.5 py-1.5 rounded-lg shadow-sm z-10 opacity-0 animate-[shot-expand_0.5s_cubic-bezier(0.34,1.56,0.64,1)_0.9s_forwards]">
+            Strategy
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "shot-breakdown-document") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-sm font-semibold text-[#1a1a1a] mb-4 pb-3 border-b-2 border-[#e5e7eb] animate-[document-header-slide_0.4s_ease-out]">
+          Shot Breakdown Document
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.1s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Technique</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.2s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Proper grip position
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.3s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Body positioning
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.4s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Follow-through motion
+              </div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.2s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Key Cues</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.3s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Keep wrist firm
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.4s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Contact point timing
+              </div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.3s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Common Errors</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.4s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Over-rotating
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.5s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Late contact
+              </div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.4s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Evaluation Criteria</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-5 relative opacity-0 animate-[checklist-appear_0.4s_ease-out_0.2s_forwards]">
+                <span className="absolute left-0 top-0.5 w-3 h-3 bg-[#10b981] rounded opacity-0 animate-[checkmark-animate_0.3s_ease-out_0.1s_forwards]"></span>
+                Accuracy test
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-5 relative opacity-0 animate-[checklist-appear_0.4s_ease-out_0.3s_forwards]">
+                <span className="absolute left-0 top-0.5 w-3 h-3 bg-[#10b981] rounded opacity-0 animate-[checkmark-animate_0.3s_ease-out_0.2s_forwards]"></span>
+                Consistency score
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "drill-progression") {
+    return (
+      <div className="mx-auto w-full max-w-[360px]">
+        <div className="flex items-center justify-center gap-2 mb-5 text-[11px] font-semibold text-[#6b7280]">
+          <span className="px-2.5 py-1 bg-[#10b981] text-white rounded-md animate-[level-indicator-pulse_2s_ease-in-out_infinite]">Level 1</span>
+          <span className="text-[#9ca3af] animate-[arrow-slide_1.5s_ease-in-out_infinite]">→</span>
+          <span className="px-2.5 py-1 bg-[#f3f4f6] rounded-md">Level 2</span>
+          <span className="text-[#9ca3af] animate-[arrow-slide_1.5s_ease-in-out_infinite]">→</span>
+          <span className="px-2.5 py-1 bg-[#f3f4f6] rounded-md">Level 3</span>
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1 bg-white rounded-xl p-4 shadow-sm opacity-0 animate-[drill-swipe_0.6s_ease-out_0.1s_forwards]">
+            <div className="text-[10px] font-semibold text-[#6b7280] uppercase tracking-wider mb-3 text-center">Isolated Repetition</div>
+            <div className="w-full h-24 bg-gradient-to-br from-[#e5e7eb] to-[#f3f4f6] rounded-lg relative overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#10b981] rounded-full opacity-30 animate-[drill-pulse_2s_ease-in-out_infinite]"></div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-4 shadow-sm opacity-0 animate-[drill-swipe_0.6s_ease-out_0.3s_forwards]">
+            <div className="text-[10px] font-semibold text-[#6b7280] uppercase tracking-wider mb-3 text-center">Controlled Rally</div>
+            <div className="w-full h-24 bg-gradient-to-br from-[#e5e7eb] to-[#f3f4f6] rounded-lg relative overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#10b981] rounded-full opacity-30 animate-[drill-pulse_2s_ease-in-out_infinite]"></div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-4 shadow-sm opacity-0 animate-[drill-swipe_0.6s_ease-out_0.5s_forwards]">
+            <div className="text-[10px] font-semibold text-[#6b7280] uppercase tracking-wider mb-3 text-center">Live Point Scenario</div>
+            <div className="w-full h-24 bg-gradient-to-br from-[#e5e7eb] to-[#f3f4f6] rounded-lg relative overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#10b981] rounded-full opacity-30 animate-[drill-pulse_2s_ease-in-out_infinite]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "assessment-checklist") {
+    return (
+      <div className="mx-auto w-full max-w-[320px]">
+        <div className="text-xs font-semibold text-[#1a1a1a] mb-5 text-center">Evaluation & Level-Up Criteria</div>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 opacity-0 animate-[metric-fade-in_0.5s_ease-out_0.1s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider">Skill Test Score</div>
+            <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full w-0 animate-[progress-fill-animate_1.5s_ease-out_0.3s_forwards]" style={{ width: "75%" }}></div>
+            </div>
+            <div className="text-[11px] font-semibold text-[#1a1a1a] text-right">75/100</div>
+          </div>
+          <div className="flex flex-col gap-2 opacity-0 animate-[metric-fade-in_0.5s_ease-out_0.2s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider">Consistency Rate</div>
+            <div className="w-full h-2 bg-[#e5e7eb] rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full w-0 animate-[progress-fill-animate_1.5s_ease-out_0.4s_forwards]" style={{ width: "68%" }}></div>
+            </div>
+            <div className="text-[11px] font-semibold text-[#1a1a1a] text-right">68%</div>
+          </div>
+          <div className="flex items-center justify-between opacity-0 animate-[metric-fade-in_0.5s_ease-out_0.3s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider">Pass Threshold</div>
+            <div className="flex items-center gap-2">
+              <span className="text-base text-[#10b981] opacity-0 scale-0 animate-[checkmark-pulse_1s_ease-out_0.5s_forwards]">✓</span>
+              <span className="text-[11px] font-semibold text-[#1a1a1a]">Met</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "master-document") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="flex flex-col items-center mb-6 pb-4 border-b-2 border-[#e5e7eb] animate-[branding-fade-in_0.5s_ease-out]">
+          <div className="text-3xl mb-2 animate-[logo-appear_0.6s_ease-out]">🏫</div>
+          <div className="text-sm font-semibold text-[#1a1a1a] text-center">Master Coaching Curriculum</div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="opacity-0 animate-[toc-expand_0.5s_ease-out_0.1s_forwards]">
+            <div className="text-xs font-semibold text-white bg-[#10b981] px-3 py-2 rounded-md mb-2">Levels</div>
+            <div className="pl-3 flex flex-col gap-1.5 max-h-0 overflow-hidden animate-[toc-items-expand_0.4s_ease-out_0.3s_forwards]" style={{ maxHeight: "200px" }}>
+              <div className="text-[11px] text-[#6b7280] p-1 rounded opacity-0 animate-[toc-item-fade_0.3s_ease-out_0.4s_forwards]">Level 1: Beginner</div>
+              <div className="text-[11px] text-[#6b7280] p-1 rounded opacity-0 animate-[toc-item-fade_0.3s_ease-out_0.5s_forwards]">Level 2: Advanced</div>
+              <div className="text-[11px] text-[#6b7280] p-1 rounded opacity-0 animate-[toc-item-fade_0.3s_ease-out_0.6s_forwards]">Level 3: Competitive</div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[toc-expand_0.5s_ease-out_0.2s_forwards]">
+            <div className="text-xs font-semibold text-[#1a1a1a] bg-[#f9fafb] px-3 py-2 rounded-md">Shot Library</div>
+          </div>
+          <div className="opacity-0 animate-[toc-expand_0.5s_ease-out_0.3s_forwards]">
+            <div className="text-xs font-semibold text-[#1a1a1a] bg-[#f9fafb] px-3 py-2 rounded-md">Drill Library</div>
+          </div>
+          <div className="opacity-0 animate-[toc-expand_0.5s_ease-out_0.4s_forwards]">
+            <div className="text-xs font-semibold text-[#1a1a1a] bg-[#f9fafb] px-3 py-2 rounded-md">Evaluation System</div>
+          </div>
+          <div className="opacity-0 animate-[toc-expand_0.5s_ease-out_0.5s_forwards]">
+            <div className="text-xs font-semibold text-[#1a1a1a] bg-[#f9fafb] px-3 py-2 rounded-md">Coaching Standards</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "approval-stamp") {
+    return (
+      <div className="flex min-h-[280px] items-center justify-center">
+        <div className="relative w-[200px] h-[200px] bg-white rounded-xl shadow-lg flex items-center justify-center animate-[document-final-appear_0.6s_ease-out]">
+          <div className="absolute text-7xl opacity-5 animate-[logo-bg-fade_1s_ease-out_forwards]">🏫</div>
+          <div className="text-lg font-bold text-[#10b981] uppercase tracking-widest relative z-10 opacity-0 scale-90 animate-[stamp-appear_0.5s_ease-out_0.3s_forwards]">
+            Approved
+          </div>
+          <div className="absolute inset-[-10px] rounded-2xl bg-gradient-radial from-[#10b981]/20 to-transparent opacity-0 animate-[glow-pulse_2s_ease-in-out_infinite_0.8s]"></div>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
 

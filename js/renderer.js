@@ -328,6 +328,201 @@ function renderFlowSections() {
                                     </div>
                                 </div>
                             `;
+                        } else if (step.mockup === 'curriculum-planning-board') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="curriculum-planning-mockup">
+                                        <div class="curriculum-header">Curriculum Planning Board</div>
+                                        <div class="level-columns">
+                                            <div class="level-column level-column-1">
+                                                <div class="level-label">Level 1</div>
+                                                <div class="level-subtitle">Beginner</div>
+                                                <div class="level-benchmarks">
+                                                    <div class="benchmark-item">Basic grip & stance</div>
+                                                    <div class="benchmark-item">Serve consistency</div>
+                                                    <div class="benchmark-item">Court awareness</div>
+                                                </div>
+                                            </div>
+                                            <div class="level-column level-column-2">
+                                                <div class="level-label">Level 2</div>
+                                                <div class="level-subtitle">Advanced</div>
+                                                <div class="level-benchmarks">
+                                                    <div class="benchmark-item">Shot placement</div>
+                                                    <div class="benchmark-item">Rally control</div>
+                                                    <div class="benchmark-item">Strategy basics</div>
+                                                </div>
+                                            </div>
+                                            <div class="level-column level-column-3">
+                                                <div class="level-label">Level 3</div>
+                                                <div class="level-subtitle">Competitive</div>
+                                                <div class="level-benchmarks">
+                                                    <div class="benchmark-item">Advanced tactics</div>
+                                                    <div class="benchmark-item">Match play</div>
+                                                    <div class="benchmark-item">Performance metrics</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'shot-categories-animation') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="shot-categories-mockup">
+                                        <div class="curriculum-core">Curriculum Core</div>
+                                        <div class="shot-categories-radial">
+                                            <div class="shot-category shot-serve">Serve</div>
+                                            <div class="shot-category shot-return">Return</div>
+                                            <div class="shot-category shot-dink">Dink</div>
+                                            <div class="shot-category shot-volley">Volley</div>
+                                            <div class="shot-category shot-drive">Drive</div>
+                                            <div class="shot-category shot-reset">Reset</div>
+                                            <div class="shot-category shot-transition">Transition</div>
+                                            <div class="shot-category shot-footwork">Footwork</div>
+                                            <div class="shot-category shot-strategy">Strategy</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'shot-breakdown-document') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="shot-breakdown-mockup">
+                                        <div class="document-header">Shot Breakdown Document</div>
+                                        <div class="document-section">
+                                            <div class="section-title">Technique</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Proper grip position</div>
+                                                <div class="bullet-point">Body positioning</div>
+                                                <div class="bullet-point">Follow-through motion</div>
+                                            </div>
+                                        </div>
+                                        <div class="document-section">
+                                            <div class="section-title">Key Cues</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Keep wrist firm</div>
+                                                <div class="bullet-point">Contact point timing</div>
+                                            </div>
+                                        </div>
+                                        <div class="document-section">
+                                            <div class="section-title">Common Errors</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Over-rotating</div>
+                                                <div class="bullet-point">Late contact</div>
+                                            </div>
+                                        </div>
+                                        <div class="document-section">
+                                            <div class="section-title">Evaluation Criteria</div>
+                                            <div class="section-content">
+                                                <div class="checklist-item">✓ Accuracy test</div>
+                                                <div class="checklist-item">✓ Consistency score</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'drill-progression') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="drill-progression-mockup">
+                                        <div class="drill-level-indicator">
+                                            <span class="level-indicator active">Level 1</span>
+                                            <span class="level-arrow">→</span>
+                                            <span class="level-indicator">Level 2</span>
+                                            <span class="level-arrow">→</span>
+                                            <span class="level-indicator">Level 3</span>
+                                        </div>
+                                        <div class="drill-panels">
+                                            <div class="drill-panel drill-isolated">
+                                                <div class="drill-label">Isolated Repetition</div>
+                                                <div class="drill-visual"></div>
+                                            </div>
+                                            <div class="drill-panel drill-controlled">
+                                                <div class="drill-label">Controlled Rally</div>
+                                                <div class="drill-visual"></div>
+                                            </div>
+                                            <div class="drill-panel drill-live">
+                                                <div class="drill-label">Live Point Scenario</div>
+                                                <div class="drill-visual"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'assessment-checklist') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="assessment-checklist-mockup">
+                                        <div class="assessment-header">Evaluation & Level-Up Criteria</div>
+                                        <div class="assessment-metrics">
+                                            <div class="metric-item">
+                                                <div class="metric-label">Skill Test Score</div>
+                                                <div class="progress-bar-container">
+                                                    <div class="progress-bar-fill progress-75"></div>
+                                                </div>
+                                                <div class="metric-score">75/100</div>
+                                            </div>
+                                            <div class="metric-item">
+                                                <div class="metric-label">Consistency Rate</div>
+                                                <div class="progress-bar-container">
+                                                    <div class="progress-bar-fill progress-68"></div>
+                                                </div>
+                                                <div class="metric-score">68%</div>
+                                            </div>
+                                            <div class="metric-item">
+                                                <div class="metric-label">Pass Threshold</div>
+                                                <div class="checkmark-indicator">✓</div>
+                                                <div class="metric-score">Met</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'master-document') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="master-document-mockup">
+                                        <div class="document-branding">
+                                            <div class="academy-logo">🏫</div>
+                                            <div class="document-title">Master Coaching Curriculum</div>
+                                        </div>
+                                        <div class="document-toc">
+                                            <div class="toc-section toc-expanded">
+                                                <div class="toc-header">Levels</div>
+                                                <div class="toc-items">
+                                                    <div class="toc-item">Level 1: Beginner</div>
+                                                    <div class="toc-item">Level 2: Advanced</div>
+                                                    <div class="toc-item">Level 3: Competitive</div>
+                                                </div>
+                                            </div>
+                                            <div class="toc-section">
+                                                <div class="toc-header">Shot Library</div>
+                                            </div>
+                                            <div class="toc-section">
+                                                <div class="toc-header">Drill Library</div>
+                                            </div>
+                                            <div class="toc-section">
+                                                <div class="toc-header">Evaluation System</div>
+                                            </div>
+                                            <div class="toc-section">
+                                                <div class="toc-header">Coaching Standards</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'approval-stamp') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="approval-stamp-mockup">
+                                        <div class="document-final">
+                                            <div class="academy-logo-bg">🏫</div>
+                                            <div class="approval-stamp">APPROVED</div>
+                                            <div class="approval-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
                         }
                         
                         return mockupContent;
@@ -336,13 +531,18 @@ function renderFlowSections() {
             ` : '';
 
             const dailyBadge = item.id === 'creating-session-success-clips' ? '<span class="daily-badge">Daily</span>' : '';
+            const systemBadge = item.badge ? `<span class="system-badge">${item.badge}</span>` : '';
+            const subtitle = item.subtitle ? `<p class="user-flow-subtitle">${item.subtitle}</p>` : '';
+            const description = item.description ? `<p class="user-flow-description">${item.description}</p>` : '';
             return `
                 <div class="user-flow-section" data-user-flow-id="${item.id}">
                     <div class="user-flow-header">
                         <div class="user-flow-icon">${item.image}</div>
                         <div class="user-flow-title-section">
                             <h2 class="user-flow-title">${item.title}${dailyBadge}</h2>
-                            <p class="user-flow-description">${item.description}</p>
+                            ${subtitle}
+                            ${description}
+                            ${systemBadge}
                         </div>
                     </div>
                     <div class="view-mode-controls">
