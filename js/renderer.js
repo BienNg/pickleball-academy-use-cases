@@ -157,6 +157,38 @@ function renderFlowSections() {
                         } else if (step.mockup === 'phone-app' && step.mockupImage) {
                             const altText = step.action || 'App Screenshot';
                             mockupContent = renderPhoneMockup(step.mockupImage, altText, index);
+                        } else if (step.mockup === 'camera-upload') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="animation-mockup camera-upload-animation">
+                                        <div class="anim-icon anim-camera">📹</div>
+                                        <div class="anim-arrow">→</div>
+                                        <div class="anim-icon anim-cloud">☁️</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'payment-editor') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="animation-mockup payment-editor-animation">
+                                        <div class="anim-icon anim-payment">💳</div>
+                                        <div class="anim-arrow">→</div>
+                                        <div class="anim-icon anim-recordings">📁</div>
+                                        <span class="anim-label">Editor</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'editor-upload') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="animation-mockup editor-upload-animation">
+                                        <div class="anim-icon anim-edit">✂️</div>
+                                        <div class="anim-arrow">→</div>
+                                        <div class="anim-icon anim-phone">📱</div>
+                                        <span class="anim-label">App</span>
+                                    </div>
+                                </div>
+                            `;
                         }
                         
                         return mockupContent;

@@ -169,8 +169,10 @@ function initializeApp() {
                         if (selectedMockup) {
                             selectedMockup.style.display = 'block';
                         }
+                        alignDetailPanelWithStep(detailPanel, latestStep);
                     } else {
                         detailPanel.style.display = 'none';
+                        detailPanel.style.transform = '';
                     }
                 }
                 
@@ -325,12 +327,24 @@ function initializeApp() {
                         if (selectedMockup) {
                             selectedMockup.style.display = 'block';
                         }
+                        alignDetailPanelWithStep(detailPanel, stepEl);
                     } else {
                         detailPanel.style.display = 'none';
+                        detailPanel.style.transform = '';
                     }
                 }
             });
         });
+    }
+
+    function alignDetailPanelWithStep(detailPanel, stepEl) {
+        if (!detailPanel || !stepEl) return;
+        const layout = stepEl.closest('.flow-steps-layout');
+        if (!layout) return;
+        const layoutRect = layout.getBoundingClientRect();
+        const stepRect = stepEl.getBoundingClientRect();
+        const offsetTop = stepRect.top - layoutRect.top;
+        detailPanel.style.transform = `translateY(${offsetTop}px)`;
     }
 
     // Keyboard navigation for step-by-step mode

@@ -67,15 +67,18 @@ const allUseCases = [
             },
             {
                 party: 'Coach',
-                action: 'Records the session and sends the recording to CSM'
+                action: 'Records the session and sends the recording to CSM',
+                mockup: 'camera-upload'
             },
             {
                 party: 'CSM',
-                action: 'Checks if student has paid and sends the Recordings to Editor'
+                action: 'Checks if student has paid and sends the Recordings to Editor',
+                mockup: 'payment-editor'
             },
             {
                 party: 'Editor',
-                action: 'Uploads Recordings to App'
+                action: 'Uploads Recordings to App',
+                mockup: 'editor-upload'
             }
         ],
         features: [

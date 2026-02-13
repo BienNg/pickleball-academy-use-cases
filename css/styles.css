@@ -465,9 +465,9 @@ body {
 
 .step-detail-panel {
     flex-shrink: 0;
-    position: sticky;
-    top: 40px;
     width: 320px;
+    align-self: flex-start;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flow-step {
@@ -773,6 +773,141 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+/* Animation mockups (camera-upload, payment-editor, editor-upload) */
+.animation-mockup {
+    width: 280px;
+    min-height: 200px;
+    background: linear-gradient(145deg, #f8f8f8 0%, #eee 100%);
+    border-radius: 24px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.animation-mockup .anim-icon {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.animation-mockup .anim-arrow {
+    font-size: 24px;
+    color: #666;
+    opacity: 0.9;
+}
+
+.animation-mockup .anim-label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: -8px;
+}
+
+/* Camera → Cloud */
+.camera-upload-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.camera-upload-animation .anim-camera {
+    animation: camera-pulse 2s ease-in-out infinite;
+}
+
+.camera-upload-animation .anim-arrow {
+    animation: arrow-flow 2s ease-in-out infinite;
+}
+
+.camera-upload-animation .anim-cloud {
+    animation: cloud-receive 2s ease-in-out infinite;
+}
+
+@keyframes camera-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.9; }
+}
+
+@keyframes arrow-flow {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(4px); }
+}
+
+@keyframes cloud-receive {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* Payment → Editor */
+.payment-editor-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-editor-animation .anim-payment {
+    animation: payment-complete 2.2s ease-in-out infinite;
+}
+
+.payment-editor-animation .anim-arrow {
+    animation: arrow-flow 2.2s ease-in-out infinite 0.2s;
+}
+
+.payment-editor-animation .anim-recordings {
+    animation: send-to-editor 2.2s ease-in-out infinite 0.4s;
+}
+
+@keyframes payment-complete {
+    0%, 100% { transform: scale(1) rotate(-2deg); }
+    40% { transform: scale(1.05) rotate(0deg); }
+    50%, 100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes send-to-editor {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* Editor → App */
+.editor-upload-animation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.editor-upload-animation .anim-edit {
+    animation: edit-video 2.4s ease-in-out infinite;
+}
+
+.editor-upload-animation .anim-arrow {
+    animation: arrow-flow 2.4s ease-in-out infinite 0.3s;
+}
+
+.editor-upload-animation .anim-phone {
+    animation: upload-to-app 2.4s ease-in-out infinite 0.6s;
+}
+
+@keyframes edit-video {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    35% { transform: scale(1.06) rotate(3deg); }
+    70% { transform: scale(1.06) rotate(-2deg); }
+}
+
+@keyframes upload-to-app {
+    0% { transform: scale(0.92); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.92); opacity: 0.7; }
 }
 
 .step-mockup {
