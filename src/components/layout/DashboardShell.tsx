@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard,
   ChevronDown,
@@ -13,15 +13,37 @@ import { flows, getAllFlowSlugs, ALL_ROLES, getFlowSlugsByRole } from "@/lib/flo
 import { cn } from "@/lib/utils";
 
 function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: boolean }) {
-  // Only open initially if on home page, not when navigating to flows
-  const [open, setOpen] = useState(isHome);
   const slugs = getAllFlowSlugs();
+  const STORAGE_KEY = "allFlowsDropdownOpen";
+  
+  // Initialize state from localStorage or isHome
+  const getInitialState = () => {
+    if (typeof window === "undefined") return isHome;
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored !== null) {
+      return stored === "true";
+    }
+    return isHome;
+  };
+  
+  const [open, setOpen] = useState(getInitialState);
+
+  // Persist state to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, String(open));
+    }
+  }, [open]);
+
+  const handleToggle = () => {
+    setOpen((o) => !o);
+  };
 
   return (
     <div className="flex flex-col gap-0.5">
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={handleToggle}
         className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors w-full text-left text-slate-600 hover:bg-slate-50"
       >
         <LayoutDashboard className="size-4 flex-shrink-0" />
@@ -45,6 +67,8 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
                 onClick={(e) => {
                   // Prevent the click from closing the dropdown
                   e.stopPropagation();
+                  // Keep dropdown open when clicking a link
+                  setOpen(true);
                 }}
                 className={cn(
                   "block px-3 py-1 rounded-lg text-xs transition-colors",
