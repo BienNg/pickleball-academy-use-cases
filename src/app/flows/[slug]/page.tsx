@@ -7,18 +7,32 @@ import { ChevronLeft } from "lucide-react";
 
 export interface FlowPageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function FlowPage({ params }: FlowPageProps) {
+export default async function FlowPage({ params, searchParams }: FlowPageProps) {
   const { slug } = await params;
+  const resolved = await searchParams;
+  const stepParam = resolved?.step;
+  const initialStepIndex =
+    typeof stepParam === "string"
+      ? Math.max(0, Math.min(parseInt(stepParam, 10) - 1, 999))
+      : undefined;
+
   const flow = getFlowBySlug(slug);
   if (!flow) notFound();
+  const clampedStep =
+    initialStepIndex != null && !isNaN(initialStepIndex)
+      ? Math.min(initialStepIndex, flow.steps.length - 1)
+      : undefined;
+
   return (
     <DashboardShell>
       <div className="p-8">
-        <FlowLayout 
-          flow={flow} 
+        <FlowLayout
+          flow={flow}
           flowSlug={slug}
+          initialStepIndex={clampedStep}
           backLink={
             <Link
               href="/"

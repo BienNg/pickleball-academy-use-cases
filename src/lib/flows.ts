@@ -11,12 +11,24 @@ export interface FlowStepVisual {
   src?: string;
 }
 
+/** Reference to another flow and step (e.g. escalation path) */
+export interface StepBranchRef {
+  /** Flow slug (e.g. "student-requests-training-session-scenario-2") */
+  flowSlug: string;
+  /** Step index (0-based, e.g. 4 for Step 5) */
+  stepIndex: number;
+}
+
 export interface FlowStep {
   role: string;
   title: string;
   description?: string;
   visual?: FlowStepVisual;
   stepIcon?: string;
+  /** Optional note shown below the visual (e.g. branch/escalation hint) */
+  branchNote?: string;
+  /** Optional reference to alternative scenario and step when branching */
+  branchRef?: StepBranchRef;
 }
 
 export interface FlowConfig {
@@ -483,7 +495,9 @@ export const flows: Record<string, FlowConfig> = {
         visual: {
           type: "coach-request-notification"
         },
-        stepIcon: "🏅"
+        stepIcon: "🏅",
+        branchNote: "If the coach confirms within 10 minutes, continue with Step 5. If not, see Step 5 of Student Requests Training Session (Scenario 2).",
+        branchRef: { flowSlug: "student-requests-training-session-scenario-2", stepIndex: 4 }
       },
       {
         role: "Coach",
@@ -560,7 +574,9 @@ export const flows: Record<string, FlowConfig> = {
         visual: {
           type: "coach-request-notification"
         },
-        stepIcon: "⏳"
+        stepIcon: "⏳",
+        branchNote: "If the coach does not respond within 10 minutes, continue with Step 5. If the coach responds, see Step 5 of Student Requests Training Session (Scenario 1).",
+        branchRef: { flowSlug: "student-requests-training-session-scenario-1", stepIndex: 4 }
       },
       {
         role: "CSM",

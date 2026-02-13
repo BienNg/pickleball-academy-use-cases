@@ -1,27 +1,42 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Timeline } from "./Timeline";
 import { VisualPanel } from "./VisualPanel";
 import { RoleBadge } from "./RoleBadge";
 import { Button } from "@/components/ui/button";
 import type { FlowConfig } from "@/lib/flows";
-import { categoryLabels } from "@/lib/flows";
+import { categoryLabels, getFlowBySlug } from "@/lib/flows";
 
 export interface FlowLayoutProps {
   flow: FlowConfig;
   flowSlug?: string;
   className?: string;
   backLink?: React.ReactNode;
+  /** When set, focus this step on mount and switch to step-by-step mode */
+  initialStepIndex?: number;
 }
 
 type ViewMode = "complete" | "step-by-step";
 
-export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("complete");
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(1);
+export function FlowLayout({ flow, flowSlug, className, backLink, initialStepIndex }: FlowLayoutProps) {
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    initialStepIndex != null ? "step-by-step" : "complete"
+  );
+  const [activeIndex, setActiveIndex] = useState(initialStepIndex ?? 0);
+  const [visibleCount, setVisibleCount] = useState(
+    initialStepIndex != null ? (initialStepIndex + 1) : 1
+  );
+
+  useEffect(() => {
+    if (initialStepIndex != null && initialStepIndex >= 0 && initialStepIndex < flow.steps.length) {
+      setViewMode("step-by-step");
+      setActiveIndex(initialStepIndex);
+      setVisibleCount(initialStepIndex + 1);
+    }
+  }, [initialStepIndex, flow.steps.length]);
 
   const steps = flow.steps;
   const activeStep = steps[activeIndex];
@@ -152,12 +167,34 @@ export function FlowLayout({ flow, flowSlug, className, backLink }: FlowLayoutPr
       {/* Split: Visual left | Timeline right – stacked on mobile */}
       <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:flex-nowrap lg:items-start">
         {hasVisual && activeStep && (
-          <VisualPanel
-            role={activeStep.role}
-            visual={activeStep.visual ?? null}
-            active
-            className="w-full lg:w-[360px] lg:flex-shrink-0 order-first lg:order-none"
-          />
+          <div className="flex flex-col gap-4 w-full lg:w-[360px] lg:flex-shrink-0 order-first lg:order-none">
+            <VisualPanel
+              role={activeStep.role}
+              visual={activeStep.visual ?? null}
+              active
+              className="w-full"
+            />
+            {activeStep.branchNote && (
+              <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] px-4 py-3 text-sm text-[#6B7280] leading-snug">
+                <p>{activeStep.branchNote}</p>
+                {activeStep.branchRef && (() => {
+                  const refFlow = getFlowBySlug(activeStep.branchRef!.flowSlug);
+                  const stepNum = activeStep.branchRef!.stepIndex + 1;
+                  const linkLabel = refFlow
+                    ? `→ Step ${stepNum} of ${refFlow.title}`
+                    : `→ Scenario 2, Step ${stepNum}`;
+                  return (
+                    <Link
+                      href={`/flows/${activeStep.branchRef!.flowSlug}?step=${stepNum}`}
+                      className="mt-2 inline-block text-[13px] font-medium text-primary hover:underline"
+                    >
+                      {linkLabel}
+                    </Link>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
         )}
         <div className="flex-1 min-w-0 order-last lg:order-none">
           <Timeline
