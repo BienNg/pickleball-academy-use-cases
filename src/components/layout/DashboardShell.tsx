@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   ChevronDown,
@@ -13,7 +13,8 @@ import { flows, getAllFlowSlugs, ALL_ROLES, getFlowSlugsByRole } from "@/lib/flo
 import { cn } from "@/lib/utils";
 
 function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: boolean }) {
-  const [open, setOpen] = useState(isHome || pathname.startsWith("/flows/"));
+  // Only open initially if on home page, not when navigating to flows
+  const [open, setOpen] = useState(isHome);
   const slugs = getAllFlowSlugs();
 
   return (
@@ -41,6 +42,10 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
               <Link
                 key={slug}
                 href={href}
+                onClick={(e) => {
+                  // Prevent the click from closing the dropdown
+                  e.stopPropagation();
+                }}
                 className={cn(
                   "block px-3 py-1 rounded-lg text-xs transition-colors",
                   isActive
@@ -59,7 +64,33 @@ function AllFlowsDropdown({ pathname, isHome }: { pathname: string; isHome: bool
 }
 
 function RolesDropdown({ pathname }: { pathname: string }) {
-  const [openRole, setOpenRole] = useState<string | null>(null);
+  // Helper function to get the role for a given pathname
+  const getOpenRoleFromPathname = (currentPathname: string): string | null => {
+    if (currentPathname.startsWith("/flows/")) {
+      const slug = currentPathname.replace("/flows/", "");
+      const flow = flows[slug];
+      if (flow) {
+        // Find which role this flow belongs to
+        for (const role of ALL_ROLES) {
+          const flowSlugs = getFlowSlugsByRole(role);
+          if (flowSlugs.includes(slug)) {
+            return role;
+          }
+        }
+      }
+    }
+    return null;
+  };
+
+  const [openRole, setOpenRole] = useState<string | null>(() => getOpenRoleFromPathname(pathname));
+
+  // Sync openRole with pathname changes - keep role open when navigating to its flows
+  useEffect(() => {
+    const roleFromPathname = getOpenRoleFromPathname(pathname);
+    if (roleFromPathname) {
+      setOpenRole(roleFromPathname);
+    }
+  }, [pathname]);
 
   return (
     <div className="flex flex-col gap-0.5">
@@ -95,6 +126,14 @@ function RolesDropdown({ pathname }: { pathname: string }) {
                     <Link
                       key={slug}
                       href={href}
+                      onClick={(e) => {
+                        // Prevent the click from closing the dropdown
+                        e.stopPropagation();
+                        // Keep the role open when clicking a link
+                        if (!isOpen) {
+                          setOpenRole(role);
+                        }
+                      }}
                       className={cn(
                         "block px-3 py-1 rounded-lg text-xs transition-colors",
                         isActive
