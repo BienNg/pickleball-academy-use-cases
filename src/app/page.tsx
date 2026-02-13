@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { getAllFlowSlugs, getFlowBySlug } from "@/lib/flows";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Filter, ArrowDownNarrowWide, Bookmark, ArrowRight } from "lucide-react";
@@ -14,14 +17,75 @@ const CATEGORIES = [
   "E-commerce",
 ];
 
+const ITEMS_PER_PAGE = 12;
+
 export default function HomePage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  
   const slugs = getAllFlowSlugs();
-  const flows = slugs
+  const allFlows = slugs
     .map((slug) => {
       const flow = getFlowBySlug(slug);
       return flow ? { slug, ...flow } : null;
     })
     .filter(Boolean) as { slug: string; title: string; subtitle: string }[];
+
+  // Calculate pagination
+  const totalPages = Math.ceil(allFlows.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const flows = allFlows.slice(startIndex, endIndex);
+
+  // Calculate page numbers to display
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    const maxVisible = 5; // Show up to 5 page numbers
+    
+    if (totalPages <= maxVisible) {
+      // Show all pages if total is less than max visible
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Always show first page
+      pages.push(1);
+      
+      if (currentPage <= 3) {
+        // Near the beginning
+        for (let i = 2; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        // Near the end
+        pages.push("...");
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        // In the middle
+        pages.push("...");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+    
+    return pages;
+  };
+
+  const pageNumbers = getPageNumbers();
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      // Scroll to top of content
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <DashboardShell>
@@ -34,7 +98,7 @@ export default function HomePage() {
                 Flows
               </h2>
               <p className="text-slate-500 text-sm mt-1">
-                Found {flows.length} result{flows.length !== 1 ? "s" : ""} across
+                Found {allFlows.length} result{allFlows.length !== 1 ? "s" : ""} across
                 mobile and web platforms.
               </p>
             </div>
@@ -109,71 +173,69 @@ export default function HomePage() {
               </span>
             </Link>
           ))}
-          {/* Skeleton card placeholder */}
-          {flows.length < 8 && (
-            <div className="bg-white rounded-xl border border-slate-100 card-shadow p-5 space-y-3">
-              <div className="h-4 bg-slate-100 rounded w-12 animate-pulse" />
-              <div className="h-5 bg-slate-100 rounded-full w-3/4 animate-pulse" />
-              <div className="space-y-2">
-                <div className="h-3 bg-slate-50 rounded-full animate-pulse" />
-                <div className="h-3 bg-slate-50 rounded-full w-5/6 animate-pulse" />
-              </div>
-              <div className="flex gap-2">
-                <div className="h-5 bg-slate-50 rounded w-16 animate-pulse" />
-                <div className="h-5 bg-slate-50 rounded w-12 animate-pulse" />
-              </div>
-              <div className="h-3 bg-slate-50 rounded w-20 animate-pulse" />
-            </div>
-          )}
         </div>
 
         {/* Pagination */}
-        <div className="mt-12 flex items-center justify-center gap-4">
-          <button
-            type="button"
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-400 cursor-not-allowed"
-            disabled
-          >
-            <span>←</span>
-            <span>Previous</span>
-          </button>
-          <div className="flex gap-1">
+        {totalPages > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-4">
             <button
               type="button"
-              className="size-9 bg-primary text-white rounded-lg text-sm font-bold"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold transition-colors ${
+                currentPage === 1
+                  ? "text-slate-400 cursor-not-allowed"
+                  : "text-slate-600 hover:border-primary/50"
+              }`}
             >
-              1
+              <span>←</span>
+              <span>Previous</span>
             </button>
+            <div className="flex gap-1">
+              {pageNumbers.map((page, index) => {
+                if (page === "...") {
+                  return (
+                    <span
+                      key={`ellipsis-${index}`}
+                      className="size-9 flex items-center justify-center text-slate-400"
+                    >
+                      ...
+                    </span>
+                  );
+                }
+                const pageNum = page as number;
+                const isActive = pageNum === currentPage;
+                return (
+                  <button
+                    key={pageNum}
+                    type="button"
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`size-9 rounded-lg text-sm font-bold transition-colors ${
+                      isActive
+                        ? "bg-primary text-white"
+                        : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
             <button
               type="button"
-              className="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold transition-colors ${
+                currentPage === totalPages
+                  ? "text-slate-400 cursor-not-allowed"
+                  : "text-slate-600 hover:border-primary/50"
+              }`}
             >
-              2
-            </button>
-            <button
-              type="button"
-              className="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors"
-            >
-              3
-            </button>
-            <span className="size-9 flex items-center justify-center text-slate-400">
-              ...
-            </span>
-            <button
-              type="button"
-              className="size-9 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm font-bold hover:border-primary/50 transition-colors"
-            >
-              12
+              <span>Next</span>
+              <span>→</span>
             </button>
           </div>
-          <button
-            type="button"
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-600 hover:border-primary/50 transition-colors"
-          >
-            <span>Next</span>
-            <span>→</span>
-          </button>
-        </div>
+        )}
       </div>
     </DashboardShell>
   );
