@@ -129,3 +129,37 @@ export function getFlowBySlug(slug: string): FlowConfig | null {
 export function getAllFlowSlugs(): string[] {
   return Object.keys(flows);
 }
+
+/** All roles/parties in the system (display names) */
+export const ALL_ROLES = [
+  "Student",
+  "Coach",
+  "Head Coach",
+  "Admin",
+  "Customer Success Manager",
+  "Content Manager",
+] as const;
+
+/** Maps shorthand party names in flow steps to role display names */
+const PARTY_TO_ROLE: Record<string, string> = {
+  Student: "Student",
+  Coach: "Coach",
+  "Head Coach": "Head Coach",
+  Admin: "Admin",
+  CSM: "Customer Success Manager",
+  "Customer Success Manager": "Customer Success Manager",
+  Editor: "Content Manager",
+  "Content Manager": "Content Manager",
+};
+
+export function getFlowSlugsByRole(role: string): string[] {
+  const slugs = getAllFlowSlugs();
+  return slugs.filter((slug) => {
+    const config = flows[slug];
+    const roleLower = role.toLowerCase();
+    return config.steps.some((step) => {
+      const stepRole = PARTY_TO_ROLE[step.party] ?? step.party;
+      return stepRole.toLowerCase() === roleLower;
+    });
+  });
+}
