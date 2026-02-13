@@ -4,7 +4,7 @@
 
 export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript";
 
-export type PartyCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "content-manager";
+export type PartyCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor";
 
 export interface FlowStepVisual {
   type: VisualType;
@@ -39,7 +39,7 @@ export const categoryLabels: Record<PartyCategory, string> = {
   'head-coach': 'Head Coach',
   'admin': 'Admin',
   'customer-success': 'Customer Success Manager',
-  'content-manager': 'Content Manager'
+  'editor': 'Editor'
 };
 
 // Party icons mapping - maps party names/abbreviations to their icons
@@ -55,9 +55,8 @@ export const partyIcons: Record<string, string> = {
   'Customer Success Manager': '💬',
   'customer-success': '💬',
   'CSM': '💬',
-  'Content Manager': '📝',
-  'content-manager': '📝',
-  'Editor': '✂️'
+  'Editor': '✂️',
+  'editor': '✂️'
 };
 
 // Party slug for design system styling
@@ -73,8 +72,6 @@ export const partySlugs: Record<string, string> = {
   'Customer Success Manager': 'csm',
   'customer-success': 'csm',
   'CSM': 'csm',
-  'Content Manager': 'editor',
-  'content-manager': 'editor',
   'Editor': 'editor',
   'editor': 'editor',
   'App': 'app',
@@ -93,7 +90,7 @@ export const flows: Record<string, FlowConfig> = {
   "first-contact-academy": {
     title: "First contact with Academy",
     subtitle: "Student Requests a Coaching through Academy",
-    parties: ['student', 'customer-success', 'coach', 'content-manager'],
+    parties: ['student', 'customer-success', 'coach', 'editor'],
     filter: 'coaching',
     image: '🎓',
     features: [
@@ -152,7 +149,7 @@ export const flows: Record<string, FlowConfig> = {
   "creating-session-success-clips": {
     title: "Creating Session Success Clips",
     subtitle: "Daily before-and-after transformation clips for students and social media",
-    parties: ['content-manager', 'customer-success'],
+    parties: ['editor', 'customer-success'],
     filter: 'content',
     image: '🎬',
     features: [
@@ -284,7 +281,7 @@ export const flows: Record<string, FlowConfig> = {
   "head-coach-creates-video-course": {
     title: "Creating Complete Video Course",
     subtitle: "Transforming the coaching program into structured in-app video lessons",
-    parties: ['head-coach', 'coach', 'content-manager'],
+    parties: ['head-coach', 'editor'],
     filter: 'content',
     image: '📚',
     badge: 'Internal System Flow',
@@ -312,18 +309,18 @@ export const flows: Record<string, FlowConfig> = {
         stepIcon: '🧠'
       },
       {
-        party: "Content Manager",
+        party: "Head Coach",
         title: "Plans Production Schedule",
-        description: "Content Manager schedules filming sessions, books courts, prepares equipment, and coordinates with filming team.",
+        description: "Head Coach schedules filming sessions, books courts, prepares equipment, and coordinates with filming team.",
         visual: { type: "production-calendar" },
-        stepIcon: '📅'
+        stepIcon: '🧠'
       },
       {
-        party: "Coach",
+        party: "Head Coach",
         title: "Records Video Lessons",
-        description: "Coach demonstrates techniques on court while Head Coach ensures technical accuracy and structure alignment.",
+        description: "Head Coach demonstrates techniques on court and ensures technical accuracy and structure alignment.",
         visual: { type: "video-recording-court" },
-        stepIcon: '🏅'
+        stepIcon: '🧠'
       },
       {
         party: "Editor",
@@ -365,7 +362,7 @@ export const ALL_ROLES = [
   "Head Coach",
   "Admin",
   "Customer Success Manager",
-  "Content Manager",
+  "Editor",
 ] as const;
 
 /** Maps shorthand party names in flow steps to role display names */
@@ -376,8 +373,7 @@ const PARTY_TO_ROLE: Record<string, string> = {
   Admin: "Admin",
   CSM: "Customer Success Manager",
   "Customer Success Manager": "Customer Success Manager",
-  Editor: "Content Manager",
-  "Content Manager": "Content Manager",
+  Editor: "Editor",
 };
 
 export function getFlowSlugsByRole(role: string): string[] {
