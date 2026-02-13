@@ -626,6 +626,65 @@ export const flows: Record<string, FlowConfig> = {
       }
     ]
   },
+  "student-requests-training-session-scenario-3": {
+    title: "Student Requests Training Session (Scenario 3)",
+    subtitle: "Student requests a session through Zalo; CSM coordinates coach, court, and sends confirmation.",
+    roles: ['student', 'coach', 'customer-success'],
+    filter: "coaching",
+    image: "app screenshots/booking-escalation.png",
+    viewMode: "step-by-step",
+    features: [
+      "Zalo-based session request",
+      "CSM consultation and coordination",
+      "Manual court coordination",
+      "Coach availability verification",
+      "Zalo confirmation communication"
+    ],
+    steps: [
+      {
+        role: "Student",
+        title: "Requests a Session through Zalo",
+        description: "Student sends a Zalo message to the academy to request a training session.",
+        visual: { type: "zalo-chat" },
+        stepIcon: "📲"
+      },
+      {
+        role: "CSM",
+        title: "Consults & Coordinates",
+        description: "CSM receives the Zalo request and consults with the student on coach preference and availability.",
+        visual: { type: "zalo-chat-continued" },
+        stepIcon: "💬"
+      },
+      {
+        role: "CSM",
+        title: "Checks Court Availability & Calls Coach",
+        description: "CSM searches for available courts and directly calls the coach to verify real-time availability.",
+        visual: {
+          type: "csm-court-call-coach"
+        },
+        stepIcon: "📞"
+      },
+      {
+        role: "CSM",
+        title: "Books Court & Creates Session in App",
+        description: "Once coach confirms availability, CSM books the court and manually creates the confirmed session inside the app system.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/session booked.png"
+        },
+        stepIcon: "🛠️"
+      },
+      {
+        role: "CSM",
+        title: "Sends Final Confirmation to Student & Coach",
+        description: "CSM sends Zalo confirmation to both student and coach including court address and session details. Booking is finalized.",
+        visual: {
+          type: "csm-zalo-confirmation"
+        },
+        stepIcon: "✅"
+      }
+    ]
+  },
 };
 
 export function getFlowBySlug(slug: string): FlowConfig | null {

@@ -20,6 +20,7 @@ function getFlowThumbnailVisual(flow: FlowConfig, flowSlug: string) {
     "head-coach-creates-coaching-program": 5, // Step 6 (index 5): "Compiles Master Coaching Document"
     "creating-session-success-clips": 1, // Step 2 (index 1): "Selects Before & After Clip"
     "student-requests-training-session-scenario-2": 4, // Step 5 (index 4): "Receives Escalation Notification"
+    "student-requests-training-session-scenario-3": 2, // Step 3 (index 2): "Checks Court Availability & Calls Coach"
   };
 
   // Check if this flow has a specific thumbnail step defined
