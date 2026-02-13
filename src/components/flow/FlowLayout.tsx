@@ -119,7 +119,6 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
             Step-by-Step
           </button>
         </div>
-        </div>
         {isStepByStep && (
           <div className="flex items-center gap-4">
             <Button
@@ -145,6 +144,7 @@ export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
             </Button>
           </div>
         )}
+        </div>
       </div>
 
       {/* Split: Visual left | Timeline right – stacked on mobile */}

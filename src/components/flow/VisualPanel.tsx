@@ -46,12 +46,19 @@ export function VisualPanel({
 
 function VisualContent({ visual }: { visual: FlowStepVisual }) {
   if (visual.type === "app-screen" && visual.src) {
+    // Normalize src: Next.js Image requires paths starting with / for public folder
+    // or full URLs (http:// or https://)
+    let imageSrc = visual.src;
+    if (!imageSrc.startsWith('/') && !imageSrc.startsWith('http://') && !imageSrc.startsWith('https://')) {
+      imageSrc = `/${imageSrc}`;
+    }
+    
     return (
       <div className="mx-auto w-full max-w-[280px] rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] p-4 shadow-lg">
         <div className="relative overflow-hidden rounded-[20px] bg-white aspect-[9/19] min-h-[280px]">
           <div className="absolute left-1/2 top-0 z-10 h-6 w-[100px] -translate-x-1/2 rounded-b-[14px] bg-[#1a1a1a]" />
           <Image
-            src={visual.src}
+            src={imageSrc}
             alt="App screen"
             fill
             className="object-cover"
