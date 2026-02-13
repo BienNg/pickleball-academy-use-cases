@@ -490,6 +490,269 @@ function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "course-structure-board") {
+    return (
+      <div className="mx-auto w-full max-w-[320px]">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-5">
+          Course Structure Board
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm opacity-0 animate-[column-fade-in_0.6s_ease-out_0.1s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-2 text-center pb-2 border-b-2 border-[#e5e7eb]">Beginner</div>
+            <div className="flex flex-col gap-1.5 mt-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.2s_forwards]">Serve</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.3s_forwards]">Return</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.4s_forwards]">Dink</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.5s_forwards]">Volley</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.6s_forwards]">Strategy</div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm border-2 border-[#10b981] shadow-[#10b981]/15 opacity-0 animate-[column-fade-in_0.6s_ease-out_0.3s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-2 text-center pb-2 border-b-2 border-[#e5e7eb]">Intermediate</div>
+            <div className="flex flex-col gap-1.5 mt-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.4s_forwards]">Serve</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.5s_forwards]">Return</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.6s_forwards]">Dink</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.7s_forwards]">Volley</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.8s_forwards]">Strategy</div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-xl p-3 shadow-sm opacity-0 animate-[column-fade-in_0.6s_ease-out_0.5s_forwards]">
+            <div className="text-sm font-semibold text-[#1a1a1a] mb-2 text-center pb-2 border-b-2 border-[#e5e7eb]">Advanced</div>
+            <div className="flex flex-col gap-1.5 mt-2">
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.6s_forwards]">Serve</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.7s_forwards]">Return</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.8s_forwards]">Dink</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_0.9s_forwards]">Volley</div>
+              <div className="text-[10px] text-[#4b5563] p-1.5 bg-[#f9fafb] rounded text-center opacity-0 animate-[row-slide-in_0.4s_ease-out_1s_forwards]">Strategy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "lesson-script-document") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-sm font-semibold text-[#1a1a1a] mb-4 pb-3 border-b-2 border-[#e5e7eb] animate-[document-header-slide_0.4s_ease-out]">
+          Lesson Script
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.1s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Objective</div>
+            <div className="text-[11px] text-[#4b5563] p-2 bg-[#f9fafb] rounded opacity-0 animate-[typing-effect_0.8s_ease-out_0.3s_forwards]">
+              Master proper serve technique with consistent placement
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.2s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Key Teaching Points</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.3s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Wrist firm at contact
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.4s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Follow-through complete
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.5s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Body positioning
+              </div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.3s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Common Mistakes</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.4s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Over-rotating shoulders
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.5s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Late contact point
+              </div>
+            </div>
+          </div>
+          <div className="opacity-0 animate-[section-slide-in_0.5s_ease-out_0.4s_forwards]">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider mb-2">Drill Integration</div>
+            <div className="flex flex-col gap-1.5">
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.5s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Target practice drill
+              </div>
+              <div className="text-[11px] text-[#4b5563] pl-4 relative opacity-0 animate-[bullet-fade-in_0.4s_ease-out_0.6s_forwards]">
+                <span className="absolute left-0 text-[#10b981] font-bold">•</span>
+                Progressive difficulty
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "production-calendar") {
+    return (
+      <div className="mx-auto w-full max-w-[320px]">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-5">
+          Production Schedule
+        </div>
+        <div className="flex gap-2 justify-center">
+          {[15, 16, 17, 18, 19, 20, 21].map((day, idx) => {
+            const isFilming = [16, 18, 20].includes(day);
+            const delay = (idx + 1) * 0.1;
+            return (
+              <div
+                key={day}
+                className={`flex-1 bg-white rounded-lg p-2 text-center shadow-sm relative transition-all hover:scale-105 hover:shadow-md opacity-0 ${
+                  isFilming ? "border-2 border-[#10b981] bg-[#10b981]/5" : ""
+                }`}
+                style={{
+                  animation: `calendar-day-appear 0.4s ease-out ${delay}s forwards`
+                }}
+              >
+                <div className="text-sm font-semibold text-[#1a1a1a] mb-1">{day}</div>
+                <div className="text-[10px] text-[#6b7280] uppercase">
+                  {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][idx]}
+                </div>
+                {isFilming && (
+                  <div className="absolute top-1 right-1 text-xs opacity-0 animate-[icon-appear_0.4s_ease-out_0.5s_forwards]">📹</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-recording-court") {
+    return (
+      <div className="flex min-h-[280px] items-center justify-center">
+        <div className="relative w-full max-w-[300px] h-[200px] bg-gradient-to-br from-[#e8f5e9] to-[#c8e6c9] rounded-xl shadow-md overflow-hidden">
+          <div className="absolute inset-0 opacity-30" style={{
+            backgroundImage: `linear-gradient(to bottom, transparent 45%, #4caf50 45%, #4caf50 47%, transparent 47%),
+                              linear-gradient(to right, transparent 48%, #4caf50 48%, #4caf50 50%, transparent 50%)`
+          }} />
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 w-8 h-10 bg-[#10b981] rounded-full animate-[coach-swing_3s_ease-in-out_infinite]" />
+          <div className="absolute top-2.5 right-5 w-5 h-7 bg-[#333] rounded-sm">
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-2.5 bg-[#555] rounded-sm" />
+          </div>
+          <div className="absolute top-2.5 left-2.5 flex items-center gap-1 bg-black/70 px-2 py-1 rounded-md text-[10px] text-white">
+            <div className="w-2 h-2 bg-red-500 rounded-full animate-[rec-blink_1.5s_ease-in-out_infinite]" />
+            <span className="font-semibold tracking-wider">REC</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-editing-timeline") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4">
+          Video Editing Timeline
+        </div>
+        <div className="relative w-full h-30 bg-[#1a1a1a] rounded-lg mb-4 overflow-hidden">
+          <div className="w-full h-full bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]" />
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-[10px] opacity-0 animate-[subtitle-fade-in_1s_ease-out_0.5s_forwards]">
+            "Keep your wrist firm at contact"
+          </div>
+        </div>
+        <div className="relative w-full h-10 bg-[#f9fafb] rounded-lg overflow-hidden mb-2">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#10b981] rounded opacity-60" />
+          <div className="absolute left-[30%] top-0 w-0.5 h-full bg-[#10b981] animate-[timeline-scrub_3s_ease-in-out_infinite]" />
+        </div>
+        <div className="flex items-center gap-2 text-[10px] text-[#6b7280]">
+          <span className="opacity-0 animate-[icon-pulse_2s_ease-in-out_infinite_1s_forwards]">⏱️</span>
+          <span>Slow Motion</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-review-dashboard") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4">
+          Lesson Review
+        </div>
+        <div className="w-full h-35 bg-[#1a1a1a] rounded-lg mb-4 overflow-hidden">
+          <div className="w-full h-full bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]" />
+        </div>
+        <div className="flex flex-col gap-2 mb-4">
+          {["Technical accuracy", "Instruction clarity", "Program alignment"].map((item, idx) => {
+            const slideDelay = (idx + 1) * 0.2;
+            const checkDelay = slideDelay + 0.2;
+            return (
+              <div
+                key={item}
+                className="flex items-center gap-2 opacity-0"
+                style={{ animation: `checklist-slide-in 0.5s ease-out ${slideDelay}s forwards` }}
+              >
+                <div
+                  className="w-5 h-5 bg-[#10b981] rounded-full flex items-center justify-center text-white text-xs opacity-0 scale-0"
+                  style={{ animation: `checkmark-appear 0.4s ease-out ${checkDelay}s forwards` }}
+                >
+                  ✓
+                </div>
+                <div className="text-[11px] text-[#4b5563]">{item}</div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="text-center text-xs font-bold text-[#10b981] uppercase tracking-widest p-3 bg-[#10b981]/10 rounded-lg opacity-0 scale-90 animate-[badge-scale-in_0.6s_ease-out_1s_forwards]">
+          APPROVED
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "app-course-library") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] bg-white rounded-xl p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#1a1a1a] mb-4 text-center">
+          Course Library
+        </div>
+        <div className="flex gap-2 mb-4 justify-center">
+          {["Beginner", "Intermediate", "Advanced"].map((tab, idx) => {
+            const delay = (idx + 1) * 0.1;
+            return (
+              <div
+                key={tab}
+                className={`px-3 py-1 rounded-md text-[10px] font-medium transition-all opacity-0 ${
+                  tab === "Beginner"
+                    ? "bg-[#10b981] text-white shadow-[0_2px_6px_rgba(16,185,129,0.3)]"
+                    : "bg-[#f9fafb] text-[#6b7280]"
+                }`}
+                style={{ animation: `tab-fade-in 0.4s ease-out ${delay}s forwards` }}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {["Serve Basics", "Return Technique", "Dink Mastery", "Volley Fundamentals"].map((title, idx) => {
+            const delay = (idx + 1) * 0.1 + 0.2;
+            return (
+              <div
+                key={title}
+                className="opacity-0 transition-transform hover:scale-105"
+                style={{ animation: `thumbnail-fade-in 0.5s ease-out ${delay}s forwards` }}
+              >
+                <div className="w-full h-20 bg-gradient-to-br from-[#e5e7eb] to-[#f3f4f6] rounded-lg mb-1" />
+                <div className="text-[10px] text-[#4b5563] text-center font-medium">{title}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
 

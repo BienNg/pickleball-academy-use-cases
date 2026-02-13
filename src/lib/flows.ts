@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library";
 
 export interface FlowStepVisual {
   type: VisualType;
@@ -165,6 +165,54 @@ export const flows: Record<string, FlowConfig> = {
         title: "Program Approved & Locked",
         description: "The complete coaching program is finalized and becomes the official academy training framework.",
         visual: { type: "approval-stamp" },
+      },
+    ],
+  },
+  "head-coach-creates-video-course": {
+    title: "Creating Complete Video Course",
+    subtitle: "Transforming the coaching program into structured in-app video lessons",
+    steps: [
+      {
+        party: "Head Coach",
+        title: "Defines Course Structure Based on Coaching Program",
+        description: "Head Coach translates the full curriculum into structured video modules organized by level, shot, and skill progression.",
+        visual: { type: "course-structure-board" },
+      },
+      {
+        party: "Head Coach",
+        title: "Writes Lesson Scripts & Teaching Points",
+        description: "For each shot and drill, the Head Coach defines clear teaching points, cues, demonstrations, and common mistakes to cover on camera.",
+        visual: { type: "lesson-script-document" },
+      },
+      {
+        party: "Content Manager",
+        title: "Plans Production Schedule",
+        description: "Content Manager schedules filming sessions, books courts, prepares equipment, and coordinates with filming team.",
+        visual: { type: "production-calendar" },
+      },
+      {
+        party: "Coach",
+        title: "Records Video Lessons",
+        description: "Coach demonstrates techniques on court while Head Coach ensures technical accuracy and structure alignment.",
+        visual: { type: "video-recording-court" },
+      },
+      {
+        party: "Editor",
+        title: "Edits & Structures Lessons",
+        description: "Editor trims footage, adds overlays, subtitles, shot labels, slow motion breakdowns, and academy branding.",
+        visual: { type: "video-editing-timeline" },
+      },
+      {
+        party: "Head Coach",
+        title: "Reviews & Approves Final Lessons",
+        description: "Head Coach verifies technical correctness, clarity of instruction, and alignment with the official coaching program.",
+        visual: { type: "video-review-dashboard" },
+      },
+      {
+        party: "Editor",
+        title: "Uploads Course to App",
+        description: "Finalized videos are uploaded and categorized by level, shot, and topic inside the academy app.",
+        visual: { type: "app-course-library" },
       },
     ],
   },

@@ -247,6 +247,74 @@ const allUserFlows = [
             'Consistent evaluation criteria',
             'Scalable training system'
         ]
+    },
+    {
+        id: 'head-coach-creates-video-course',
+        parties: ['head-coach', 'coach', 'content-manager', 'editor'],
+        filter: 'content',
+        image: '📚',
+        title: 'Creating Complete Video Course',
+        subtitle: 'Transforming the coaching program into structured in-app video lessons',
+        badge: 'Internal System Flow',
+        viewMode: 'Step-by-Step',
+        steps: [
+            {
+                party: 'Head Coach',
+                action: 'Defines Course Structure Based on Coaching Program',
+                details: 'Head Coach translates the full curriculum into structured video modules organized by level, shot, and skill progression.',
+                mockup: 'course-structure-board',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Writes Lesson Scripts & Teaching Points',
+                details: 'For each shot and drill, the Head Coach defines clear teaching points, cues, demonstrations, and common mistakes to cover on camera.',
+                mockup: 'lesson-script-document',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Content Manager',
+                action: 'Plans Production Schedule',
+                details: 'Content Manager schedules filming sessions, books courts, prepares equipment, and coordinates with filming team.',
+                mockup: 'production-calendar',
+                stepIcon: '📅'
+            },
+            {
+                party: 'Coach',
+                action: 'Records Video Lessons',
+                details: 'Coach demonstrates techniques on court while Head Coach ensures technical accuracy and structure alignment.',
+                mockup: 'video-recording-court',
+                stepIcon: '🏅'
+            },
+            {
+                party: 'Editor',
+                action: 'Edits & Structures Lessons',
+                details: 'Editor trims footage, adds overlays, subtitles, shot labels, slow motion breakdowns, and academy branding.',
+                mockup: 'video-editing-timeline',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'Head Coach',
+                action: 'Reviews & Approves Final Lessons',
+                details: 'Head Coach verifies technical correctness, clarity of instruction, and alignment with the official coaching program.',
+                mockup: 'video-review-dashboard',
+                stepIcon: '🧠'
+            },
+            {
+                party: 'Editor',
+                action: 'Uploads Course to App',
+                details: 'Finalized videos are uploaded and categorized by level, shot, and topic inside the academy app.',
+                mockup: 'app-course-library',
+                stepIcon: '✂️'
+            }
+        ],
+        features: [
+            'Curriculum-based video structure',
+            'Level-based lesson organization',
+            'Scripted and standardized teaching',
+            'Professional editing and overlays',
+            'Structured in-app learning library'
+        ]
     }
 ];
 

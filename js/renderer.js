@@ -17,7 +17,30 @@ function renderNavigation() {
     const navList = document.getElementById('navList');
     if (!navList) return;
 
-    navList.innerHTML = flowData.map(section => {
+    // Collect all unique flows for "All Flows" section
+    const allFlows = new Map();
+    flowData.forEach(section => {
+        section.items.forEach(item => {
+            if (!allFlows.has(item.id)) {
+                allFlows.set(item.id, item);
+            }
+        });
+    });
+    const allFlowsArray = Array.from(allFlows.values());
+
+    // Build "All Flows" section HTML
+    const allFlowsHtml = `
+        <div class="nav-item main-category" data-category="all-flows">
+            <span>All Flows</span>
+            <span class="expand-icon expanded">▼</span>
+        </div>
+        ${allFlowsArray.map(item =>
+            `<div class="nav-item sub-category" data-user-flow-id="${item.id}">${item.title}</div>`
+        ).join('')}
+    `;
+
+    // Build category sections HTML
+    const categorySectionsHtml = flowData.map(section => {
         // Deduplicate items within each category section
         const seenIds = new Set();
         const userFlowItems = section.items
@@ -37,11 +60,13 @@ function renderNavigation() {
         return `
             <div class="nav-item main-category" data-category="${section.category}">
                 <span>${label}</span>
-                <span class="expand-icon">▼</span>
+                <span class="expand-icon expanded">▼</span>
             </div>
             ${userFlowItems}
         `;
     }).join('');
+
+    navList.innerHTML = allFlowsHtml + categorySectionsHtml;
 }
 
 // Render flow sections from data - show step-by-step flows
@@ -58,6 +83,10 @@ function renderFlowSections() {
             }
         });
     });
+
+    // Debug: Log flow count
+    console.log('Total unique flows to render:', uniqueUserFlows.size);
+    console.log('Flow IDs:', Array.from(uniqueUserFlows.keys()));
 
     // Render each unique user flow
     mainContent.innerHTML = Array.from(uniqueUserFlows.values()).map(item => {
@@ -519,6 +548,212 @@ function renderFlowSections() {
                                             <div class="academy-logo-bg">🏫</div>
                                             <div class="approval-stamp">APPROVED</div>
                                             <div class="approval-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'course-structure-board') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="course-structure-mockup">
+                                        <div class="curriculum-header">Course Structure Board</div>
+                                        <div class="course-grid">
+                                            <div class="course-column course-beginner">
+                                                <div class="course-level-label">Beginner</div>
+                                                <div class="course-row course-serve">Serve</div>
+                                                <div class="course-row course-return">Return</div>
+                                                <div class="course-row course-dink">Dink</div>
+                                                <div class="course-row course-volley">Volley</div>
+                                                <div class="course-row course-strategy">Strategy</div>
+                                            </div>
+                                            <div class="course-column course-intermediate">
+                                                <div class="course-level-label">Intermediate</div>
+                                                <div class="course-row course-serve">Serve</div>
+                                                <div class="course-row course-return">Return</div>
+                                                <div class="course-row course-dink">Dink</div>
+                                                <div class="course-row course-volley">Volley</div>
+                                                <div class="course-row course-strategy">Strategy</div>
+                                            </div>
+                                            <div class="course-column course-advanced">
+                                                <div class="course-level-label">Advanced</div>
+                                                <div class="course-row course-serve">Serve</div>
+                                                <div class="course-row course-return">Return</div>
+                                                <div class="course-row course-dink">Dink</div>
+                                                <div class="course-row course-volley">Volley</div>
+                                                <div class="course-row course-strategy">Strategy</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'lesson-script-document') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="lesson-script-mockup">
+                                        <div class="document-header">Lesson Script</div>
+                                        <div class="script-section script-objective">
+                                            <div class="section-title">Objective</div>
+                                            <div class="section-content">
+                                                <div class="script-text">Master proper serve technique with consistent placement</div>
+                                            </div>
+                                        </div>
+                                        <div class="script-section script-teaching-points">
+                                            <div class="section-title">Key Teaching Points</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Wrist firm at contact</div>
+                                                <div class="bullet-point">Follow-through complete</div>
+                                                <div class="bullet-point">Body positioning</div>
+                                            </div>
+                                        </div>
+                                        <div class="script-section script-mistakes">
+                                            <div class="section-title">Common Mistakes</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Over-rotating shoulders</div>
+                                                <div class="bullet-point">Late contact point</div>
+                                            </div>
+                                        </div>
+                                        <div class="script-section script-drill">
+                                            <div class="section-title">Drill Integration</div>
+                                            <div class="section-content">
+                                                <div class="bullet-point">Target practice drill</div>
+                                                <div class="bullet-point">Progressive difficulty</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'production-calendar') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="production-calendar-mockup">
+                                        <div class="calendar-header">Production Schedule</div>
+                                        <div class="calendar-grid">
+                                            <div class="calendar-day">
+                                                <div class="day-number">15</div>
+                                                <div class="day-label">Mon</div>
+                                            </div>
+                                            <div class="calendar-day calendar-filming">
+                                                <div class="day-number">16</div>
+                                                <div class="day-label">Tue</div>
+                                                <div class="filming-icon">📹</div>
+                                            </div>
+                                            <div class="calendar-day">
+                                                <div class="day-number">17</div>
+                                                <div class="day-label">Wed</div>
+                                            </div>
+                                            <div class="calendar-day calendar-filming">
+                                                <div class="day-number">18</div>
+                                                <div class="day-label">Thu</div>
+                                                <div class="filming-icon">📹</div>
+                                            </div>
+                                            <div class="calendar-day">
+                                                <div class="day-number">19</div>
+                                                <div class="day-label">Fri</div>
+                                            </div>
+                                            <div class="calendar-day calendar-filming">
+                                                <div class="day-number">20</div>
+                                                <div class="day-label">Sat</div>
+                                                <div class="filming-icon">📹</div>
+                                            </div>
+                                            <div class="calendar-day">
+                                                <div class="day-number">21</div>
+                                                <div class="day-label">Sun</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'video-recording-court') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="video-recording-mockup">
+                                        <div class="court-background">
+                                            <div class="court-lines"></div>
+                                            <div class="coach-demonstrating"></div>
+                                            <div class="camera-tripod"></div>
+                                            <div class="rec-indicator">
+                                                <span class="rec-dot"></span>
+                                                <span class="rec-text">REC</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'video-editing-timeline') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="video-editing-mockup">
+                                        <div class="editing-header">Video Editing Timeline</div>
+                                        <div class="video-preview-area">
+                                            <div class="preview-frame"></div>
+                                            <div class="subtitle-overlay">"Keep your wrist firm at contact"</div>
+                                        </div>
+                                        <div class="timeline-container">
+                                            <div class="timeline-track">
+                                                <div class="timeline-scrubber"></div>
+                                                <div class="timeline-clip"></div>
+                                            </div>
+                                            <div class="timeline-controls">
+                                                <div class="control-icon slow-mo-icon">⏱️</div>
+                                                <div class="control-label">Slow Motion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'video-review-dashboard') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="video-review-mockup">
+                                        <div class="review-header">Lesson Review</div>
+                                        <div class="video-preview-window">
+                                            <div class="preview-content"></div>
+                                        </div>
+                                        <div class="review-checklist">
+                                            <div class="checklist-item-review">
+                                                <div class="checkmark-review">✓</div>
+                                                <div class="checklist-text">Technical accuracy</div>
+                                            </div>
+                                            <div class="checklist-item-review">
+                                                <div class="checkmark-review">✓</div>
+                                                <div class="checklist-text">Instruction clarity</div>
+                                            </div>
+                                            <div class="checklist-item-review">
+                                                <div class="checkmark-review">✓</div>
+                                                <div class="checklist-text">Program alignment</div>
+                                            </div>
+                                        </div>
+                                        <div class="approval-badge-review">APPROVED</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'app-course-library') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="app-course-library-mockup">
+                                        <div class="library-header">Course Library</div>
+                                        <div class="filter-tabs">
+                                            <div class="filter-tab filter-active">Beginner</div>
+                                            <div class="filter-tab">Intermediate</div>
+                                            <div class="filter-tab">Advanced</div>
+                                        </div>
+                                        <div class="course-grid-library">
+                                            <div class="course-thumbnail">
+                                                <div class="thumbnail-placeholder"></div>
+                                                <div class="thumbnail-title">Serve Basics</div>
+                                            </div>
+                                            <div class="course-thumbnail">
+                                                <div class="thumbnail-placeholder"></div>
+                                                <div class="thumbnail-title">Return Technique</div>
+                                            </div>
+                                            <div class="course-thumbnail">
+                                                <div class="thumbnail-placeholder"></div>
+                                                <div class="thumbnail-title">Dink Mastery</div>
+                                            </div>
+                                            <div class="course-thumbnail">
+                                                <div class="thumbnail-placeholder"></div>
+                                                <div class="thumbnail-title">Volley Fundamentals</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

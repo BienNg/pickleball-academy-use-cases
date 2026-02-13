@@ -112,6 +112,14 @@ function initializeApp() {
                 const category = item.dataset.category;
                 const userFlowSections = document.querySelectorAll('.user-flow-section');
                 
+                // Special handling for "All Flows"
+                if (category === 'all-flows') {
+                    userFlowSections.forEach(section => {
+                        section.style.display = 'block';
+                    });
+                    return;
+                }
+                
                 // Show all user flows that belong to this category (check parties)
                 userFlowSections.forEach(section => {
                     const userFlowId = section.dataset.userFlowId;
@@ -402,6 +410,18 @@ function initializeApp() {
     setupStepNavigation();
     setupStepDetailSelection();
     setupKeyboardNavigation();
+    
+    // Show all flows by default (All Flows view)
+    const userFlowSections = document.querySelectorAll('.user-flow-section');
+    userFlowSections.forEach(section => {
+        section.style.display = 'block';
+    });
+    
+    // Mark "All Flows" as active by default
+    const allFlowsNavItem = document.querySelector('.nav-item.main-category[data-category="all-flows"]');
+    if (allFlowsNavItem) {
+        allFlowsNavItem.classList.add('active');
+    }
 }
 
 // Wait for DOM and dynamic content to be ready
