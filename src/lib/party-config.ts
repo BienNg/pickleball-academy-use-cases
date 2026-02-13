@@ -49,7 +49,7 @@ export const partyConfig: Record<
     color: "#475569",
     bg: "#F1F5F9",
     gradient: "from-[#F1F5F9] to-[#F8FAFC]",
-    icon: "📝",
+    icon: "✂️",
   },
   APP: {
     color: "#0D9488",

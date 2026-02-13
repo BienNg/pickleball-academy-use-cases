@@ -66,11 +66,12 @@ function renderFlowSections() {
             const stepsHtml = item.steps.map((step, index) => {
                 const partySlug = getPartySlug(step.party);
                 const hasMockupAttr = step.mockup ? ` data-has-mockup="true" data-mockup-type="${step.mockup}"` : '';
+                const stepIcon = step.stepIcon || getPartyIcon(step.party);
                 return `
                 <div class="flow-step" data-step-index="${index}" data-user-flow-id="${item.id}" data-party="${partySlug}"${hasMockupAttr}>
                     <div class="flow-step-connector"></div>
                     <div class="flow-step-content">
-                        <span class="flow-step-badge party-badge-${partySlug}">${step.party}</span>
+                        <span class="flow-step-badge party-badge-${partySlug}"><span class="party-icon">${stepIcon}</span> ${step.party.toUpperCase()}</span>
                         <div class="flow-step-action">${step.action}</div>
                         ${step.details ? `<div class="flow-step-details">${step.details}</div>` : ''}
                     </div>
@@ -186,6 +187,147 @@ function renderFlowSections() {
                                     </div>
                                 </div>
                             `;
+                        } else if (step.mockup === 'dashboard-view') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="dashboard-view-mockup">
+                                        <div class="dashboard-sidebar"></div>
+                                        <div class="dashboard-main">
+                                            <div class="dashboard-header">Session Review</div>
+                                            <div class="session-grid">
+                                                <div class="session-thumbnail session-thumbnail-active">
+                                                    <div class="thumbnail-placeholder"></div>
+                                                    <div class="thumbnail-label">Session 1 - John Doe</div>
+                                                    <div class="thumbnail-time">Yesterday 2:30 PM</div>
+                                                </div>
+                                                <div class="session-thumbnail">
+                                                    <div class="thumbnail-placeholder"></div>
+                                                    <div class="thumbnail-label">Session 2 - Jane Smith</div>
+                                                    <div class="thumbnail-time">Yesterday 4:15 PM</div>
+                                                </div>
+                                                <div class="session-thumbnail">
+                                                    <div class="thumbnail-placeholder"></div>
+                                                    <div class="thumbnail-label">Session 3 - Bob Lee</div>
+                                                    <div class="thumbnail-time">Yesterday 6:00 PM</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'video-thumbnail') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="video-thumbnail-mockup">
+                                        <div class="split-video-container">
+                                            <div class="video-panel video-before">
+                                                <div class="video-label">Before</div>
+                                                <div class="video-preview"></div>
+                                            </div>
+                                            <div class="video-panel video-after">
+                                                <div class="video-label">After</div>
+                                                <div class="video-preview video-improved"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'app-screen') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="app-screen-mockup">
+                                        <div class="transcript-header">Transcript</div>
+                                        <div class="waveform-container">
+                                            <div class="waveform"></div>
+                                        </div>
+                                        <div class="transcript-content">
+                                            <div class="transcript-line">Coach: "Let's work on your serve technique..."</div>
+                                            <div class="transcript-line transcript-highlight">Coach: "Focus on keeping your wrist firm and follow through completely."</div>
+                                            <div class="transcript-line">Coach: "That's much better! Notice the difference?"</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'ai-voice-animation') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="animation-mockup ai-voice-animation">
+                                        <div class="ai-voice-text">"The key improvement was maintaining wrist stability..."</div>
+                                        <div class="soundwave-container">
+                                            <div class="soundwave-bar"></div>
+                                            <div class="soundwave-bar"></div>
+                                            <div class="soundwave-bar"></div>
+                                            <div class="soundwave-bar"></div>
+                                            <div class="soundwave-bar"></div>
+                                        </div>
+                                        <div class="ai-voice-icon">🔊</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'video-thumbnail-vertical') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="vertical-video-mockup">
+                                        <div class="vertical-video-frame">
+                                            <div class="video-content"></div>
+                                            <div class="video-subtitle">"Focus on keeping your wrist firm..."</div>
+                                        </div>
+                                        <div class="video-timeline">
+                                            <div class="timeline-progress"></div>
+                                            <div class="timeline-label">0:30</div>
+                                        </div>
+                                        <div class="export-progress">
+                                            <div class="progress-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'clip-transfer-animation') {
+                            mockupContent = `
+                                <div class="step-mockup step-mockup-animation" data-step-index="${index}">
+                                    <div class="animation-mockup clip-transfer-animation">
+                                        <div class="transfer-panel transfer-from">
+                                            <div class="panel-label">Editor</div>
+                                            <div class="clip-icon">🎬</div>
+                                        </div>
+                                        <div class="anim-arrow">→</div>
+                                        <div class="transfer-panel transfer-to">
+                                            <div class="panel-label">CSM</div>
+                                            <div class="notification-badge">1</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (step.mockup === 'social-publish-screen') {
+                            mockupContent = `
+                                <div class="step-mockup" data-step-index="${index}">
+                                    <div class="social-publish-mockup">
+                                        <div class="publish-split">
+                                            <div class="publish-panel publish-message">
+                                                <div class="panel-header">Send to Student</div>
+                                                <div class="message-preview">
+                                                    <div class="message-bubble">Check out your improvement! 🎾</div>
+                                                    <div class="message-attachment">📹 Clip attached</div>
+                                                </div>
+                                            </div>
+                                            <div class="publish-panel publish-social">
+                                                <div class="panel-header">Social Media Preview</div>
+                                                <div class="social-post">
+                                                    <div class="post-header">
+                                                        <div class="post-avatar">🏫</div>
+                                                        <div class="post-name">Pickleball Academy</div>
+                                                    </div>
+                                                    <div class="post-content"></div>
+                                                    <div class="post-engagement">
+                                                        <span class="engagement-icon">❤️</span>
+                                                        <span class="engagement-icon">💬</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
                         }
                         
                         return mockupContent;
@@ -193,12 +335,13 @@ function renderFlowSections() {
                 </div>
             ` : '';
 
+            const dailyBadge = item.id === 'creating-session-success-clips' ? '<span class="daily-badge">Daily</span>' : '';
             return `
                 <div class="user-flow-section" data-user-flow-id="${item.id}">
                     <div class="user-flow-header">
                         <div class="user-flow-icon">${item.image}</div>
                         <div class="user-flow-title-section">
-                            <h2 class="user-flow-title">${item.title}</h2>
+                            <h2 class="user-flow-title">${item.title}${dailyBadge}</h2>
                             <p class="user-flow-description">${item.description}</p>
                         </div>
                     </div>

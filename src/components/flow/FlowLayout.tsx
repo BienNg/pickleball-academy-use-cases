@@ -9,12 +9,13 @@ import type { FlowConfig } from "@/lib/flows";
 
 export interface FlowLayoutProps {
   flow: FlowConfig;
+  flowSlug?: string;
   className?: string;
 }
 
 type ViewMode = "complete" | "step-by-step";
 
-export function FlowLayout({ flow, className }: FlowLayoutProps) {
+export function FlowLayout({ flow, flowSlug, className }: FlowLayoutProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("complete");
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
@@ -49,8 +50,13 @@ export function FlowLayout({ flow, className }: FlowLayoutProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Header */}
       <div className="mb-9 border-b border-[#E5E7EB] pb-7">
-        <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2">
+        <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2 flex items-center gap-2">
           {flow.title}
+          {flowSlug === "creating-session-success-clips" && (
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#4caf50] bg-[#e8f5e9] px-2 py-0.5 rounded">
+              Daily
+            </span>
+          )}
         </h1>
         <p className="text-[15px] font-normal text-[#6B7280] leading-snug">
           {flow.subtitle}

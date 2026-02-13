@@ -26,7 +26,7 @@ export default async function FlowPage({ params }: FlowPageProps) {
           </Link>
           <h2 className="text-lg font-semibold text-slate-900">{flow.title}</h2>
         </div>
-        <FlowLayout flow={flow} />
+        <FlowLayout flow={flow} flowSlug={slug} />
       </div>
     </DashboardShell>
   );

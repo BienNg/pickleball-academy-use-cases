@@ -46,9 +46,14 @@ function initializeApp() {
             });
         });
 
-        // Initially hide sub-categories
+        // Initially show sub-categories (expanded by default)
         document.querySelectorAll('.nav-item.sub-category').forEach(item => {
-            item.style.display = 'none';
+            item.style.display = 'flex';
+        });
+        
+        // Mark all categories as expanded
+        document.querySelectorAll('.nav-item.main-category .expand-icon').forEach(icon => {
+            icon.classList.add('expanded');
         });
     }
 

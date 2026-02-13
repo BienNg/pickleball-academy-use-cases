@@ -99,6 +99,139 @@ function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "dashboard-view") {
+    return (
+      <div className="mx-auto w-full max-w-[320px] rounded-xl overflow-hidden bg-white shadow-md min-h-[280px] flex">
+        <div className="w-[60px] bg-[#1a1a1a] flex-shrink-0" />
+        <div className="flex-1 p-4 flex flex-col gap-4">
+          <div className="text-sm font-semibold text-[#1a1a1a]">Session Review</div>
+          <div className="flex flex-col gap-3 animate-[scroll-sessions_8s_ease-in-out_infinite]">
+            <div className="bg-[#e8f5e9] rounded-lg p-3 shadow-sm scale-[1.02]">
+              <div className="w-full h-20 bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-md mb-2" />
+              <div className="text-xs font-semibold text-[#1a1a1a] mb-1">Session 1 - John Doe</div>
+              <div className="text-[10px] text-[#6b7280]">Yesterday 2:30 PM</div>
+            </div>
+            <div className="bg-[#f5f5f5] rounded-lg p-3">
+              <div className="w-full h-20 bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-md mb-2" />
+              <div className="text-xs font-semibold text-[#1a1a1a] mb-1">Session 2 - Jane Smith</div>
+              <div className="text-[10px] text-[#6b7280]">Yesterday 4:15 PM</div>
+            </div>
+            <div className="bg-[#f5f5f5] rounded-lg p-3">
+              <div className="w-full h-20 bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-md mb-2" />
+              <div className="text-xs font-semibold text-[#1a1a1a] mb-1">Session 3 - Bob Lee</div>
+              <div className="text-[10px] text-[#6b7280]">Yesterday 6:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-thumbnail") {
+    return (
+      <div className="mx-auto w-full max-w-[320px]">
+        <div className="flex gap-3 bg-white rounded-xl p-4 shadow-md">
+          <div className="flex-1 flex flex-col gap-2">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#6b7280] text-center">Before</div>
+            <div className="w-full aspect-video bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-lg animate-[video-fade-in_2s_ease-in-out_infinite]" />
+          </div>
+          <div className="flex-1 flex flex-col gap-2">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#6b7280] text-center">After</div>
+            <div className="w-full aspect-video bg-gradient-to-br from-[#c8e6c9] to-[#e8f5e9] rounded-lg border-2 border-[#4caf50]/30 animate-[video-slide-in_2s_ease-in-out_infinite]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "ai-voice-animation") {
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="text-[13px] text-[#1a1a1a] text-center p-3 bg-[#f5f5f5] rounded-lg animate-[text-type_3s_ease-in-out_infinite]">
+          "The key improvement was maintaining wrist stability..."
+        </div>
+        <div className="flex gap-1 items-end justify-center h-[60px]">
+          <div className="w-1.5 h-5 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite]" />
+          <div className="w-1.5 h-9 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.1s]" />
+          <div className="w-1.5 h-12 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.2s]" />
+          <div className="w-1.5 h-9 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.3s]" />
+          <div className="w-1.5 h-5 bg-[#4caf50] rounded-full animate-[soundwave-build_2s_ease-in-out_infinite_0.4s]" />
+        </div>
+        <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">🔊</div>
+      </div>
+    );
+  }
+
+  if (visual.type === "video-thumbnail-vertical") {
+    return (
+      <div className="mx-auto w-full max-w-[200px] flex flex-col gap-3">
+        <div className="w-full aspect-[9/16] bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-xl p-2 relative overflow-hidden">
+          <div className="w-full h-full bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-lg" />
+          <div className="absolute bottom-5 left-3 right-3 bg-black/70 text-white p-2 rounded-md text-[11px] animate-[subtitle-fade-in_2s_ease-in-out_infinite]">
+            "Focus on keeping your wrist firm..."
+          </div>
+        </div>
+        <div className="w-full h-1 bg-[#e0e0e0] rounded-full relative overflow-hidden">
+          <div className="h-full w-[30%] bg-[#4caf50] rounded-full animate-[timeline-compress_3s_ease-in-out_infinite]" />
+        </div>
+        <div className="flex justify-end">
+          <div className="text-[10px] text-[#6b7280]">0:30</div>
+        </div>
+        <div className="w-full h-0.5 bg-[#e0e0e0] rounded-full overflow-hidden">
+          <div className="h-full w-0 bg-[#4caf50] animate-[progress-fill_2s_ease-in-out_infinite]" />
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "clip-transfer-animation") {
+    return (
+      <div className="flex min-h-[160px] max-w-[280px] flex-row items-center justify-center gap-5 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] relative">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Editor</div>
+          <div className="text-4xl animate-[clip-move-left_2s_ease-in-out_infinite]">🎬</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80">→</span>
+        <div className="flex flex-col items-center gap-3 p-5 bg-white/90 rounded-xl min-w-[100px] relative animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">CSM</div>
+          <div className="absolute top-2 right-2 w-5 h-5 bg-[#ef4444] text-white rounded-full flex items-center justify-center text-[11px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">1</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "social-publish-screen") {
+    return (
+      <div className="mx-auto w-full max-w-[360px]">
+        <div className="flex gap-3 bg-white rounded-xl p-4 shadow-md">
+          <div className="flex-1 flex flex-col gap-3">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider">Send to Student</div>
+            <div className="flex flex-col gap-2">
+              <div className="bg-[#e3f2fd] text-[#1a1a1a] p-2.5 rounded-xl text-xs animate-[message-send_2s_ease-in-out_infinite]">
+                Check out your improvement! 🎾
+              </div>
+              <div className="text-[11px] text-[#6b7280] p-1.5 bg-[#f5f5f5] rounded-md">📹 Clip attached</div>
+            </div>
+          </div>
+          <div className="flex-1 flex flex-col gap-3">
+            <div className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wider">Social Media Preview</div>
+            <div className="bg-[#f9fafb] rounded-lg p-3 animate-[post-fade-in_2s_ease-in-out_infinite]">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="text-xl">🏫</div>
+                <div className="text-xs font-semibold text-[#1a1a1a]">Pickleball Academy</div>
+              </div>
+              <div className="w-full h-[120px] bg-gradient-to-br from-[#e0e0e0] to-[#f5f5f5] rounded-md mb-2" />
+              <div className="flex gap-3 pt-2">
+                <span className="text-base animate-[engagement-pulse_2s_ease-in-out_infinite]">❤️</span>
+                <span className="text-base animate-[engagement-pulse_2s_ease-in-out_infinite_0.3s]">💬</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
 

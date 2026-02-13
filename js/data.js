@@ -23,7 +23,7 @@ const partyIcons = {
     'CSM': '💬',
     'Content Manager': '📝',
     'content-manager': '📝',
-    'Editor': '📝'
+    'Editor': '✂️'
 };
 
 // Helper function to get party icon
@@ -112,6 +112,72 @@ const allUserFlows = [
             'Coach records the session',
             'CSM checks payment and sends recordings to Editor',
             'Editor uploads recordings to App'
+        ]
+    },
+    {
+        id: 'creating-session-success-clips',
+        parties: ['content-manager', 'customer-success'],
+        filter: 'content',
+        image: '🎬',
+        title: 'Creating Session Success Clips',
+        description: 'Daily before-and-after transformation clips for students and social media',
+        steps: [
+            {
+                party: 'Editor',
+                action: 'Reviews All Completed Sessions',
+                details: 'Editor reviews recordings from all sessions completed the previous day to identify potential transformation moments.',
+                mockup: 'dashboard-view',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'Editor',
+                action: 'Selects Before & After Clip',
+                details: 'Editor selects one clip from the beginning of the session and one improved execution after coaching.',
+                mockup: 'video-thumbnail',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'Editor',
+                action: 'Transcribes Coaching Moment',
+                details: 'Editor extracts and transcribes the specific coaching instruction related to the technical correction.',
+                mockup: 'app-screen',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'Editor',
+                action: 'Generates AI Voice Explanation',
+                details: 'Editor creates an AI voiceover explaining the technical issue and how it was corrected.',
+                mockup: 'ai-voice-animation',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'Editor',
+                action: 'Produces 30-Second Transformation Clip',
+                details: 'Editor combines before, after, transcript insight, and AI voice into a polished 30-second vertical clip.',
+                mockup: 'video-thumbnail-vertical',
+                stepIcon: '✂️'
+            },
+            {
+                party: 'CSM',
+                action: 'Receives Final Clip',
+                details: 'Customer Success Manager receives the finished clip for review and distribution.',
+                mockup: 'clip-transfer-animation',
+                stepIcon: '💬'
+            },
+            {
+                party: 'CSM',
+                action: 'Sends to Student & Publishes',
+                details: 'CSM sends clip to the student and publishes it on social media channels.',
+                mockup: 'social-publish-screen',
+                stepIcon: '💬'
+            }
+        ],
+        features: [
+            'Daily content generation process',
+            'Before-and-after transformation clips',
+            'AI voiceover integration',
+            'Social media distribution',
+            'Student engagement through progress clips'
         ]
     }
 ];

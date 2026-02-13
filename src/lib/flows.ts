@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen";
 
 export interface FlowStepVisual {
   type: VisualType;
@@ -69,6 +69,54 @@ export const flows: Record<string, FlowConfig> = {
         title: "Uploads Recordings to App",
         description: undefined,
         visual: { type: "editor-upload" },
+      },
+    ],
+  },
+  "creating-session-success-clips": {
+    title: "Creating Session Success Clips",
+    subtitle: "Daily before-and-after transformation clips for students and social media",
+    steps: [
+      {
+        party: "Editor",
+        title: "Reviews All Completed Sessions",
+        description: "Editor reviews recordings from all sessions completed the previous day to identify potential transformation moments.",
+        visual: { type: "dashboard-view" },
+      },
+      {
+        party: "Editor",
+        title: "Selects Before & After Clip",
+        description: "Editor selects one clip from the beginning of the session and one improved execution after coaching.",
+        visual: { type: "video-thumbnail" },
+      },
+      {
+        party: "Editor",
+        title: "Transcribes Coaching Moment",
+        description: "Editor extracts and transcribes the specific coaching instruction related to the technical correction.",
+        visual: { type: "app-screen" },
+      },
+      {
+        party: "Editor",
+        title: "Generates AI Voice Explanation",
+        description: "Editor creates an AI voiceover explaining the technical issue and how it was corrected.",
+        visual: { type: "ai-voice-animation" },
+      },
+      {
+        party: "Editor",
+        title: "Produces 30-Second Transformation Clip",
+        description: "Editor combines before, after, transcript insight, and AI voice into a polished 30-second vertical clip.",
+        visual: { type: "video-thumbnail-vertical" },
+      },
+      {
+        party: "CSM",
+        title: "Receives Final Clip",
+        description: "Customer Success Manager receives the finished clip for review and distribution.",
+        visual: { type: "clip-transfer-animation" },
+      },
+      {
+        party: "CSM",
+        title: "Sends to Student & Publishes",
+        description: "CSM sends clip to the student and publishes it on social media channels.",
+        visual: { type: "social-publish-screen" },
       },
     ],
   },
