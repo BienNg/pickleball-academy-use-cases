@@ -2,7 +2,7 @@
  * Flow data – single source of truth. Add new flows here; pages render from this config.
  */
 
-export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification" | "coach-request-notification" | "coach-confirm-court-booking" | "csm-escalation-notification" | "csm-zalo-to-student" | "csm-court-call-coach" | "csm-zalo-confirmation" | "reactivation-notification" | "reactivation-roadmap-review" | "reactivation-zalo-progress-check" | "reactivation-student-confirm" | "reactivation-coach-coordinate" | "reactivation-final-confirmation";
+export type VisualType = "app-screen" | "zalo-chat" | "zalo-chat-continued" | "camera-upload" | "payment-editor" | "editor-upload" | "dashboard-view" | "video-thumbnail" | "ai-voice-animation" | "video-thumbnail-vertical" | "clip-transfer-animation" | "social-publish-screen" | "curriculum-planning-board" | "shot-categories-animation" | "shot-breakdown-document" | "drill-progression" | "assessment-checklist" | "master-document" | "approval-stamp" | "course-structure-board" | "lesson-script-document" | "production-calendar" | "video-recording-court" | "video-editing-timeline" | "video-review-dashboard" | "app-course-library" | "coaching-transcript" | "animation" | "cloud-link-paste" | "editor-notification" | "video-download" | "video-editing-tool" | "upload-to-app" | "student-notification" | "coach-request-notification" | "coach-confirm-court-booking" | "csm-escalation-notification" | "csm-zalo-to-student" | "csm-court-call-coach" | "csm-zalo-confirmation" | "reactivation-notification" | "reactivation-roadmap-review" | "reactivation-zalo-progress-check" | "reactivation-student-confirm" | "reactivation-coach-coordinate" | "reactivation-final-confirmation" | "first-session-booking" | "assessment-protocol-animation" | "shot-selection-animation" | "roadmap-notification" | "csm-follow-up-schedule";
 
 export type RoleCategory = "student" | "coach" | "head-coach" | "admin" | "customer-success" | "editor" | "app";
 
@@ -160,6 +160,68 @@ export const flows: Record<string, FlowConfig> = {
         visual: { type: "editor-upload" },
       },
     ],
+  },
+  "first-session-level-assessment": {
+    title: "First Session Level Assessment",
+    subtitle: "Structured evaluation protocol to assess strengths, weaknesses, and define a personalized improvement roadmap.",
+    roles: ['student', 'coach', 'customer-success'],
+    filter: "coaching",
+    image: "app screenshots/first-session-assessment.png",
+    viewMode: "step-by-step",
+    features: [
+      "Standardized evaluation protocol",
+      "Shot-by-shot strength analysis",
+      "Personalized roadmap creation",
+      "In-app progress tracking",
+      "CSM follow-up scheduling"
+    ],
+    steps: [
+      {
+        role: "Student",
+        title: "Books First Coaching Session",
+        description: "Student books their first session after indicating prior playing experience.",
+        visual: { type: "first-session-booking" },
+        stepIcon: "🎾"
+      },
+      {
+        role: "Coach",
+        title: "Conducts Standardized Skill Assessment",
+        description: "Coach runs the academy's structured evaluation protocol covering all major shots to identify strengths and weaknesses.",
+        visual: { type: "assessment-protocol-animation" },
+        stepIcon: "🏅"
+      },
+      {
+        role: "Coach",
+        title: "Selects Priority Shots for Training",
+        description: "Based on assessment results, coach selects one or two key shots to focus on for the remainder of the session.",
+        visual: { type: "shot-selection-animation" },
+        stepIcon: "🏅"
+      },
+      {
+        role: "Coach",
+        title: "Creates Personalized Roadmap in App",
+        description: "After the session, coach defines the improvement roadmap inside the app outlining progression targets and practice focus.",
+        visual: {
+          type: "app-screen",
+          src: "app screenshots/dupr coach.png"
+        },
+        stepIcon: "🏅"
+      },
+      {
+        role: "Student",
+        title: "Receives Roadmap & Notification",
+        description: "Student receives notification that their roadmap has been updated and can review strengths, weaknesses, and next targets.",
+        visual: { type: "roadmap-notification" },
+        stepIcon: "🎾"
+      },
+      {
+        role: "CSM",
+        title: "Sends Follow-Up & Schedules Next Session",
+        description: "CSM receives update notification and sends a follow-up message via Zalo to schedule the next training session.",
+        visual: { type: "csm-follow-up-schedule" },
+        stepIcon: "💬"
+      }
+    ]
   },
   "creating-session-success-clips": {
     title: "Creating Session Success Clips",

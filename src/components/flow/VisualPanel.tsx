@@ -1081,7 +1081,7 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
             </div>
             <div className="flex flex-col items-end gap-1 opacity-0 animate-[reactivation-message-appear_0.5s_ease-out_0.5s_forwards]">
               <span className="max-w-[85%] rounded-[18px] rounded-br-md bg-gradient-to-br from-[#0068FF] to-[#0052CC] px-3.5 py-2.5 text-sm leading-snug text-white flex items-center gap-2">
-                <span>Yes, that works! Let's book it 🎾</span>
+                <span>Yes, that works! Let&apos;s book it 🎾</span>
                 <span className="text-lg animate-[reactivation-check-appear_0.6s_ease-out_0.8s_forwards] opacity-0">✓</span>
               </span>
               <span className="text-[11px] text-[#888]">14:35</span>
@@ -1151,8 +1151,138 @@ export function VisualContent({ visual }: { visual: FlowStepVisual }) {
     );
   }
 
+  if (visual.type === "first-session-booking") {
+    // Step 1: Student books first coaching session
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl opacity-0 animate-[first-session-booking-fade_0.5s_ease-out_forwards]">
+            <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite]">🎾</div>
+            <div className="text-[10px] text-[#6b7280] font-medium">Student</div>
+          </div>
+          <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+          <div className="flex flex-col items-center gap-2 p-4 bg-[#e8f5e9]/80 rounded-xl opacity-0 animate-[first-session-booking-fade_0.5s_ease-out_0.2s_forwards]">
+            <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite_0.2s]">📅</div>
+            <div className="text-[10px] text-[#10b981] font-medium">Session Booked</div>
+          </div>
+        </div>
+        <div className="text-xs text-[#6b7280] text-center opacity-0 animate-[first-session-booking-fade_0.5s_ease-out_0.4s_forwards]">
+          First session confirmed
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "assessment-protocol-animation") {
+    // Step 2: Coach conducts standardized skill assessment - shot icons checked in sequence
+    const shots = ["Serve", "Return", "Dink", "Volley", "3rd Drop", "Kitchen"];
+    return (
+      <div className="mx-auto w-full max-w-[300px] rounded-xl bg-white p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4 opacity-0 animate-[first-session-booking-fade_0.5s_ease-out_forwards]">
+          Skill Assessment
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {shots.map((shot, idx) => (
+            <div
+              key={shot}
+              className="flex flex-col items-center gap-1 p-2.5 bg-[#f9fafb] rounded-lg border border-[#e5e7eb] opacity-0 animate-[assessment-check-sequence_2.5s_ease-in-out_infinite]"
+              style={{ animationDelay: `${idx * 0.2}s` }}
+            >
+              <span className="text-lg">🎯</span>
+              <span className="text-[10px] font-medium text-[#4b5563]">{shot}</span>
+              <span className="text-[#10b981] text-xs font-bold" style={{ opacity: 0.6 }}>✓</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "shot-selection-animation") {
+    // Step 3: Coach selects priority shots - highlight effect on two selected tiles
+    const allShots = ["Serve", "Return", "Dink", "Volley", "3rd Drop", "Kitchen"];
+    const selected = [2, 3]; // Dink and Volley
+    return (
+      <div className="mx-auto w-full max-w-[300px] rounded-xl bg-white p-4 shadow-md">
+        <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider text-center mb-4">
+          Priority Shots Selected
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {allShots.map((shot, idx) => {
+            const isSelected = selected.includes(idx);
+            return (
+              <div
+                key={shot}
+                className={`flex flex-col items-center gap-1 p-2.5 rounded-lg border-2 transition-all ${
+                  isSelected
+                    ? "bg-[#e8f5e9] border-[#10b981] animate-[shot-tile-highlight_2s_ease-in-out_infinite]"
+                    : "bg-[#f9fafb] border-transparent opacity-70"
+                }`}
+              >
+                <span className="text-lg">{isSelected ? "✅" : "🎯"}</span>
+                <span className={`text-[10px] font-medium ${isSelected ? "text-[#10b981]" : "text-[#6b7280]"}`}>{shot}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "roadmap-notification") {
+    // Step 5: Student receives roadmap & notification
+    return (
+      <div className="flex min-h-[200px] max-w-[280px] flex-col items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="relative">
+          <div className="text-4xl animate-[roadmap-notification-pulse_2s_ease-in-out_infinite]">📱</div>
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-[#10b981] rounded-full flex items-center justify-center text-white text-[10px] font-semibold animate-[badge-ping_2s_ease-in-out_infinite]">
+            ✓
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-xs font-semibold text-[#1a1a1a]">Roadmap Updated</div>
+          <div className="text-[11px] text-[#6b7280] text-center animate-[notification-fade_2s_ease-in-out_infinite]">
+            Your personalized roadmap is ready to view
+          </div>
+        </div>
+        <div className="flex items-center gap-2 p-3 bg-[#e8f5e9] rounded-xl w-full max-w-[200px] opacity-0 animate-[first-session-booking-fade_0.5s_ease-out_0.3s_forwards]">
+          <span className="text-lg">🗺️</span>
+          <div className="flex flex-col gap-0.5">
+            <div className="text-[10px] font-semibold text-[#1a1a1a]">Strengths & weaknesses</div>
+            <div className="text-[9px] text-[#6b7280]">Next targets defined</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "csm-follow-up-schedule") {
+    // Step 6: CSM sends follow-up via Zalo - left-to-right message transfer
+    return (
+      <div className="flex min-h-[180px] max-w-[280px] flex-row items-center justify-center gap-4 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
+        <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">CSM</div>
+          <div className="text-3xl animate-[clip-move-left_2s_ease-in-out_infinite]">💬</div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-[#0068FF]/10 rounded-xl animate-[receive-ping_2s_ease-in-out_infinite]">
+          <div className="text-xs font-semibold text-[#0068FF] uppercase tracking-wider">Zalo</div>
+          <div className="text-3xl">📱</div>
+          <div className="text-[10px] text-[#6b7280] text-center animate-[csm-message-transfer_1.5s_ease-out_infinite]">
+            Schedule next session?
+          </div>
+        </div>
+        <span className="text-2xl text-[#6B7280] opacity-80 animate-[arrow-flow_2s_ease-in-out_infinite]">→</span>
+        <div className="flex flex-col items-center gap-2 p-4 bg-white/90 rounded-xl animate-[receive-ping_2s_ease-in-out_infinite_0.3s]">
+          <div className="text-xs font-semibold text-[#6b7280] uppercase tracking-wider">Student</div>
+          <div className="text-3xl animate-[icon-pulse_2s_ease-in-out_infinite_0.2s]">🎾</div>
+        </div>
+      </div>
+    );
+  }
+
   if (visual.type === "animation") {
-    // Cloud upload animation - Step 1
+    // Cloud upload animation - Step 1 (session-editing flow)
     return (
       <div className="flex min-h-[180px] max-w-[280px] flex-row items-center justify-center gap-5 rounded-[20px] bg-white/80 px-6 py-8 mx-auto">
         <div className="flex flex-col items-center gap-2">

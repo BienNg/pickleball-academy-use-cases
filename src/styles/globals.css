@@ -851,6 +851,29 @@
   }
 }
 
+/* First Session Level Assessment animations */
+@keyframes first-session-booking-fade {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes assessment-check-sequence {
+  0%, 100% { opacity: 0.5; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes shot-tile-highlight {
+  0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-color: transparent; }
+  50% { box-shadow: 0 4px 16px rgba(16,185,129,0.25); border-color: #10b981; }
+}
+@keyframes roadmap-notification-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes csm-message-transfer {
+  0% { opacity: 0; transform: translateX(-20px); }
+  50% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
 /* Hide Next.js dev tools overlay */
 nextjs-portal {
   display: none !important;
