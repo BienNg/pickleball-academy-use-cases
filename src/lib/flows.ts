@@ -103,60 +103,60 @@ export function getRoleSlug(roleName: string): string {
 
 export const flows: Record<string, FlowConfig> = {
   "first-contact-academy": {
-    title: "First contact with Academy",
-    subtitle: "Student Requests a Coaching through Academy",
+    title: "First Contact with Academy",
+    subtitle: "From initial inquiry to booked session and recorded lesson delivery",
     roles: ['student', 'customer-success', 'coach', 'editor'],
     filter: 'coaching',
     image: '🎓',
     features: [
-      'CSM consults and schedules first session',
-      'Finds time slot, free coach and court',
-      'Coach records the session',
-      'CSM checks payment and sends recordings to Editor',
-      'Editor uploads recordings to App'
+      'CSM consults with student and schedules first session',
+      'Matches time slot, available coach, and court',
+      'Coach conducts assessment and records session',
+      'CSM verifies payment and sends recordings to editor',
+      'Editor uploads recordings to the app for student access'
     ],
     steps: [
       {
         role: "Student",
-        title: "Requests a Coaching through Academy",
-        description: undefined,
+        title: "Reaches out to request coaching",
+        description: "Student contacts the academy via Zalo to inquire about coaching sessions.",
         visual: { type: "zalo-chat" },
       },
       {
         role: "CSM",
-        title: "Consults",
-        description: undefined,
+        title: "Consults with student on goals and availability",
+        description: "CSM learns about the student's experience level, goals, and schedule preferences.",
         visual: { type: "zalo-chat-continued" },
       },
       {
         role: "CSM",
         title: "Schedules first session with coach",
-        description: "Finds a time slot, free coach and court",
+        description: "Finds an open time slot and matches an available coach and court.",
         visual: { type: "app-screen", src: "app screenshots/session booked.png" },
       },
       {
         role: "Coach",
-        title: "First Session takes place",
+        title: "Conducts first session and skill assessment",
         description:
-          "Goes through all the shots the first time to rate the skill of every shot to create a roadmap",
+          "Runs through all shots to evaluate skill level and create a personalized improvement roadmap.",
         visual: { type: "app-screen", src: "app screenshots/dupr coach.png" },
       },
       {
         role: "Coach",
-        title: "Records the session and sends the recording to CSM",
-        description: undefined,
+        title: "Records session and sends recording to CSM",
+        description: "Captures the session footage and transfers it for editing and delivery.",
         visual: { type: "camera-upload" },
       },
       {
         role: "CSM",
-        title: "Checks if student has paid and sends the Recordings to Editor",
-        description: undefined,
+        title: "Verifies payment and forwards recordings to editor",
+        description: "Confirms the student has paid before passing recordings along for processing.",
         visual: { type: "payment-editor" },
       },
       {
         role: "Editor",
-        title: "Uploads Recordings to App",
-        description: undefined,
+        title: "Uploads recordings to the app",
+        description: "Processes and uploads the session recordings so the student can access them in-app.",
         visual: { type: "editor-upload" },
       },
     ],
