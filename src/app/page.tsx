@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo, useEffect, useRef } from "react";
-import { getAllFlowSlugs, getFlowBySlug, ALL_ROLES, getFlowSlugsByRole, categoryLabels, FlowConfig } from "@/lib/flows";
+import { getAllFlowSlugs, getFlowBySlug, ALL_ROLES, getFlowSlugsByRole, getFlowSlugsByApp, categoryLabels, FlowConfig } from "@/lib/flows";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Bookmark, ArrowRight } from "lucide-react";
 import { VisualContent } from "@/components/flow/VisualPanel";
@@ -50,7 +50,7 @@ export default function HomePage() {
       const stored = sessionStorage.getItem(DASHBOARD_STATE_KEY);
       if (stored) {
         const { role, page } = JSON.parse(stored) as { role: string | null; page: number };
-        if (role === null || (ALL_ROLES as readonly string[]).includes(role)) {
+        if (role === null || role === "app" || (ALL_ROLES as readonly string[]).includes(role)) {
           setSelectedRole(role);
         }
         if (typeof page === "number" && page >= 1) {
@@ -79,11 +79,13 @@ export default function HomePage() {
     }
   }, [selectedRole, currentPage]);
   
-  // Get all flows, filtered by selected role
+  // Get all flows, filtered by selected role or app
   const filteredFlows = useMemo(() => {
-    const slugs = selectedRole 
-      ? getFlowSlugsByRole(selectedRole)
-      : getAllFlowSlugs();
+    const slugs = selectedRole === null
+      ? getAllFlowSlugs()
+      : selectedRole === "app"
+        ? getFlowSlugsByApp()
+        : getFlowSlugsByRole(selectedRole);
     
     return slugs
       .map((slug) => {
@@ -194,6 +196,18 @@ export default function HomePage() {
               All Roles
               <span className="tabular-nums opacity-80">{getAllFlowSlugs().length}</span>
             </button>
+            <button
+              type="button"
+              onClick={() => handleRoleChange("app")}
+              className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+                selectedRole === "app"
+                  ? "bg-primary text-white"
+                  : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50"
+              }`}
+            >
+              📱 App
+              <span className="tabular-nums opacity-80">{getFlowSlugsByApp().length}</span>
+            </button>
             {ALL_ROLES.map((role) => (
               <button
                 key={role}
@@ -236,9 +250,6 @@ export default function HomePage() {
                 <div className="p-5">
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex flex-wrap gap-1">
-                      <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                        Web
-                      </span>
                       {flowConfig?.involvesApp && (
                         <span className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-0.5">
                           📱 App

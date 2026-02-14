@@ -880,3 +880,8 @@ export function getFlowSlugsByRole(role: string): string[] {
     });
   });
 }
+
+/** Returns flow slugs where the flow involves the mobile app */
+export function getFlowSlugsByApp(): string[] {
+  return getAllFlowSlugs().filter((slug) => flows[slug]?.involvesApp === true);
+}
