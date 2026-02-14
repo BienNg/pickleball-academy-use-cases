@@ -41,6 +41,8 @@ export interface FlowConfig {
   image?: string;
   features?: string[];
   badge?: string;
+  /** True when this flow includes steps that use or deliver content via the PB Academy app (booking, uploads, in-app notifications, etc.) */
+  involvesApp?: boolean;
   viewMode?: "Step-by-Step" | "Complete" | "step-by-step";
 }
 
@@ -108,6 +110,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'customer-success', 'coach', 'editor'],
     filter: 'coaching',
     image: '🎓',
+    involvesApp: true,
     features: [
       'CSM consults with student and schedules first session',
       'Matches time slot, available coach, and court',
@@ -167,6 +170,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'coach', 'customer-success'],
     filter: "coaching",
     image: "app screenshots/first-session-assessment.png",
+    involvesApp: true,
     viewMode: "step-by-step",
     features: [
       "Standardized evaluation protocol",
@@ -362,6 +366,7 @@ export const flows: Record<string, FlowConfig> = {
     filter: 'content',
     image: '📚',
     badge: 'Internal System Flow',
+    involvesApp: true,
     viewMode: 'Step-by-Step',
     features: [
       'Curriculum-based video structure',
@@ -428,6 +433,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['coach', 'editor', 'student'],
     filter: "internal",
     badge: "Internal System Flow",
+    involvesApp: true,
     viewMode: "Step-by-Step",
     image: "app screenshots/session-library.png",
     features: [
@@ -510,6 +516,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'coach'],
     filter: "coaching",
     image: "app screenshots/booking-flow.png",
+    involvesApp: true,
     viewMode: "step-by-step",
     features: [
       "Coach selection",
@@ -588,6 +595,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'coach', 'customer-success'],
     filter: "coaching",
     image: "app screenshots/booking-escalation.png",
+    involvesApp: true,
     viewMode: "step-by-step",
     features: [
       "Coach selection",
@@ -694,6 +702,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'coach', 'customer-success'],
     filter: "coaching",
     image: "app screenshots/booking-escalation.png",
+    involvesApp: true,
     viewMode: "step-by-step",
     features: [
       "Zalo-based session request",
@@ -753,6 +762,7 @@ export const flows: Record<string, FlowConfig> = {
     roles: ['student', 'customer-success', 'coach'],
     filter: "coaching",
     image: "🔁",
+    involvesApp: true,
     features: [
       "Automatic 5-day inactivity trigger",
       "CSM proactive progress check via Zalo",

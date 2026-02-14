@@ -82,11 +82,16 @@ export function FlowLayout({ flow, flowSlug, className, backLink, initialStepInd
       {/* Header */}
       <div className="mb-4 border-b border-[#E5E7EB] pb-7">
         {backLink && <div className="mb-2">{backLink}</div>}
-        <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2 flex items-center gap-2">
+        <h1 className="text-[22px] font-semibold tracking-[-0.02em] text-[#1E1E1E] mb-2 flex items-center gap-2 flex-wrap">
           {flow.title}
           {flowSlug === "creating-session-success-clips" && (
             <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#4caf50] bg-[#e8f5e9] px-2 py-0.5 rounded">
               Daily
+            </span>
+          )}
+          {flow.involvesApp && (
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.08em] text-primary bg-primary/10 px-2 py-0.5 rounded flex items-center gap-1">
+              📱 Involves App
             </span>
           )}
         </h1>

@@ -235,9 +235,16 @@ export default function HomePage() {
                 
                 <div className="p-5">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                      Web
-                    </span>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                        Web
+                      </span>
+                      {flowConfig?.involvesApp && (
+                        <span className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-0.5">
+                          📱 App
+                        </span>
+                      )}
+                    </div>
                     <div className="size-6 bg-slate-50 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Bookmark className="size-4 text-slate-400" />
                     </div>
